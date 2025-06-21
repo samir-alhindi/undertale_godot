@@ -1,0 +1,109 @@
+[gd_scene load_steps=4 format=3 uid="uid://45qmet5s5aix"]
+
+[ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
+[ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
+[ext_resource type="Texture2D" uid="uid://qk57agdnwi8" path="res://icon.svg" id="2_tiqy5"]
+
+[node name="Battle" type="Node"]
+script = ExtResource("1_mqutd")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -138.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="AttackButton" type="Button" parent="CanvasLayer/ButtonsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Attack"
+
+[node name="ActButton" type="Button" parent="CanvasLayer/ButtonsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Act"
+
+[node name="ItemButton" type="Button" parent="CanvasLayer/ButtonsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Item"
+
+[node name="MercyButton" type="Button" parent="CanvasLayer/ButtonsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Mercy"
+
+[node name="Border" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -556.0
+offset_top = -140.0
+offset_right = 585.0
+offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Border"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Text" type="Label" parent="CanvasLayer/Border/ColorRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 50
+text = "* Godot hopped close !"
+
+[node name="AttackBar" type="Sprite2D" parent="CanvasLayer/Border/ColorRect"]
+unique_name_in_owner = true
+position = Vector2(563.998, 154.5)
+scale = Vector2(2.00359, 2.344)
+texture = ExtResource("2_qubjc")
+region_enabled = true
+region_rect = Rect2(7.04988, 24.3621, 558.95, 125.045)
+
+[node name="Monster" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(645, 155)
+
+[node name="Sprite2D" type="Sprite2D" parent="Monster"]
+unique_name_in_owner = true
+texture = ExtResource("2_tiqy5")
+
+[connection signal="pressed" from="CanvasLayer/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
