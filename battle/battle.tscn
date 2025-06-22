@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=11 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
+[ext_resource type="PackedScene" uid="uid://mlb50vg57cn7" path="res://bullet_attacks/follow_soul.tscn" id="2_6hnvb"]
 [ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
 [ext_resource type="Texture2D" uid="uid://qk57agdnwi8" path="res://icon.svg" id="2_tiqy5"]
 
@@ -77,6 +78,7 @@ _data = {
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_mqutd")
+attacks = Array[PackedScene]([ExtResource("2_6hnvb")])
 
 [node name="CanvasLayer" type="Control" parent="."]
 unique_name_in_owner = true

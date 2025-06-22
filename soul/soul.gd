@@ -1,5 +1,6 @@
 class_name Soul extends CharacterBody2D
 
+signal took_damage(amount: int)
 enum Mode {RED, BLUE, YELLOW, GREEN, PURPLE}
 var mode: Mode
 const SOUL := preload("uid://tly4ac72poq7")
@@ -30,3 +31,8 @@ func _physics_process(delta: float) -> void:
 			velocity.y += 800 * delta
 			
 			move_and_slide()
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if not area.is_in_group("bullet") or %invincibilityTimer.time_left: return
+	took_damage.emit(area.damage_amount)
+	%invincibilityTimer.start()

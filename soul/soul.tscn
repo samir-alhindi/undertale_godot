@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rujom"]
 radius = 15.0333
 
-[node name="Soul" type="CharacterBody2D"]
+[node name="Soul" type="CharacterBody2D" groups=["soul"]]
 z_index = 1
 script = ExtResource("1_rujom")
 
@@ -17,3 +17,15 @@ texture = ExtResource("1_llyy4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rujom")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hurtbox"]
+polygon = PackedVector2Array(0, 19, -19, 5, -19, -15, -11, -19, -1, -10, 11, -19, 19, -13, 19, 4)
+
+[node name="invincibilityTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

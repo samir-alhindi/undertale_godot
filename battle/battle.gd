@@ -3,6 +3,10 @@ extends Node
 var is_selecting := false
 var is_attacking := false
 
+var player_hp := 20
+
+@export var attacks: Array[PackedScene]
+
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	%AttackButton.grab_focus()
@@ -27,6 +31,10 @@ func _input(event: InputEvent) -> void:
 		%Anim.stop()
 		%LabelTimer.start()
 
+func player_take_damage(amount: int) -> void:
+	player_hp -= amount
+	print(player_hp)
+
 func _on_attack_button_pressed() -> void:
 	%ButtonsContainer.hide()
 	%Text.text = "* Godot"
@@ -48,6 +56,15 @@ func _on_damage_label_timer_timeout() -> void:
 func start_hell() -> void:
 	%ButtonsContainer.hide()
 	%Anim.play("start_hell")
+	
 	var soul := Soul.new_soul(Soul.Mode.RED)
 	add_child(soul)
 	soul.global_position = %AttackBar.global_position
+	soul.took_damage.connect(player_take_damage)
+	
+	var attack: BulletAttack = attacks[0].instantiate()
+	add_child(attack)
+	await attack.done
+	attack.queue_free()
+	print("Done")
+	
