@@ -1,23 +1,103 @@
-[gd_scene load_steps=4 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=10 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
 [ext_resource type="Texture2D" uid="uid://qk57agdnwi8" path="res://icon.svg" id="2_tiqy5"]
 
-[node name="Battle" type="Node"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qubjc"]
+size = Vector2(9.5, 323)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6hnvb"]
+size = Vector2(1143.5, 9)
+
+[sub_resource type="Animation" id="Animation_6hnvb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Box/AttackLine:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(7, 63)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Box:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qubjc"]
+resource_name = "attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Box/AttackLine:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(7, 63), Vector2(1070, 63)]
+}
+
+[sub_resource type="Animation" id="Animation_4mnim"]
+resource_name = "start_hell"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Box:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.5, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4mnim"]
+_data = {
+&"RESET": SubResource("Animation_6hnvb"),
+&"attack": SubResource("Animation_qubjc"),
+&"start_hell": SubResource("Animation_4mnim")
+}
+
+[node name="Battle" type="Node2D"]
 script = ExtResource("1_mqutd")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="Control" parent="."]
 unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = 640.0
+offset_top = 552.0
+offset_right = 640.0
+offset_bottom = 552.0
 
 [node name="ButtonsContainer" type="HBoxContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
+layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -138.0
-offset_bottom = -60.0
+offset_left = -536.0
+offset_top = 249.0
+offset_right = 564.0
+offset_bottom = 327.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 100
@@ -51,8 +131,9 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Mercy"
 
-[node name="Border" type="ColorRect" parent="CanvasLayer"]
+[node name="Box" type="ColorRect" parent="CanvasLayer"]
 unique_name_in_owner = true
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -64,8 +145,9 @@ offset_right = 585.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(570.5, 160)
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Border"]
+[node name="BoxColorRect" type="ColorRect" parent="CanvasLayer/Box"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -79,7 +161,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Text" type="Label" parent="CanvasLayer/Border/ColorRect"]
+[node name="Text" type="Label" parent="CanvasLayer/Box/BoxColorRect"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -90,13 +172,56 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 50
 text = "* Godot hopped close !"
 
-[node name="AttackBar" type="Sprite2D" parent="CanvasLayer/Border/ColorRect"]
+[node name="AttackBar" type="Sprite2D" parent="CanvasLayer/Box/BoxColorRect"]
 unique_name_in_owner = true
 position = Vector2(563.998, 154.5)
 scale = Vector2(2.00359, 2.344)
 texture = ExtResource("2_qubjc")
 region_enabled = true
 region_rect = Rect2(7.04988, 24.3621, 558.95, 125.045)
+
+[node name="Border" type="StaticBody2D" parent="CanvasLayer/Box/BoxColorRect"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Box/BoxColorRect/Border"]
+position = Vector2(-5.25, 151.5)
+shape = SubResource("RectangleShape2D_qubjc")
+
+[node name="Border2" type="StaticBody2D" parent="CanvasLayer/Box/BoxColorRect"]
+position = Vector2(1135.5, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Box/BoxColorRect/Border2"]
+position = Vector2(-5.25, 151.5)
+shape = SubResource("RectangleShape2D_qubjc")
+
+[node name="Border3" type="StaticBody2D" parent="CanvasLayer/Box/BoxColorRect"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Box/BoxColorRect/Border3"]
+position = Vector2(561.75, -4.5)
+shape = SubResource("RectangleShape2D_6hnvb")
+
+[node name="Border4" type="StaticBody2D" parent="CanvasLayer/Box/BoxColorRect"]
+position = Vector2(0, 315)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Box/BoxColorRect/Border4"]
+position = Vector2(561.75, -4.5)
+shape = SubResource("RectangleShape2D_6hnvb")
+
+[node name="AttackLine" type="ColorRect" parent="CanvasLayer/Box"]
+unique_name_in_owner = true
+z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -563.5
+offset_top = -97.0
+offset_right = -535.5
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(14, 100)
 
 [node name="Monster" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -106,4 +231,27 @@ position = Vector2(645, 155)
 unique_name_in_owner = true
 texture = ExtResource("2_tiqy5")
 
+[node name="Damage" type="Label" parent="Monster"]
+unique_name_in_owner = true
+visible = false
+offset_left = 71.0
+offset_top = -117.0
+offset_right = 158.0
+offset_bottom = -62.0
+theme_override_font_sizes/font_size = 40
+text = "Miss"
+
+[node name="LabelTimer" type="Timer" parent="Monster"]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_4mnim")
+}
+
 [connection signal="pressed" from="CanvasLayer/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
+[connection signal="timeout" from="Monster/LabelTimer" to="." method="_on_damage_label_timer_timeout"]
+[connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]
