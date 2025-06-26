@@ -1,4 +1,4 @@
-extends BulletAttack
+extends Node2D
 
 const FOLLOWER_BULLET := preload("res://bullets/follower_bullet.tscn")
 
@@ -8,3 +8,7 @@ func _ready() -> void:
 	
 	add_child(bullet)
 	bullet.global_position = soul.global_position + Vector2(0, 100)
+	
+
+func _on_timer_timeout() -> void:
+	Global.wave_done.emit(self, get_tree().get_first_node_in_group("soul"))

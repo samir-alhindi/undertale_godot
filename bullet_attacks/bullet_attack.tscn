@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://csss717x68oa1" path="res://bullet_attacks/bullet_attack.gd" id="1_8fcg0"]
 
-[node name="BulletAttack" type="Node" groups=["bullet_attack"]]
+[node name="BulletAttack" type="Node2D" groups=["bullet_attack"]]
 script = ExtResource("1_8fcg0")
 
 [node name="Timer" type="Timer" parent="."]

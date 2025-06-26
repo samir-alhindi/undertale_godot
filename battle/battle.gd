@@ -2,14 +2,16 @@ extends Node
 
 var is_selecting := false
 var is_attacking := false
-var battle_done := false
+var battle_won := false
+var battle_lost := false
 
 var player_hp := 20
-var enemy_hp := 150
+var enemy_hp := 100
 
 @export var bullet_waves: Array[PackedScene]
 
 func _ready() -> void:
+	Global.wave_done.connect(finish_hell)
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	%AttackButton.grab_focus()
 
@@ -33,15 +35,9 @@ func _input(event: InputEvent) -> void:
 		
 		enemy_hp -= damage
 		if enemy_hp <= 0:
-			battle_done = true
-			%MonsterAnim.play("die")
-			await %MonsterAnim.animation_finished
-			%Anim.play("end_hell")
-			await %Anim.animation_finished
-			%Text.text = "Battle won\nGot 50 EXP and 27 Gold."
-			%Anim.play("fade_into_black")
-			await %Anim.animation_finished
-			get_tree().quit(0)
+			battle_won = true
+			%Anim.play("die")
+			# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
 
 func player_take_damage(amount: int, soul: Soul) -> void:
 	player_hp -= amount
@@ -50,7 +46,7 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 	%HP2.text = str(formated_hp) + " / 20"
 	
 	if player_hp <= 0:
-		battle_done = true
+		battle_won = true
 		var attack := get_tree().get_first_node_in_group("bullet_attack")
 		if is_instance_valid(attack): attack.queue_free()
 		const DEATH_PARTICLE := preload("uid://cvsoixker4k6d")
@@ -59,13 +55,7 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 		particles.global_position = soul.global_position
 		add_child(particles)
 		soul.call_deferred("queue_free")
-		
 		%Anim.play("end_hell")
-		await %Anim.animation_finished
-		%Text.text = "Battle Lost..."
-		%Anim.play("fade_into_black")
-		await %Anim.animation_finished
-		get_tree().quit(0)
 
 func _on_attack_button_pressed() -> void:
 	%ButtonsContainer.hide()
@@ -79,11 +69,21 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		%Damage.text = "miss"
 		%Damage.show()
 		%LabelTimer.start()
+	elif anim_name == "die":
+		%Anim.play("end_hell")
+	elif anim_name == "end_hell" and battle_won:
+		%Text.text = "Battle won\nGot 50 EXP and 27 Gold."
+		%Anim.play("fade_into_black")
+	elif anim_name == "end_hell" and battle_lost:
+		%Text.text = "Battle Lost..."
+		%Anim.play("fade_into_black")
+	elif anim_name == "fade_into_black":
+		get_tree().quit(0)
 
 func _on_damage_label_timer_timeout() -> void:
 	%Damage.hide()
 	%AttackBar.hide()
-	if battle_done: return
+	if battle_won or battle_lost: return
 	start_hell()
 
 func start_hell() -> void:
@@ -95,11 +95,13 @@ func start_hell() -> void:
 	soul.global_position = %AttackBar.global_position
 	soul.took_damage.connect(player_take_damage)
 	
-	var wave: BulletAttack = bullet_waves[0].instantiate()
+	var wave: Node2D = bullet_waves[0].instantiate()
 	add_child(wave)
-	await wave.done
+	# The wave finishes when the Node emits the global "wave_done" signal.
+
+func finish_hell(wave: Node2D, soul: Soul) -> void:
 	wave.queue_free()
-	if battle_done: return
+	if battle_won or battle_lost: return
 	%Anim.play("end_hell")
 	%ButtonsContainer.show()
 	soul.queue_free()
