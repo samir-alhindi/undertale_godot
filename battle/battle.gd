@@ -2,16 +2,16 @@ extends Node
 
 var is_selecting := false
 var is_attacking := false
+var battle_done := false
 
 var player_hp := 20
+var enemy_hp := 150
 
-@export var attacks: Array[PackedScene]
+@export var bullet_waves: Array[PackedScene]
 
 func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	%AttackButton.grab_focus()
-	%AttackBar.hide()
-	%AttackLine.hide()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and is_selecting:
@@ -30,10 +30,42 @@ func _input(event: InputEvent) -> void:
 		%Damage.show()
 		%Anim.stop()
 		%LabelTimer.start()
+		
+		enemy_hp -= damage
+		if enemy_hp <= 0:
+			battle_done = true
+			%MonsterAnim.play("die")
+			await %MonsterAnim.animation_finished
+			%Anim.play("end_hell")
+			await %Anim.animation_finished
+			%Text.text = "Battle won\nGot 50 EXP and 27 Gold."
+			%Anim.play("fade_into_black")
+			await %Anim.animation_finished
+			get_tree().quit(0)
 
-func player_take_damage(amount: int) -> void:
+func player_take_damage(amount: int, soul: Soul) -> void:
 	player_hp -= amount
-	print(player_hp)
+	var formated_hp: int = clamp(player_hp, 0, 20)
+	%HPBar.value = formated_hp
+	%HP2.text = str(formated_hp) + " / 20"
+	
+	if player_hp <= 0:
+		battle_done = true
+		var attack := get_tree().get_first_node_in_group("bullet_attack")
+		if is_instance_valid(attack): attack.queue_free()
+		const DEATH_PARTICLE := preload("uid://cvsoixker4k6d")
+		var particles := DEATH_PARTICLE.instantiate()
+		particles.color = soul.color
+		particles.global_position = soul.global_position
+		add_child(particles)
+		soul.call_deferred("queue_free")
+		
+		%Anim.play("end_hell")
+		await %Anim.animation_finished
+		%Text.text = "Battle Lost..."
+		%Anim.play("fade_into_black")
+		await %Anim.animation_finished
+		get_tree().quit(0)
 
 func _on_attack_button_pressed() -> void:
 	%ButtonsContainer.hide()
@@ -51,6 +83,7 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 func _on_damage_label_timer_timeout() -> void:
 	%Damage.hide()
 	%AttackBar.hide()
+	if battle_done: return
 	start_hell()
 
 func start_hell() -> void:
@@ -62,9 +95,13 @@ func start_hell() -> void:
 	soul.global_position = %AttackBar.global_position
 	soul.took_damage.connect(player_take_damage)
 	
-	var attack: BulletAttack = attacks[0].instantiate()
-	add_child(attack)
-	await attack.done
-	attack.queue_free()
-	print("Done")
-	
+	var wave: BulletAttack = bullet_waves[0].instantiate()
+	add_child(wave)
+	await wave.done
+	wave.queue_free()
+	if battle_done: return
+	%Anim.play("end_hell")
+	%ButtonsContainer.show()
+	soul.queue_free()
+	%AttackButton.grab_focus()
+	%Text.text = "* Godot hopped close !"

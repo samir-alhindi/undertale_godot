@@ -7,4 +7,4 @@ func _ready() -> void:
 	var bullet := FOLLOWER_BULLET.instantiate()
 	
 	add_child(bullet)
-	bullet.global_position = soul.global_position + Vector2(0, 50)
+	bullet.global_position = soul.global_position + Vector2(0, 100)

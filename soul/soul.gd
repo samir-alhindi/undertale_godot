@@ -1,6 +1,7 @@
 class_name Soul extends CharacterBody2D
 
-signal took_damage(amount: int)
+signal took_damage(amount: int, soul: Soul)
+var color: Color
 enum Mode {RED, BLUE, YELLOW, GREEN, PURPLE}
 var mode: Mode
 const SOUL := preload("uid://tly4ac72poq7")
@@ -13,8 +14,9 @@ static func new_soul(mode: Mode) -> Soul:
 func _ready() -> void:
 	match mode:
 		Mode.RED:
-			pass
+			color = Color.RED
 		Mode.BLUE:
+			color = Color.BLUE
 			%Sprite2D.texture = preload("uid://bgfotjyiv112h")
 
 func _physics_process(delta: float) -> void:
@@ -34,5 +36,5 @@ func _physics_process(delta: float) -> void:
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if not area.is_in_group("bullet") or %invincibilityTimer.time_left: return
-	took_damage.emit(area.damage_amount)
+	took_damage.emit(area.damage_amount, self)
 	%invincibilityTimer.start()

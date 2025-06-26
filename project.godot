@@ -25,6 +25,7 @@ window/stretch/mode="canvas_items"
 
 soul="The human soul"
 bullet="hurts the soul"
+bullet_attack="A bullet wave."
 
 [rendering]
 

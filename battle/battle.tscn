@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=15 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
-[ext_resource type="PackedScene" uid="uid://mlb50vg57cn7" path="res://bullet_attacks/follow_soul.tscn" id="2_6hnvb"]
 [ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
 [ext_resource type="Texture2D" uid="uid://qk57agdnwi8" path="res://icon.svg" id="2_tiqy5"]
 
@@ -11,12 +10,49 @@ size = Vector2(9.5, 323)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6hnvb"]
 size = Vector2(1143.5, 9)
 
+[sub_resource type="Animation" id="Animation_rxlun"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_iorop"]
+resource_name = "die"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rxlun"]
+_data = {
+&"RESET": SubResource("Animation_rxlun"),
+&"die": SubResource("Animation_iorop")
+}
+
 [sub_resource type="Animation" id="Animation_6hnvb"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Box/AttackLine:position")
+tracks/0/path = NodePath("Control/Box/AttackLine:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -28,7 +64,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Box:scale")
+tracks/1/path = NodePath("Control/Box:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -37,13 +73,37 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Monster:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/BlackScreen:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_qubjc"]
 resource_name = "attack"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Box/AttackLine:position")
+tracks/0/path = NodePath("Control/Box/AttackLine:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -53,13 +113,45 @@ tracks/0/keys = {
 "values": [Vector2(7, 63), Vector2(1070, 63)]
 }
 
+[sub_resource type="Animation" id="Animation_7fucf"]
+resource_name = "end_hell"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Box:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.5, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_l1kiu"]
+resource_name = "fade_into_black"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/BlackScreen:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_4mnim"]
 resource_name = "start_hell"
 length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Box:scale")
+tracks/0/path = NodePath("Control/Box:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -73,14 +165,15 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_6hnvb"),
 &"attack": SubResource("Animation_qubjc"),
+&"end_hell": SubResource("Animation_7fucf"),
+&"fade_into_black": SubResource("Animation_l1kiu"),
 &"start_hell": SubResource("Animation_4mnim")
 }
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_mqutd")
-attacks = Array[PackedScene]([ExtResource("2_6hnvb")])
 
-[node name="CanvasLayer" type="Control" parent="."]
+[node name="Control" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
@@ -89,51 +182,90 @@ offset_top = 552.0
 offset_right = 640.0
 offset_bottom = 552.0
 
-[node name="ButtonsContainer" type="HBoxContainer" parent="CanvasLayer"]
+[node name="UI" type="VBoxContainer" parent="Control"]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -536.0
-offset_top = 249.0
-offset_right = 564.0
-offset_bottom = 327.0
-grow_horizontal = 2
-grow_vertical = 0
+layout_mode = 0
+offset_left = -547.0
+offset_top = 259.0
+offset_right = 585.0
+offset_bottom = 384.0
+theme_override_constants/separation = 20
+
+[node name="StatsContainer" type="HBoxContainer" parent="Control/UI"]
+unique_name_in_owner = true
+layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="AttackButton" type="Button" parent="CanvasLayer/ButtonsContainer"]
+[node name="Name" type="Label" parent="Control/UI/StatsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Chara"
+
+[node name="LV" type="Label" parent="Control/UI/StatsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "LV 1"
+
+[node name="HP" type="Label" parent="Control/UI/StatsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "HP"
+
+[node name="HPBar" type="ProgressBar" parent="Control/UI/StatsContainer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 0, 1)
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 2
+max_value = 20.0
+step = 1.0
+value = 20.0
+show_percentage = false
+
+[node name="HP2" type="Label" parent="Control/UI/StatsContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "20 / 20"
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="Control/UI"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="AttackButton" type="Button" parent="Control/UI/ButtonsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Attack"
 
-[node name="ActButton" type="Button" parent="CanvasLayer/ButtonsContainer"]
+[node name="ActButton" type="Button" parent="Control/UI/ButtonsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Act"
 
-[node name="ItemButton" type="Button" parent="CanvasLayer/ButtonsContainer"]
+[node name="ItemButton" type="Button" parent="Control/UI/ButtonsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Item"
 
-[node name="MercyButton" type="Button" parent="CanvasLayer/ButtonsContainer"]
+[node name="MercyButton" type="Button" parent="Control/UI/ButtonsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Mercy"
 
-[node name="Box" type="ColorRect" parent="CanvasLayer"]
+[node name="Box" type="ColorRect" parent="Control"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -149,7 +281,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(570.5, 160)
 
-[node name="BoxColorRect" type="ColorRect" parent="CanvasLayer/Box"]
+[node name="BoxColorRect" type="ColorRect" parent="Control/Box"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -163,7 +295,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Text" type="Label" parent="CanvasLayer/Box/BoxColorRect"]
+[node name="Text" type="Label" parent="Control/Box/BoxColorRect"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -174,42 +306,44 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 50
 text = "* Godot hopped close !"
 
-[node name="AttackBar" type="Sprite2D" parent="CanvasLayer/Box/BoxColorRect"]
+[node name="AttackBar" type="Sprite2D" parent="Control/Box/BoxColorRect"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(563.998, 154.5)
 scale = Vector2(2.00359, 2.344)
 texture = ExtResource("2_qubjc")
 region_enabled = true
 region_rect = Rect2(7.04988, 24.3621, 558.95, 125.045)
 
-[node name="Border" type="StaticBody2D" parent="CanvasLayer/Box/BoxColorRect"]
+[node name="Border" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Box/BoxColorRect/Border"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border"]
 position = Vector2(-5.25, 151.5)
 shape = SubResource("RectangleShape2D_qubjc")
 
-[node name="Border2" type="StaticBody2D" parent="CanvasLayer/Box/BoxColorRect"]
+[node name="Border2" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
 position = Vector2(1135.5, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Box/BoxColorRect/Border2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border2"]
 position = Vector2(-5.25, 151.5)
 shape = SubResource("RectangleShape2D_qubjc")
 
-[node name="Border3" type="StaticBody2D" parent="CanvasLayer/Box/BoxColorRect"]
+[node name="Border3" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Box/BoxColorRect/Border3"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border3"]
 position = Vector2(561.75, -4.5)
 shape = SubResource("RectangleShape2D_6hnvb")
 
-[node name="Border4" type="StaticBody2D" parent="CanvasLayer/Box/BoxColorRect"]
+[node name="Border4" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
 position = Vector2(0, 315)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Box/BoxColorRect/Border4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border4"]
 position = Vector2(561.75, -4.5)
 shape = SubResource("RectangleShape2D_6hnvb")
 
-[node name="AttackLine" type="ColorRect" parent="CanvasLayer/Box"]
+[node name="AttackLine" type="ColorRect" parent="Control/Box"]
 unique_name_in_owner = true
+visible = false
 z_index = 1
 layout_mode = 1
 anchors_preset = 8
@@ -248,12 +382,31 @@ unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
 
+[node name="MonsterAnim" type="AnimationPlayer" parent="Monster"]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_rxlun")
+}
+
 [node name="Anim" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_4mnim")
 }
 
-[connection signal="pressed" from="CanvasLayer/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="BlackScreen" type="ColorRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="Control/UI/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="timeout" from="Monster/LabelTimer" to="." method="_on_damage_label_timer_timeout"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]
