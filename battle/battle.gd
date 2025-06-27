@@ -1,12 +1,34 @@
 extends Node
 
-var is_selecting := false
+var gonna_attack := false
+var gonna_act := false
+var is_choosing_act := false
+var is_reading_act_text := false
 var is_attacking := false
+var gonna_spare := false
 var battle_won := false
 var battle_lost := false
+var can_spare := false
 
 var player_hp := 20
 var enemy_hp := 100
+var enemy_mercy := 0:
+	set(new_value):
+		enemy_mercy = new_value
+		if enemy_mercy >= 100:
+			can_spare = true
+
+var enemy_acts := {
+	"Check" : "Godot: 10 ATK 15 DFN\nLoves talking.",
+	"Chat" : "* You talked to Godot about GDscript...\nIt seemed pleased !",
+	"Insult" : "* You told Godot that GDscript is slow...\nGodot got angry !",
+}
+
+var enemy_act_stats := {
+	"Check" : 0,
+	"Chat" : 100,
+	"Insult" : 0,
+}
 
 @export var bullet_waves: Array[PackedScene]
 
@@ -21,12 +43,13 @@ func _ready() -> void:
 		assert(wave_instance.is_in_group("wave"), "Make sure all waves are in the 'Wave' group")
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept") and is_selecting:
+	if event.is_action_pressed("ui_accept") and gonna_attack:
+		%Text.modulate = Color.WHITE
 		%AttackBar.show()
 		%Text.text = ""
 		%AttackLine.show()
 		%Anim.play("attack")
-		is_selecting = false
+		gonna_attack = false
 		is_attacking = true
 	elif event.is_action_pressed("ui_accept") and is_attacking:
 		is_attacking = false
@@ -43,6 +66,57 @@ func _input(event: InputEvent) -> void:
 			battle_won = true
 			%Anim.play("die")
 			# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
+	elif event.is_action_pressed("ui_accept") and gonna_act:
+		gonna_act = false
+		is_choosing_act = true
+		%Text.text = ""
+		%Text.modulate = Color.WHITE
+		for act: String in enemy_acts.keys():
+			var button := Button.new()
+			button.text = act
+			button.custom_minimum_size = Vector2(100, 50)
+			button.add_theme_font_size_override("font_size", 50)
+			button.pressed.connect(do_act.bind(button.text))
+			%OptionsContainer.add_child(button)
+		%OptionsContainer.get_child(0).grab_focus()
+		%UiCooldownTimer.start()
+		# Rest of the logic is in "do_act".
+		
+	elif event.is_action_pressed("ui_accept") and is_reading_act_text:
+		is_reading_act_text = false
+		%Text.text = ""
+		start_hell()
+		
+	elif event.is_action_pressed("ui_accept") and gonna_spare and can_spare:
+		battle_won = true
+		%Sprite2D.modulate.a = 0.5
+		%Text.modulate = Color.WHITE
+		%Text.text = "Battle won !\nGained 75 Gold and 0 EXP."
+		%Anim.play("fade_into_black")
+	
+	elif event.is_action_pressed("ui_cancel"):
+		if gonna_attack:
+			gonna_attack = false
+			%ButtonsContainer.show()
+			%AttackButton.grab_focus()
+			%Text.modulate = Color.WHITE
+			%Text.text = "* Godot hopped close !"
+		elif gonna_act:
+			%ActButton.grab_focus()
+			%ButtonsContainer.show()
+			%OptionsContainer.hide()
+			%Text.modulate = Color.WHITE
+			%Text.text = "* Godot hopped close !"
+			gonna_act = false
+		elif is_choosing_act:
+			for button: Button in %OptionsContainer.get_children():
+				button.queue_free()
+			%OptionsContainer.hide()
+			if can_spare:
+				%Text.modulate = Color.YELLOW
+			%Text.text = "* Godot"
+			is_choosing_act = false
+			gonna_act = true
 
 func player_take_damage(amount: int, soul: Soul) -> void:
 	player_hp -= amount
@@ -65,8 +139,10 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 
 func _on_attack_button_pressed() -> void:
 	%ButtonsContainer.hide()
+	if can_spare:
+		%Text.modulate = Color.YELLOW
 	%Text.text = "* Godot"
-	is_selecting = true
+	gonna_attack = true
 
 func _on_anim_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "attack":
@@ -115,3 +191,30 @@ func finish_hell(wave: Node2D, soul: Soul) -> void:
 	soul.queue_free()
 	%AttackButton.grab_focus()
 	%Text.text = "* Godot hopped close !"
+
+
+func _on_act_button_pressed() -> void:
+	%ButtonsContainer.hide()
+	%OptionsContainer.show()
+	if can_spare:
+		%Text.modulate = Color.YELLOW
+	%Text.text = "* Godot"
+	gonna_act = true
+
+func do_act(act_name: String) -> void:
+	if %UiCooldownTimer.time_left: return
+	for button: Button in %OptionsContainer.get_children():
+		button.queue_free()
+	%OptionsContainer.hide()
+	enemy_mercy += enemy_act_stats[act_name]
+	%Text.text = enemy_acts[act_name]
+	is_choosing_act = false
+	is_reading_act_text = true
+
+
+func _on_mercy_button_pressed() -> void:
+	gonna_spare = true
+	%ButtonsContainer.hide()
+	if can_spare:
+		%Text.modulate = Color.YELLOW
+	%Text.text = "* Godot"

@@ -342,6 +342,25 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(14, 100)
 
+[node name="OptionsContainer" type="GridContainer" parent="Control/Box"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.031
+anchor_top = 0.087
+anchor_right = 0.973
+anchor_bottom = 0.931
+offset_left = -0.371002
+offset_top = 0.159998
+offset_right = -0.193115
+offset_bottom = 0.0799866
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 450
+theme_override_constants/v_separation = 30
+columns = 2
+
 [node name="Monster" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(645, 155)
@@ -387,6 +406,12 @@ metadata/_edit_use_anchors_ = true
 [node name="DebugMarker" type="Marker2D" parent="."]
 position = Vector2(656, 791)
 
+[node name="UiCooldownTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
 [connection signal="pressed" from="Control/UI/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="Control/UI/ButtonsContainer/ActButton" to="." method="_on_act_button_pressed"]
+[connection signal="pressed" from="Control/UI/ButtonsContainer/MercyButton" to="." method="_on_mercy_button_pressed"]
 [connection signal="timeout" from="Monster/LabelTimer" to="." method="_on_damage_label_timer_timeout"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]
