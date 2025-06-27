@@ -4,14 +4,16 @@
 [ext_resource type="Texture2D" uid="uid://qk57agdnwi8" path="res://icon.svg" id="1_28y32"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tnxwn"]
+size = Vector2(31, 30)
 
 [node name="FollowerBullet" type="Area2D" groups=["bullet"]]
 z_index = 1
 script = ExtResource("1_4btat")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_28y32")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_tnxwn")

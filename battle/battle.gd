@@ -4,13 +4,20 @@ var gonna_attack := false
 var gonna_act := false
 var is_choosing_act := false
 var is_reading_act_text := false
+var is_reading_item_text := false
 var is_attacking := false
 var gonna_spare := false
+var is_choosing_item := false
 var battle_won := false
 var battle_lost := false
 var can_spare := false
 
-var player_hp := 20
+var player_hp := 20:
+	set(new_value):
+		player_hp = clamp(new_value, 0, 20)
+		%HPBar.value = player_hp
+		%HP2.text = str(player_hp) + " / 20"
+		
 var enemy_hp := 100
 var enemy_mercy := 0:
 	set(new_value):
@@ -28,6 +35,12 @@ var enemy_act_stats := {
 	"Check" : 0,
 	"Chat" : 100,
 	"Insult" : 0,
+}
+
+var items := {
+	"Pie" : [20, "* You ate the Pie..\nBut it turned out to be 3.14159265359 !\n(HP recovered anyway)."],
+	"Nice Cream" : [10, "* You licked the Nice cream...\n, it was very nice !\n"],
+	"Apple" : [12, "* You took a big bite out of the Apple...\n, it tasted like Kris's hair ! !\n"],
 }
 
 @export var bullet_waves: Array[PackedScene]
@@ -82,8 +95,9 @@ func _input(event: InputEvent) -> void:
 		%UiCooldownTimer.start()
 		# Rest of the logic is in "do_act".
 		
-	elif event.is_action_pressed("ui_accept") and is_reading_act_text:
+	elif event.is_action_pressed("ui_accept") and is_reading_act_text or is_reading_item_text:
 		is_reading_act_text = false
+		is_reading_item_text = false
 		%Text.text = ""
 		start_hell()
 		
@@ -93,6 +107,7 @@ func _input(event: InputEvent) -> void:
 		%Text.modulate = Color.WHITE
 		%Text.text = "Battle won !\nGained 75 Gold and 0 EXP."
 		%Anim.play("fade_into_black")
+	
 	
 	elif event.is_action_pressed("ui_cancel"):
 		if gonna_attack:
@@ -117,12 +132,25 @@ func _input(event: InputEvent) -> void:
 			%Text.text = "* Godot"
 			is_choosing_act = false
 			gonna_act = true
+		elif is_choosing_item:
+			for button: Button in %OptionsContainer.get_children():
+				button.queue_free()
+			%OptionsContainer.hide()
+			%ButtonsContainer.show()
+			%ItemButton.grab_focus()
+			%Text.modulate = Color.WHITE
+			%Text.text = "* Godot hopped close !"
+			is_choosing_item = false
+		elif gonna_spare:
+			%MercyButton.grab_focus()
+			%ButtonsContainer.show()
+			%OptionsContainer.hide()
+			%Text.modulate = Color.WHITE
+			%Text.text = "* Godot hopped close !"
+			gonna_spare = false
 
 func player_take_damage(amount: int, soul: Soul) -> void:
 	player_hp -= amount
-	var formated_hp: int = clamp(player_hp, 0, 20)
-	%HPBar.value = formated_hp
-	%HP2.text = str(formated_hp) + " / 20"
 	
 	if player_hp <= 0:
 		battle_lost = true
@@ -211,6 +239,15 @@ func do_act(act_name: String) -> void:
 	is_choosing_act = false
 	is_reading_act_text = true
 
+func use_item(item_name: String) -> void:
+	if %UiCooldownTimer.time_left: return
+	for button: Button in %OptionsContainer.get_children():
+		button.queue_free()
+		%OptionsContainer.hide()
+	player_hp += items[item_name][0]
+	%Text.text = items[item_name][1]
+	is_choosing_item = false
+	is_reading_item_text = true
 
 func _on_mercy_button_pressed() -> void:
 	gonna_spare = true
@@ -218,3 +255,20 @@ func _on_mercy_button_pressed() -> void:
 	if can_spare:
 		%Text.modulate = Color.YELLOW
 	%Text.text = "* Godot"
+
+
+func _on_item_button_pressed() -> void:
+	is_choosing_item = true
+	%ButtonsContainer.hide()
+	%OptionsContainer.show()
+	%Text.text = ""
+	for item_name: String in items.keys():
+		var button := Button.new()
+		button.text = item_name
+		button.custom_minimum_size = Vector2(100, 50)
+		button.add_theme_font_size_override("font_size", 50)
+		button.pressed.connect(use_item.bind(button.text))
+		%OptionsContainer.add_child(button)
+	%OptionsContainer.get_child(0).grab_focus()
+	%UiCooldownTimer.start()
+	# Rest of the logic is in "use_item".
