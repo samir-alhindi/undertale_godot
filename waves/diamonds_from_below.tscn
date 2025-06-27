@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://mj5bf0hhbi2k"]
+
+[ext_resource type="Script" uid="uid://b5dkwn51nt6mh" path="res://waves/diamonds_from_below.gd" id="1_3q2o1"]
+
+[sub_resource type="Curve2D" id="Curve2D_3q2o1"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -300, 0, 0, 0, 0, 0, 300, 0)
+}
+point_count = 2
+
+[node name="DiamondsFromBelow" type="Node2D" groups=["wave"]]
+script = ExtResource("1_3q2o1")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_3q2o1")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+unique_name_in_owner = true
+position = Vector2(-300, 0)
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="EndTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]

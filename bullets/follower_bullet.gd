@@ -1,6 +1,7 @@
 extends Area2D
 
 var damage_amount := 10
+var freed_on_hit := false
 
 func _physics_process(delta: float) -> void:
 	var soul := get_tree().get_first_node_in_group("soul")

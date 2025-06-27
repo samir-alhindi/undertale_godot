@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://mlb50vg57cn7"]
+
+[ext_resource type="Script" uid="uid://dkaghcicp38xa" path="res://waves/follow_soul.gd" id="2_a7og0"]
+
+[node name="FollowSoul" type="Node2D" groups=["wave"]]
+script = ExtResource("2_a7og0")
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -14,6 +14,11 @@ func _ready() -> void:
 	Global.wave_done.connect(finish_hell)
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	%AttackButton.grab_focus()
+	
+	# Make sure all waves are valid:
+	for wave: PackedScene in bullet_waves:
+		var wave_instance := wave.instantiate()
+		assert(wave_instance.is_in_group("wave"), "Make sure all waves are in the 'Wave' group")
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and is_selecting:
@@ -46,7 +51,7 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 	%HP2.text = str(formated_hp) + " / 20"
 	
 	if player_hp <= 0:
-		battle_won = true
+		battle_lost = true
 		var attack := get_tree().get_first_node_in_group("bullet_attack")
 		if is_instance_valid(attack): attack.queue_free()
 		const DEATH_PARTICLE := preload("uid://cvsoixker4k6d")
@@ -56,6 +61,7 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 		add_child(particles)
 		soul.call_deferred("queue_free")
 		%Anim.play("end_hell")
+		# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
 
 func _on_attack_button_pressed() -> void:
 	%ButtonsContainer.hide()
@@ -86,6 +92,7 @@ func _on_damage_label_timer_timeout() -> void:
 	if battle_won or battle_lost: return
 	start_hell()
 
+var wave_index := 0
 func start_hell() -> void:
 	%ButtonsContainer.hide()
 	%Anim.play("start_hell")
@@ -95,7 +102,8 @@ func start_hell() -> void:
 	soul.global_position = %AttackBar.global_position
 	soul.took_damage.connect(player_take_damage)
 	
-	var wave: Node2D = bullet_waves[0].instantiate()
+	var wave: Node2D = bullet_waves[wave_index % bullet_waves.size()].instantiate()
+	wave_index += 1
 	add_child(wave)
 	# The wave finishes when the Node emits the global "wave_done" signal.
 

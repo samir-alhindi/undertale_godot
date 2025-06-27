@@ -37,4 +37,5 @@ func _physics_process(delta: float) -> void:
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if not area.is_in_group("bullet") or %invincibilityTimer.time_left: return
 	took_damage.emit(area.damage_amount, self)
+	if area.freed_on_hit: area.queue_free()
 	%invincibilityTimer.start()

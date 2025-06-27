@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=15 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
-[ext_resource type="PackedScene" uid="uid://mlb50vg57cn7" path="res://bullet_attacks/follow_soul.tscn" id="2_6hnvb"]
+[ext_resource type="PackedScene" uid="uid://mlb50vg57cn7" path="res://waves/follow_soul.tscn" id="2_6hnvb"]
 [ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
 [ext_resource type="Texture2D" uid="uid://qk57agdnwi8" path="res://icon.svg" id="2_tiqy5"]
+[ext_resource type="PackedScene" uid="uid://mj5bf0hhbi2k" path="res://waves/diamonds_from_below.tscn" id="5_4mnim"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qubjc"]
 size = Vector2(9.5, 323)
@@ -153,7 +154,7 @@ _data = {
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_mqutd")
-bullet_waves = Array[PackedScene]([ExtResource("2_6hnvb")])
+bullet_waves = Array[PackedScene]([ExtResource("5_4mnim"), ExtResource("2_6hnvb")])
 
 [node name="Control" type="Control" parent="."]
 unique_name_in_owner = true
@@ -382,6 +383,9 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
 metadata/_edit_use_anchors_ = true
+
+[node name="DebugMarker" type="Marker2D" parent="."]
+position = Vector2(656, 791)
 
 [connection signal="pressed" from="Control/UI/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="timeout" from="Monster/LabelTimer" to="." method="_on_damage_label_timer_timeout"]
