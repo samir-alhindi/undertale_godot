@@ -33,9 +33,18 @@ func _physics_process(delta: float) -> void:
 			velocity.y += 800 * delta
 			
 			move_and_slide()
+	
+	
+	# Check for damage:
+	var all_areas: Array[Area2D] = %Hurtbox.get_overlapping_areas()
+	for area: Area2D in all_areas:
+		if not area.is_in_group("bullet") or %invincibilityTimer.time_left: return
+		took_damage.emit(area.damage_amount, self)
+		if area.freed_on_hit: area.queue_free()
+		%SoulAnim.play("hurt")
+		%invincibilityTimer.start()
 
-func _on_hurtbox_area_entered(area: Area2D) -> void:
-	if not area.is_in_group("bullet") or %invincibilityTimer.time_left: return
-	took_damage.emit(area.damage_amount, self)
-	if area.freed_on_hit: area.queue_free()
-	%invincibilityTimer.start()
+
+func _on_invincibility_timer_timeout() -> void:
+	%SoulAnim.stop()
+	%Sprite2D.modulate.a = 1

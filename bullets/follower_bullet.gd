@@ -1,6 +1,6 @@
 extends Area2D
 
-var damage_amount := 10
+var damage_amount := 5
 var freed_on_hit := false
 
 func _physics_process(delta: float) -> void:

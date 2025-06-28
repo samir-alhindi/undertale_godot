@@ -26,9 +26,9 @@ var enemy_mercy := 0:
 			can_spare = true
 
 var enemy_acts := {
-	"Check" : "Godot: 10 ATK 15 DFN\nLoves talking.",
-	"Chat" : "* You talked to Godot about GDscript...\nIt seemed pleased !",
-	"Insult" : "* You told Godot that GDscript is slow...\nGodot got angry !",
+	"Check" : "ATK 10 DEF 0\nLoves talking.",
+	"Chat" : "* You talked to Godot about GDscript...\n  It seemed pleased !",
+	"Insult" : "* You told Godot that GDscript is slow...\n  Godot got angry !",
 }
 
 var enemy_act_stats := {
@@ -38,10 +38,12 @@ var enemy_act_stats := {
 }
 
 var items := {
-	"Pie" : [20, "* You ate the Pie..\nBut it turned out to be 3.14159265359 !\n(HP recovered anyway)."],
+	"Pie" : [20, "* You ate the Pie..\n  But it turned out to be 3.14159265359 !\n  (HP recovered anyway)."],
 	"Nice Cream" : [10, "* You licked the Nice cream...\n, it was very nice !\n"],
-	"Apple" : [12, "* You took a big bite out of the Apple...\n, it tasted like Kris's hair ! !\n"],
+	"Apple" : [12, "* You took a big bite out of the Apple...\n  it tasted like Kris's hair !\n"],
 }
+
+var theme := preload("uid://cf0xm6i8snote")
 
 @export var bullet_waves: Array[PackedScene]
 
@@ -54,9 +56,16 @@ func _ready() -> void:
 	for wave: PackedScene in bullet_waves:
 		var wave_instance := wave.instantiate()
 		assert(wave_instance.is_in_group("wave"), "Make sure all waves are in the 'Wave' group")
+	
+	for button: Button in %ButtonsContainer.get_children():
+		button.focus_entered.connect(on_focus_entered)
+
+func on_focus_entered() -> void:
+	%MoveSound.play()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and gonna_attack:
+		%SelectSound.play()
 		%Text.modulate = Color.WHITE
 		%AttackBar.show()
 		%Text.text = ""
@@ -65,6 +74,8 @@ func _input(event: InputEvent) -> void:
 		gonna_attack = false
 		is_attacking = true
 	elif event.is_action_pressed("ui_accept") and is_attacking:
+		%KnifeSlashSound.play()
+		%Anim.play("enemy_hurt")
 		is_attacking = false
 		%AttackLine.hide()
 		var distance_from_centre: int = round(abs(%AttackLine.global_position.x - %AttackBar.global_position.x))
@@ -78,14 +89,18 @@ func _input(event: InputEvent) -> void:
 		if enemy_hp <= 0:
 			battle_won = true
 			%Anim.play("die")
+			%Music.stop()
+			%BattleDone.play()
 			# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
 	elif event.is_action_pressed("ui_accept") and gonna_act:
+		%SelectSound.play()
 		gonna_act = false
 		is_choosing_act = true
 		%Text.text = ""
 		%Text.modulate = Color.WHITE
 		for act: String in enemy_acts.keys():
 			var button := Button.new()
+			button.theme = theme
 			button.text = act
 			button.custom_minimum_size = Vector2(100, 50)
 			button.add_theme_font_size_override("font_size", 50)
@@ -102,6 +117,8 @@ func _input(event: InputEvent) -> void:
 		start_hell()
 		
 	elif event.is_action_pressed("ui_accept") and gonna_spare and can_spare:
+		%BattleDone.play()
+		%Music.stop()
 		battle_won = true
 		%Sprite2D.modulate.a = 0.5
 		%Text.modulate = Color.WHITE
@@ -151,8 +168,11 @@ func _input(event: InputEvent) -> void:
 
 func player_take_damage(amount: int, soul: Soul) -> void:
 	player_hp -= amount
+	%SoulHitSound.play()
 	
 	if player_hp <= 0:
+		%Music.stop()
+		%SoulBreak.play()
 		battle_lost = true
 		var attack := get_tree().get_first_node_in_group("bullet_attack")
 		if is_instance_valid(attack): attack.queue_free()
@@ -166,6 +186,7 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 		# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
 
 func _on_attack_button_pressed() -> void:
+	%SelectSound.play()
 	%ButtonsContainer.hide()
 	if can_spare:
 		%Text.modulate = Color.YELLOW
@@ -222,6 +243,7 @@ func finish_hell(wave: Node2D, soul: Soul) -> void:
 
 
 func _on_act_button_pressed() -> void:
+	%SelectSound.play()
 	%ButtonsContainer.hide()
 	%OptionsContainer.show()
 	if can_spare:
@@ -231,6 +253,7 @@ func _on_act_button_pressed() -> void:
 
 func do_act(act_name: String) -> void:
 	if %UiCooldownTimer.time_left: return
+	%SelectSound.play()
 	for button: Button in %OptionsContainer.get_children():
 		button.queue_free()
 	%OptionsContainer.hide()
@@ -241,6 +264,7 @@ func do_act(act_name: String) -> void:
 
 func use_item(item_name: String) -> void:
 	if %UiCooldownTimer.time_left: return
+	%UseItemSound.play()
 	for button: Button in %OptionsContainer.get_children():
 		button.queue_free()
 		%OptionsContainer.hide()
@@ -250,20 +274,22 @@ func use_item(item_name: String) -> void:
 	is_reading_item_text = true
 
 func _on_mercy_button_pressed() -> void:
+	%SelectSound.play()
 	gonna_spare = true
 	%ButtonsContainer.hide()
 	if can_spare:
 		%Text.modulate = Color.YELLOW
 	%Text.text = "* Godot"
 
-
 func _on_item_button_pressed() -> void:
+	%SelectSound.play()
 	is_choosing_item = true
 	%ButtonsContainer.hide()
 	%OptionsContainer.show()
 	%Text.text = ""
 	for item_name: String in items.keys():
 		var button := Button.new()
+		button.theme = theme
 		button.text = item_name
 		button.custom_minimum_size = Vector2(100, 50)
 		button.add_theme_font_size_override("font_size", 50)
