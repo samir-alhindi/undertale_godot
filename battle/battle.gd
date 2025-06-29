@@ -52,7 +52,7 @@ func _ready() -> void:
 	bullet_waves = enemy_stat.bullet_waves.duplicate(true)
 	encounter_text = enemy_stat.encounter_text
 	idle_text = enemy_stat.idle_text
-	%Text.text = encounter_text
+	%Text.display(encounter_text)
 	
 	Global.wave_done.connect(finish_hell)
 	RenderingServer.set_default_clear_color(Color.BLACK)
@@ -125,14 +125,17 @@ func _input(event: InputEvent) -> void:
 		%Text.text = ""
 		start_hell()
 		
-	elif event.is_action_pressed("ui_accept") and gonna_spare and can_spare:
-		%BattleDone.play()
-		%Music.stop()
-		battle_won = true
-		%Sprite2D.modulate.a = 0.5
-		%Text.modulate = Color.WHITE
-		%Text.text = "Battle won !\nGained 75 Gold and 0 EXP."
-		%Anim.play("fade_into_black")
+	elif event.is_action_pressed("ui_accept") and gonna_spare:
+		if can_spare:
+			%BattleDone.play()
+			%Music.stop()
+			battle_won = true
+			%Sprite2D.modulate.a = 0.5
+			%Text.modulate = Color.WHITE
+			%Text.display("Battle won !\nGained 75 Gold and 0 EXP.")
+			%Anim.play("fade_into_black")
+		elif not can_spare:
+			%SelectSound.play()
 	
 	
 	elif event.is_action_pressed("ui_cancel"):
@@ -141,13 +144,13 @@ func _input(event: InputEvent) -> void:
 			%ButtonsContainer.show()
 			%AttackButton.grab_focus()
 			%Text.modulate = Color.WHITE
-			%Text.text = idle_text if turn_counter > 0 else encounter_text
+			%Text.display(idle_text if turn_counter > 0 else encounter_text)
 		elif gonna_act:
 			%ActButton.grab_focus()
 			%ButtonsContainer.show()
 			%OptionsContainer.hide()
 			%Text.modulate = Color.WHITE
-			%Text.text = idle_text if turn_counter > 0 else encounter_text
+			%Text.display(idle_text if turn_counter > 0 else encounter_text)
 			gonna_act = false
 		elif is_choosing_act:
 			for button: Button in %OptionsContainer.get_children():
@@ -165,14 +168,14 @@ func _input(event: InputEvent) -> void:
 			%ButtonsContainer.show()
 			%ItemButton.grab_focus()
 			%Text.modulate = Color.WHITE
-			%Text.text = idle_text if turn_counter > 0 else encounter_text
+			%Text.display(idle_text if turn_counter > 0 else encounter_text)
 			is_choosing_item = false
 		elif gonna_spare:
 			%MercyButton.grab_focus()
 			%ButtonsContainer.show()
 			%OptionsContainer.hide()
 			%Text.modulate = Color.WHITE
-			%Text.text = idle_text if turn_counter > 0 else encounter_text
+			%Text.display(idle_text if turn_counter > 0 else encounter_text)
 			gonna_spare = false
 
 func player_take_damage(amount: int, soul: Soul) -> void:
@@ -212,10 +215,10 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 	elif anim_name == "die":
 		%Anim.play("end_hell")
 	elif anim_name == "end_hell" and battle_won:
-		%Text.text = "Battle won\nGot 50 EXP and 27 Gold."
+		%Text.display("Battle won\nGot 50 EXP and 27 Gold.")
 		%Anim.play("fade_into_black")
 	elif anim_name == "end_hell" and battle_lost:
-		%Text.text = "Battle Lost..."
+		%Text.display("Battle Lost...")
 		%Anim.play("fade_into_black")
 	elif anim_name == "fade_into_black":
 		get_tree().quit(0)
@@ -249,7 +252,7 @@ func finish_hell(wave: Node2D, soul: Soul) -> void:
 	%ButtonsContainer.show()
 	soul.queue_free()
 	%AttackButton.grab_focus()
-	%Text.text = idle_text
+	%Text.display(idle_text)
 
 
 func _on_act_button_pressed() -> void:
@@ -268,7 +271,7 @@ func do_act(act: Act) -> void:
 		button.queue_free()
 	%OptionsContainer.hide()
 	enemy_mercy += act.mercy_amount
-	%Text.text = act.text
+	%Text.display(act.text)
 	is_choosing_act = false
 	is_reading_act_text = true
 
@@ -279,7 +282,8 @@ func use_item(item_name: String) -> void:
 		button.queue_free()
 		%OptionsContainer.hide()
 	player_hp += items[item_name][0]
-	%Text.text = items[item_name][1]
+	%Text.display(items[item_name][1])
+	items.erase(item_name)
 	is_choosing_item = false
 	is_reading_item_text = true
 
@@ -293,6 +297,7 @@ func _on_mercy_button_pressed() -> void:
 
 func _on_item_button_pressed() -> void:
 	%SelectSound.play()
+	if items.size() <= 0: return
 	is_choosing_item = true
 	%ButtonsContainer.hide()
 	%OptionsContainer.show()

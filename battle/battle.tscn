@@ -1,7 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=24 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
+[ext_resource type="Script" uid="uid://cxsnx4tvhus7o" path="res://battle/text.gd" id="2_qybyd"]
+[ext_resource type="AudioStream" uid="uid://5ae82e28ymtd" path="res://sounds/Generic 1 Dialogue Sound Effect (Undertale Character Voice Beeps).mp3" id="3_eu6g2"]
+[ext_resource type="FontFile" uid="uid://bsdludjyf4ury" path="res://themes/undertale-damage.otf" id="3_hvjow"]
 [ext_resource type="AudioStream" uid="uid://byp2svo436sh6" path="res://sounds/snd_select.wav" id="6_l1kiu"]
 [ext_resource type="AudioStream" uid="uid://bg6fcjorkrh23" path="res://sounds/snd_squeak.wav" id="7_7fucf"]
 [ext_resource type="AudioStream" uid="uid://dhbvccgm7a5sj" path="res://sounds/snd_hurt1.wav" id="8_iorop"]
@@ -311,7 +314,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Text" type="Label" parent="Control/Box/BoxColorRect"]
+[node name="Text" type="RichTextLabel" parent="Control/Box/BoxColorRect"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -319,10 +322,22 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 19.0
 offset_top = 30.0
+offset_right = -25.0
+offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/normal_font_size = 50
 text = "* Godot hopped close !"
+script = ExtResource("2_qybyd")
+
+[node name="TextTimer" type="Timer" parent="Control/Box/BoxColorRect/Text"]
+unique_name_in_owner = true
+wait_time = 0.01
+one_shot = true
+
+[node name="TextSound" type="AudioStreamPlayer" parent="Control/Box/BoxColorRect/Text"]
+unique_name_in_owner = true
+stream = ExtResource("3_eu6g2")
 
 [node name="AttackBar" type="Sprite2D" parent="Control/Box/BoxColorRect"]
 unique_name_in_owner = true
@@ -409,9 +424,10 @@ unique_name_in_owner = true
 visible = false
 offset_left = 206.0
 offset_top = -129.0
-offset_right = 293.0
-offset_bottom = -74.0
-theme_override_font_sizes/font_size = 40
+offset_right = 424.0
+offset_bottom = -59.0
+theme_override_fonts/font = ExtResource("3_hvjow")
+theme_override_font_sizes/font_size = 70
 text = "Miss"
 
 [node name="LabelTimer" type="Timer" parent="Monster"]
@@ -485,5 +501,6 @@ stream = ExtResource("13_eu6g2")
 [connection signal="pressed" from="Control/UI/ButtonsContainer/ActButton" to="." method="_on_act_button_pressed"]
 [connection signal="pressed" from="Control/UI/ButtonsContainer/ItemButton" to="." method="_on_item_button_pressed"]
 [connection signal="pressed" from="Control/UI/ButtonsContainer/MercyButton" to="." method="_on_mercy_button_pressed"]
+[connection signal="timeout" from="Control/Box/BoxColorRect/Text/TextTimer" to="Control/Box/BoxColorRect/Text" method="_on_text_timer_timeout"]
 [connection signal="timeout" from="Monster/LabelTimer" to="." method="_on_damage_label_timer_timeout"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]

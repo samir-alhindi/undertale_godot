@@ -12,6 +12,7 @@ func _ready() -> void:
 		button.pressed.connect(
 			go_to_battle.bind(enemy_stat)
 		)
+	%BattlesContainer.get_child(0).grab_focus()
 
 func go_to_battle(enemy: EnemyStats) -> void:
 	Battle.enemy_stat = enemy

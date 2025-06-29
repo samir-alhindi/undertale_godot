@@ -32,6 +32,10 @@ bullet="hurts the soul"
 wave="A bullet wave."
 enemy="The monster"
 
+[gui]
+
+theme/custom_font="uid://61kg45th28eb"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
