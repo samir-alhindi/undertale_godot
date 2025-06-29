@@ -1,10 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=21 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
-[ext_resource type="PackedScene" uid="uid://mlb50vg57cn7" path="res://waves/follow_soul.tscn" id="2_6hnvb"]
 [ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
-[ext_resource type="PackedScene" uid="uid://mj5bf0hhbi2k" path="res://waves/diamonds_from_below.tscn" id="5_4mnim"]
-[ext_resource type="Texture2D" uid="uid://cllhluuapyh2q" path="res://sprites/icon_monochrome_dark.png" id="5_qybyd"]
 [ext_resource type="AudioStream" uid="uid://byp2svo436sh6" path="res://sounds/snd_select.wav" id="6_l1kiu"]
 [ext_resource type="AudioStream" uid="uid://bg6fcjorkrh23" path="res://sounds/snd_squeak.wav" id="7_7fucf"]
 [ext_resource type="AudioStream" uid="uid://dhbvccgm7a5sj" path="res://sounds/snd_hurt1.wav" id="8_iorop"]
@@ -130,6 +127,22 @@ tracks/0/keys = {
 "values": [Vector2(0.5, 1), Vector2(1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_qybyd"]
+resource_name = "enemy_hurt"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Monster/Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_l1kiu"]
 resource_name = "fade_into_black"
 length = 2.0
@@ -162,22 +175,6 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(0.5, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_qybyd"]
-resource_name = "enemy_hurt"
-length = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Monster/Sprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4mnim"]
 _data = {
 &"RESET": SubResource("Animation_6hnvb"),
@@ -191,7 +188,6 @@ _data = {
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_mqutd")
-bullet_waves = Array[PackedScene]([ExtResource("5_4mnim"), ExtResource("2_6hnvb")])
 
 [node name="Control" type="Control" parent="."]
 unique_name_in_owner = true
@@ -400,14 +396,13 @@ theme_override_constants/h_separation = 450
 theme_override_constants/v_separation = 30
 columns = 2
 
-[node name="Monster" type="Node2D" parent="."]
+[node name="Monster" type="Node2D" parent="." groups=["enemy"]]
 unique_name_in_owner = true
 position = Vector2(645, 183)
 
 [node name="Sprite2D" type="Sprite2D" parent="Monster"]
 unique_name_in_owner = true
 scale = Vector2(0.35, 0.35)
-texture = ExtResource("5_qybyd")
 
 [node name="Damage" type="Label" parent="Monster"]
 unique_name_in_owner = true

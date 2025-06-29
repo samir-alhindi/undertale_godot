@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnxrqinpyif6b"]
+
+[ext_resource type="Script" uid="uid://ce81wwjperdmy" path="res://intermediate_scenes/title_screen.gd" id="1_k6j6k"]
+[ext_resource type="Script" uid="uid://dacubvpu4m4oc" path="res://enemy/enemy_stats.gd" id="2_cdqcp"]
+[ext_resource type="Resource" uid="uid://c1s07vh0ew48n" path="res://enemy/godot.tres" id="3_nlcaa"]
+
+[node name="TitleScreen" type="CanvasLayer"]
+script = ExtResource("1_k6j6k")
+enemies = Array[ExtResource("2_cdqcp")]([ExtResource("3_nlcaa")])
+
+[node name="BG" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BattlesContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -81.0
+offset_top = 220.0
+offset_right = 81.0
+offset_bottom = 243.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 100
+text = "Undertale in Godot 4"
+horizontal_alignment = 1
+vertical_alignment = 1

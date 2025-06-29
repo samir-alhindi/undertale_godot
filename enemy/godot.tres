@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=9 format=3 uid="uid://c1s07vh0ew48n"]
+
+[ext_resource type="Script" uid="uid://ctmhbj4qf467x" path="res://enemy/act.gd" id="1_1kb3h"]
+[ext_resource type="Script" uid="uid://dacubvpu4m4oc" path="res://enemy/enemy_stats.gd" id="2_l711b"]
+[ext_resource type="PackedScene" uid="uid://mlb50vg57cn7" path="res://waves/follow_soul.tscn" id="2_tskkf"]
+[ext_resource type="Texture2D" uid="uid://cllhluuapyh2q" path="res://sprites/icon_monochrome_dark.png" id="3_l711b"]
+[ext_resource type="PackedScene" uid="uid://mj5bf0hhbi2k" path="res://waves/diamonds_from_below.tscn" id="3_n4e20"]
+
+[sub_resource type="Resource" id="Resource_l711b"]
+script = ExtResource("1_1kb3h")
+name = "Check"
+mercy_amount = 0
+text = "ATK 10 DEF 0
+Loves talking."
+metadata/_custom_type_script = "uid://ctmhbj4qf467x"
+
+[sub_resource type="Resource" id="Resource_ed65b"]
+script = ExtResource("1_1kb3h")
+name = "Insult"
+mercy_amount = 0
+text = "* You told Godot that GDscript is slow...
+Godot got angry !"
+metadata/_custom_type_script = "uid://ctmhbj4qf467x"
+
+[sub_resource type="Resource" id="Resource_tskkf"]
+script = ExtResource("1_1kb3h")
+name = "Chat"
+mercy_amount = 100
+text = "* You talked to Godot about GDscript...
+It seemed pleased !"
+metadata/_custom_type_script = "uid://ctmhbj4qf467x"
+
+[resource]
+script = ExtResource("2_l711b")
+name = "Godot"
+HP = 100
+sprite = ExtResource("3_l711b")
+acts = Array[ExtResource("1_1kb3h")]([SubResource("Resource_l711b"), SubResource("Resource_ed65b"), SubResource("Resource_tskkf")])
+bullet_waves = Array[PackedScene]([ExtResource("2_tskkf"), ExtResource("3_n4e20")])
+encounter_text = "* Godot is _ready() for a fight !"
+idle_text = "* Godot is _processing() what just happened"
+metadata/_custom_type_script = "uid://dacubvpu4m4oc"

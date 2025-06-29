@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="undertale"
-run/main_scene="uid://45qmet5s5aix"
+run/main_scene="uid://cnxrqinpyif6b"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -30,6 +30,7 @@ window/stretch/mode="canvas_items"
 soul="The human soul"
 bullet="hurts the soul"
 wave="A bullet wave."
+enemy="The monster"
 
 [rendering]
 

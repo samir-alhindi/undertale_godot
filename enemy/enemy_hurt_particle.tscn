@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://jciddngihwq7"]
+
+[ext_resource type="Script" uid="uid://d01elq4iyte3j" path="res://soul/particle.gd" id="1_gqsso"]
+
+[sub_resource type="Gradient" id="Gradient_gqsso"]
+offsets = PackedFloat32Array(0.472131, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.33, 0.33, 0.33, 0)
+
+[node name="DeathParticle" type="CPUParticles2D"]
+emitting = false
+amount = 50
+one_shot = true
+speed_scale = 3.0
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 18.39
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 323.48
+initial_velocity_max = 323.48
+angular_velocity_min = 148.7
+angular_velocity_max = 148.7
+linear_accel_max = 30.43
+damping_max = 20.109
+scale_amount_min = 5.0
+scale_amount_max = 100.0
+color_ramp = SubResource("Gradient_gqsso")
+script = ExtResource("1_gqsso")
+
+[connection signal="finished" from="." to="." method="_on_finished"]
