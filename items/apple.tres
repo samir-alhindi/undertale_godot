@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://csj3basn1h8wt"]
+
+[ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="1_pv0u0"]
+
+[resource]
+script = ExtResource("1_pv0u0")
+item_name = "Apple"
+amount = 10
+text = "* You took a big bite out of the Apple...
+  it tasted like Kris's hair !"
+metadata/_custom_type_script = "uid://c52ed72xkdnj2"

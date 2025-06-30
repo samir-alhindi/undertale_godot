@@ -30,13 +30,8 @@ var enemy_mercy := 0:
 			can_spare = true
 
 var acts: Array[Act] = []
+@export var items: Array[Item] = []
 var bullet_waves: Array[PackedScene] = []
-
-var items := {
-	"Pie" : [20, "* You ate the Pie..\n  But it turned out to be 3.14159265359 !\n  (HP recovered anyway)."],
-	"Nice Cream" : [10, "* You licked the Nice cream...\n, it was very nice !\n"],
-	"Apple" : [12, "* You took a big bite out of the Apple...\n  it tasted like Kris's hair !\n"],
-}
 
 var theme := preload("uid://cf0xm6i8snote")
 
@@ -275,15 +270,15 @@ func do_act(act: Act) -> void:
 	is_choosing_act = false
 	is_reading_act_text = true
 
-func use_item(item_name: String) -> void:
+func use_item(item: Item) -> void:
 	if %UiCooldownTimer.time_left: return
 	%UseItemSound.play()
 	for button: Button in %OptionsContainer.get_children():
 		button.queue_free()
 		%OptionsContainer.hide()
-	player_hp += items[item_name][0]
-	%Text.display(items[item_name][1])
-	items.erase(item_name)
+	player_hp += item.amount
+	%Text.display(item.text)
+	items.erase(item)
 	is_choosing_item = false
 	is_reading_item_text = true
 
@@ -302,13 +297,14 @@ func _on_item_button_pressed() -> void:
 	%ButtonsContainer.hide()
 	%OptionsContainer.show()
 	%Text.text = ""
-	for item_name: String in items.keys():
+	for item: Item in items:
 		var button := Button.new()
 		button.theme = theme
-		button.text = item_name
+		button.text = item.item_name
 		button.custom_minimum_size = Vector2(100, 50)
 		button.add_theme_font_size_override("font_size", 50)
-		button.pressed.connect(use_item.bind(button.text))
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.pressed.connect(use_item.bind(item))
 		%OptionsContainer.add_child(button)
 	%OptionsContainer.get_child(0).grab_focus()
 	%UiCooldownTimer.start()

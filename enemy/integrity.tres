@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=8 format=3 uid="uid://cq4b3ouxo5bty"]
+
+[ext_resource type="Script" uid="uid://ctmhbj4qf467x" path="res://enemy/act.gd" id="1_vvsqo"]
+[ext_resource type="PackedScene" uid="uid://mlb50vg57cn7" path="res://waves/follow_soul.tscn" id="2_s8qig"]
+[ext_resource type="Script" uid="uid://dacubvpu4m4oc" path="res://enemy/enemy_stats.gd" id="3_u50oa"]
+[ext_resource type="Texture2D" uid="uid://bgfotjyiv112h" path="res://sprites/blue_soul.svg.png" id="4_5peio"]
+
+[sub_resource type="Resource" id="Resource_f0a1x"]
+script = ExtResource("1_vvsqo")
+name = "Check"
+mercy_amount = 50
+text = "ATK 30 DEF 5
+Loves jumping around."
+metadata/_custom_type_script = "uid://ctmhbj4qf467x"
+
+[sub_resource type="Resource" id="Resource_m82el"]
+script = ExtResource("1_vvsqo")
+name = "Jump in place"
+mercy_amount = 50
+text = "* You started jumping inplace...
+* Integrity seemed intrested."
+metadata/_custom_type_script = "uid://ctmhbj4qf467x"
+
+[sub_resource type="Resource" id="Resource_tic28"]
+script = ExtResource("1_vvsqo")
+name = "criticize"
+mercy_amount = 50
+text = "* You told Integrity it's a bad dancer
+  It was very hurt !"
+metadata/_custom_type_script = "uid://ctmhbj4qf467x"
+
+[resource]
+script = ExtResource("3_u50oa")
+name = "Integrity"
+HP = 150
+sprite = ExtResource("4_5peio")
+acts = Array[ExtResource("1_vvsqo")]([SubResource("Resource_f0a1x"), SubResource("Resource_m82el"), SubResource("Resource_tic28")])
+bullet_waves = Array[PackedScene]([ExtResource("2_s8qig")])
+encounter_text = "* Integrity jumped out of nowhere !"
+idle_text = "* Integrity is jumping in place"
+metadata/_custom_type_script = "uid://dacubvpu4m4oc"

@@ -1,10 +1,14 @@
-[gd_scene load_steps=24 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=28 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
+[ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
 [ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
 [ext_resource type="Script" uid="uid://cxsnx4tvhus7o" path="res://battle/text.gd" id="2_qybyd"]
+[ext_resource type="Resource" uid="uid://cdwpd7gdg4qdj" path="res://items/pie.tres" id="3_dxsh4"]
 [ext_resource type="AudioStream" uid="uid://5ae82e28ymtd" path="res://sounds/Generic 1 Dialogue Sound Effect (Undertale Character Voice Beeps).mp3" id="3_eu6g2"]
 [ext_resource type="FontFile" uid="uid://bsdludjyf4ury" path="res://themes/undertale-damage.otf" id="3_hvjow"]
+[ext_resource type="Resource" uid="uid://csj3basn1h8wt" path="res://items/apple.tres" id="4_phvbk"]
+[ext_resource type="Resource" uid="uid://buheun3jb126i" path="res://items/nice_cream.tres" id="5_sf8fp"]
 [ext_resource type="AudioStream" uid="uid://byp2svo436sh6" path="res://sounds/snd_select.wav" id="6_l1kiu"]
 [ext_resource type="AudioStream" uid="uid://bg6fcjorkrh23" path="res://sounds/snd_squeak.wav" id="7_7fucf"]
 [ext_resource type="AudioStream" uid="uid://dhbvccgm7a5sj" path="res://sounds/snd_hurt1.wav" id="8_iorop"]
@@ -190,7 +194,9 @@ _data = {
 }
 
 [node name="Battle" type="Node2D"]
+position = Vector2(1, 0)
 script = ExtResource("1_mqutd")
+items = Array[ExtResource("2_a56dj")]([ExtResource("3_dxsh4"), ExtResource("4_phvbk"), ExtResource("5_sf8fp")])
 
 [node name="Control" type="Control" parent="."]
 unique_name_in_owner = true
@@ -326,7 +332,7 @@ offset_right = -25.0
 offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/normal_font_size = 40
 text = "* Godot hopped close !"
 script = ExtResource("2_qybyd")
 
