@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dj1ajm43ujw1g"]
+
+[ext_resource type="Script" uid="uid://cwecnhbovn1ea" path="res://bullets/pipes.gd" id="1_0vbvr"]
+[ext_resource type="PackedScene" uid="uid://cd8wtan5lb4ls" path="res://bullets/linear_bullet.tscn" id="2_xs43b"]
+
+[node name="Pipes" type="Node2D"]
+script = ExtResource("1_0vbvr")
+
+[node name="LinearBullet" parent="." instance=ExtResource("2_xs43b")]
+position = Vector2(0, -126)
+scale = Vector2(1, 3)
+dir = Vector2(-1, 0)
+speed = 200
+
+[node name="LinearBullet2" parent="." instance=ExtResource("2_xs43b")]
+position = Vector2(0, 119)
+scale = Vector2(1, 3)
+dir = Vector2(-1, 0)
+speed = 200

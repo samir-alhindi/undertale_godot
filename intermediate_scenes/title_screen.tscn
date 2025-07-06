@@ -1,13 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnxrqinpyif6b"]
+[gd_scene load_steps=4 format=3 uid="uid://cnxrqinpyif6b"]
 
 [ext_resource type="Script" uid="uid://ce81wwjperdmy" path="res://intermediate_scenes/title_screen.gd" id="1_k6j6k"]
-[ext_resource type="Script" uid="uid://dacubvpu4m4oc" path="res://enemy/enemy_stats.gd" id="2_cdqcp"]
-[ext_resource type="Resource" uid="uid://c1s07vh0ew48n" path="res://enemy/godot.tres" id="3_nlcaa"]
-[ext_resource type="Resource" uid="uid://cq4b3ouxo5bty" path="res://enemy/integrity.tres" id="4_nlcaa"]
+[ext_resource type="PackedScene" uid="uid://45qmet5s5aix" path="res://battle/godot_battle.tscn" id="2_s06oh"]
+[ext_resource type="PackedScene" uid="uid://ecppf8vima3m" path="res://battle/swatch_battle.tscn" id="3_cdqcp"]
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("1_k6j6k")
-enemies = Array[ExtResource("2_cdqcp")]([ExtResource("3_nlcaa"), ExtResource("4_nlcaa")])
+battles = Dictionary[PackedScene, String]({
+ExtResource("2_s06oh"): "Vs. Godot",
+ExtResource("3_cdqcp"): "Vs. Swatch"
+})
 
 [node name="BG" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -37,6 +39,6 @@ offset_right = 81.0
 offset_bottom = 243.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 100
-text = "Undertale in Godot 4"
+text = "Vs. Swatch"
 horizontal_alignment = 1
 vertical_alignment = 1

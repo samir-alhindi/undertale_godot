@@ -29,7 +29,9 @@ func _physics_process(delta: float) -> void:
 			var dir := Input.get_axis("ui_left", "ui_right")
 			velocity.x = dir * 200
 			if Input.is_action_just_pressed("ui_up") and is_on_floor():
-				velocity.y = -400
+				velocity.y = -600
+			if Input.is_action_just_released("ui_up") and not is_on_floor():
+				velocity.y = 0
 			velocity.y += 800 * delta
 			
 			move_and_slide()

@@ -1,4 +1,4 @@
-class_name Battle extends Node
+extends Node
 
 var gonna_attack := false
 var gonna_act := false
@@ -20,33 +20,34 @@ var player_hp := 20:
 		%HP2.text = str(player_hp) + " / 20"
 		
 var enemy_hp := 100
-var enemy_name := "Name here"
-var encounter_text := "* name here drew new !"
-var idle_text := "* name here is staring at you angerly"
+var enemy_name := "Godot"
+var encounter_text := "* Godot is _ready() for a fight !"
+var idle_text := "* Godot is _processing() what just happened"
 var enemy_mercy := 0:
 	set(new_value):
 		enemy_mercy = new_value
 		if enemy_mercy >= 100:
 			can_spare = true
 
-var acts: Array[Act] = []
+var acts: Array[Act] = [
+	Act.new("Check", 0, "ATK 10 DEF 0\nLoves talking."),
+	Act.new("Insult", 0, "* You told Godot that GDscript is slow...\nGodot got angry !"),
+	Act.new("Chat", 100, "* You talked to Godot about GDscript...\nIt seemed pleased !")
+]
 @export var items: Array[Item] = []
-var bullet_waves: Array[PackedScene] = []
+var bullet_waves: Array[PackedScene] = [
+	preload("uid://mj5bf0hhbi2k"),
+	preload("uid://mlb50vg57cn7"),
+]
 
 var theme := preload("uid://cf0xm6i8snote")
 
-static var enemy_stat: EnemyStats
-
 func _ready() -> void:
 	
-	# set up enemy:
-	%Sprite2D.texture = enemy_stat.sprite
-	enemy_name = enemy_stat.name
-	enemy_hp = enemy_stat.HP
-	acts = enemy_stat.acts.duplicate(true)
-	bullet_waves = enemy_stat.bullet_waves.duplicate(true)
-	encounter_text = enemy_stat.encounter_text
-	idle_text = enemy_stat.idle_text
+	#acts.append(Act.new("Check", 0, "ATK 10 DEF 0\nLoves talking."))
+	#acts.append(Act.new("Insult", 0, "* You told Godot that GDscript is slow...\nGodot got angry !"))
+	#acts.append(Act.new("Chat", 100, "* You talked to Godot about GDscript...\nIt seemed pleased !"))
+	
 	%Text.display(encounter_text)
 	
 	Global.wave_done.connect(finish_hell)
@@ -229,14 +230,15 @@ func start_hell() -> void:
 	%ButtonsContainer.hide()
 	%Anim.play("start_hell")
 	
-	var soul := Soul.new_soul(Soul.Mode.RED)
+	var wave: Node2D = bullet_waves[wave_index % bullet_waves.size()].instantiate()
+	wave_index += 1
+	
+	var soul := Soul.new_soul(wave.mode)
 	add_child(soul)
 	soul.global_position = %AttackBar.global_position
 	soul.took_damage.connect(player_take_damage)
-	
-	var wave: Node2D = bullet_waves[wave_index % bullet_waves.size()].instantiate()
-	wave_index += 1
 	add_child(wave)
+	
 	# The wave finishes when the Node emits the global "wave_done" signal.
 
 func finish_hell(wave: Node2D, soul: Soul) -> void:
@@ -248,7 +250,6 @@ func finish_hell(wave: Node2D, soul: Soul) -> void:
 	soul.queue_free()
 	%AttackButton.grab_focus()
 	%Text.display(idle_text)
-
 
 func _on_act_button_pressed() -> void:
 	%SelectSound.play()

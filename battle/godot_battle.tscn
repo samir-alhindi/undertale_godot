@@ -1,22 +1,23 @@
-[gd_scene load_steps=28 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=29 format=3 uid="uid://45qmet5s5aix"]
 
-[ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
-[ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
-[ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
-[ext_resource type="Script" uid="uid://cxsnx4tvhus7o" path="res://battle/text.gd" id="2_qybyd"]
-[ext_resource type="Resource" uid="uid://cdwpd7gdg4qdj" path="res://items/pie.tres" id="3_dxsh4"]
-[ext_resource type="AudioStream" uid="uid://5ae82e28ymtd" path="res://sounds/Generic 1 Dialogue Sound Effect (Undertale Character Voice Beeps).mp3" id="3_eu6g2"]
-[ext_resource type="FontFile" uid="uid://bsdludjyf4ury" path="res://themes/undertale-damage.otf" id="3_hvjow"]
-[ext_resource type="Resource" uid="uid://csj3basn1h8wt" path="res://items/apple.tres" id="4_phvbk"]
-[ext_resource type="Resource" uid="uid://buheun3jb126i" path="res://items/nice_cream.tres" id="5_sf8fp"]
-[ext_resource type="AudioStream" uid="uid://byp2svo436sh6" path="res://sounds/snd_select.wav" id="6_l1kiu"]
-[ext_resource type="AudioStream" uid="uid://bg6fcjorkrh23" path="res://sounds/snd_squeak.wav" id="7_7fucf"]
-[ext_resource type="AudioStream" uid="uid://dhbvccgm7a5sj" path="res://sounds/snd_hurt1.wav" id="8_iorop"]
-[ext_resource type="AudioStream" uid="uid://8uape5wkyje4" path="res://sounds/snd_laz.wav" id="9_rxlun"]
-[ext_resource type="AudioStream" uid="uid://bo5dxmxjbqcuc" path="res://sounds/snd_heal_c.wav" id="10_vlrs1"]
-[ext_resource type="AudioStream" uid="uid://dpexiickfpwht" path="res://sounds/Enemy Approaching.wav" id="11_hvjow"]
-[ext_resource type="AudioStream" uid="uid://cxoa4407vpjc4" path="res://sounds/Undertale Sound - Monster Dust.mp3" id="12_qybyd"]
-[ext_resource type="AudioStream" uid="uid://cnunm8axqgv8s" path="res://sounds/snd_break2.wav" id="13_eu6g2"]
+[ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/godot_battle.gd" id="1_pk2oy"]
+[ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_iwmrv"]
+[ext_resource type="Resource" uid="uid://cdwpd7gdg4qdj" path="res://items/pie.tres" id="3_sh3r5"]
+[ext_resource type="Resource" uid="uid://csj3basn1h8wt" path="res://items/apple.tres" id="4_c52hf"]
+[ext_resource type="Resource" uid="uid://buheun3jb126i" path="res://items/nice_cream.tres" id="5_7uso4"]
+[ext_resource type="Script" uid="uid://cxsnx4tvhus7o" path="res://battle/text.gd" id="6_7u7rg"]
+[ext_resource type="AudioStream" uid="uid://5ae82e28ymtd" path="res://sounds/Generic 1 Dialogue Sound Effect (Undertale Character Voice Beeps).mp3" id="7_i2j6v"]
+[ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="8_vr5qr"]
+[ext_resource type="Texture2D" uid="uid://cllhluuapyh2q" path="res://sprites/icon_monochrome_dark.png" id="9_iwmrv"]
+[ext_resource type="FontFile" uid="uid://bsdludjyf4ury" path="res://themes/undertale-damage.otf" id="9_qtefw"]
+[ext_resource type="AudioStream" uid="uid://byp2svo436sh6" path="res://sounds/snd_select.wav" id="10_iffjn"]
+[ext_resource type="AudioStream" uid="uid://bg6fcjorkrh23" path="res://sounds/snd_squeak.wav" id="11_7sk2k"]
+[ext_resource type="AudioStream" uid="uid://dhbvccgm7a5sj" path="res://sounds/snd_hurt1.wav" id="12_7u1sb"]
+[ext_resource type="AudioStream" uid="uid://8uape5wkyje4" path="res://sounds/snd_laz.wav" id="13_fhu68"]
+[ext_resource type="AudioStream" uid="uid://bo5dxmxjbqcuc" path="res://sounds/snd_heal_c.wav" id="14_y28jh"]
+[ext_resource type="AudioStream" uid="uid://dpexiickfpwht" path="res://sounds/Enemy Approaching.wav" id="15_isob6"]
+[ext_resource type="AudioStream" uid="uid://cxoa4407vpjc4" path="res://sounds/Undertale Sound - Monster Dust.mp3" id="16_ay8jn"]
+[ext_resource type="AudioStream" uid="uid://cnunm8axqgv8s" path="res://sounds/snd_break2.wav" id="17_mjmi5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qubjc"]
 size = Vector2(9.5, 323)
@@ -193,10 +194,10 @@ _data = {
 &"start_hell": SubResource("Animation_4mnim")
 }
 
-[node name="Battle" type="Node2D"]
+[node name="GodotBattle" type="Node2D"]
 position = Vector2(1, 0)
-script = ExtResource("1_mqutd")
-items = Array[ExtResource("2_a56dj")]([ExtResource("3_dxsh4"), ExtResource("4_phvbk"), ExtResource("5_sf8fp")])
+script = ExtResource("1_pk2oy")
+items = Array[ExtResource("2_iwmrv")]([ExtResource("3_sh3r5"), ExtResource("4_c52hf"), ExtResource("5_7uso4")])
 
 [node name="Control" type="Control" parent="."]
 unique_name_in_owner = true
@@ -334,7 +335,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/normal_font_size = 40
 text = "* Godot hopped close !"
-script = ExtResource("2_qybyd")
+script = ExtResource("6_7u7rg")
 
 [node name="TextTimer" type="Timer" parent="Control/Box/BoxColorRect/Text"]
 unique_name_in_owner = true
@@ -343,14 +344,14 @@ one_shot = true
 
 [node name="TextSound" type="AudioStreamPlayer" parent="Control/Box/BoxColorRect/Text"]
 unique_name_in_owner = true
-stream = ExtResource("3_eu6g2")
+stream = ExtResource("7_i2j6v")
 
 [node name="AttackBar" type="Sprite2D" parent="Control/Box/BoxColorRect"]
 unique_name_in_owner = true
 visible = false
 position = Vector2(563.998, 154.5)
 scale = Vector2(2.00359, 2.344)
-texture = ExtResource("2_qubjc")
+texture = ExtResource("8_vr5qr")
 region_enabled = true
 region_rect = Rect2(7.04988, 24.3621, 558.95, 125.045)
 
@@ -424,6 +425,7 @@ position = Vector2(645, 183)
 [node name="Sprite2D" type="Sprite2D" parent="Monster"]
 unique_name_in_owner = true
 scale = Vector2(0.35, 0.35)
+texture = ExtResource("9_iwmrv")
 
 [node name="Damage" type="Label" parent="Monster"]
 unique_name_in_owner = true
@@ -432,7 +434,7 @@ offset_left = 206.0
 offset_top = -129.0
 offset_right = 424.0
 offset_bottom = -59.0
-theme_override_fonts/font = ExtResource("3_hvjow")
+theme_override_fonts/font = ExtResource("9_qtefw")
 theme_override_font_sizes/font_size = 70
 text = "Miss"
 
@@ -461,7 +463,7 @@ color = Color(0, 0, 0, 0)
 metadata/_edit_use_anchors_ = true
 
 [node name="DebugMarker" type="Marker2D" parent="."]
-position = Vector2(656, 791)
+position = Vector2(1161, 578)
 
 [node name="UiCooldownTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -472,36 +474,36 @@ one_shot = true
 
 [node name="SelectSound" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
-stream = ExtResource("6_l1kiu")
+stream = ExtResource("10_iffjn")
 
 [node name="MoveSound" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
-stream = ExtResource("7_7fucf")
+stream = ExtResource("11_7sk2k")
 
 [node name="SoulHitSound" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
-stream = ExtResource("8_iorop")
+stream = ExtResource("12_7u1sb")
 
 [node name="KnifeSlashSound" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
-stream = ExtResource("9_rxlun")
+stream = ExtResource("13_fhu68")
 
 [node name="UseItemSound" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
-stream = ExtResource("10_vlrs1")
+stream = ExtResource("14_y28jh")
 
 [node name="Music" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
-stream = ExtResource("11_hvjow")
+stream = ExtResource("15_isob6")
 autoplay = true
 
 [node name="BattleDone" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
-stream = ExtResource("12_qybyd")
+stream = ExtResource("16_ay8jn")
 
 [node name="SoulBreak" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
-stream = ExtResource("13_eu6g2")
+stream = ExtResource("17_mjmi5")
 
 [connection signal="pressed" from="Control/UI/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="pressed" from="Control/UI/ButtonsContainer/ActButton" to="." method="_on_act_button_pressed"]
