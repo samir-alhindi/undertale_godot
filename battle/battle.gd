@@ -11,6 +11,7 @@ var is_choosing_item := false
 var battle_won := false
 var battle_lost := false
 var can_spare := false
+var monster_speaking := false
 var turn_counter := 0
 
 var player_hp := 20:
@@ -41,6 +42,7 @@ func _ready() -> void:
 	
 	# set up enemy:
 	%Sprite2D.texture = enemy_stat.sprite
+	%Sprite2D.scale *= enemy_stat.sprite_scale
 	enemy_name = enemy_stat.name
 	enemy_hp = enemy_stat.HP
 	acts = enemy_stat.acts.duplicate(true)
@@ -118,7 +120,9 @@ func _input(event: InputEvent) -> void:
 		is_reading_act_text = false
 		is_reading_item_text = false
 		%Text.text = ""
-		start_hell()
+		monster_speaking = true
+		%SpeechBox.show()
+		%MonsterDialouge.display("Let's dance darling !")
 		
 	elif event.is_action_pressed("ui_accept") and gonna_spare:
 		if can_spare:
@@ -131,6 +135,11 @@ func _input(event: InputEvent) -> void:
 			%Anim.play("fade_into_black")
 		elif not can_spare:
 			%SelectSound.play()
+	
+	elif event.is_action_pressed("ui_accept") and monster_speaking:
+		monster_speaking = false
+		%SpeechBox.hide()
+		start_hell()
 	
 	
 	elif event.is_action_pressed("ui_cancel"):
@@ -222,7 +231,9 @@ func _on_damage_label_timer_timeout() -> void:
 	%Damage.hide()
 	%AttackBar.hide()
 	if battle_won or battle_lost: return
-	start_hell()
+	monster_speaking = true
+	%SpeechBox.show()
+	%MonsterDialouge.display("Let's dance darling !")
 
 var wave_index := 0
 func start_hell() -> void:

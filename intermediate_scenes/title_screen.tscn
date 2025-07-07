@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ce81wwjperdmy" path="res://intermediate_scenes/title_screen.gd" id="1_k6j6k"]
 [ext_resource type="Script" uid="uid://dacubvpu4m4oc" path="res://enemy/enemy_stats.gd" id="2_cdqcp"]
 [ext_resource type="Resource" uid="uid://c1s07vh0ew48n" path="res://enemy/godot.tres" id="3_nlcaa"]
-[ext_resource type="Resource" uid="uid://cq4b3ouxo5bty" path="res://enemy/integrity.tres" id="4_nlcaa"]
+[ext_resource type="Resource" uid="uid://cxd4rgi65mitb" path="res://enemy/poseur.tres" id="4_nlcaa"]
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("1_k6j6k")

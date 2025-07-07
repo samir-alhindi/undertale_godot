@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=29 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
@@ -13,6 +13,7 @@
 [ext_resource type="AudioStream" uid="uid://bg6fcjorkrh23" path="res://sounds/snd_squeak.wav" id="7_7fucf"]
 [ext_resource type="AudioStream" uid="uid://dhbvccgm7a5sj" path="res://sounds/snd_hurt1.wav" id="8_iorop"]
 [ext_resource type="AudioStream" uid="uid://8uape5wkyje4" path="res://sounds/snd_laz.wav" id="9_rxlun"]
+[ext_resource type="Script" uid="uid://dm77kynm1njqe" path="res://battle/monster_dialouge.gd" id="10_dxsh4"]
 [ext_resource type="AudioStream" uid="uid://bo5dxmxjbqcuc" path="res://sounds/snd_heal_c.wav" id="10_vlrs1"]
 [ext_resource type="AudioStream" uid="uid://dpexiickfpwht" path="res://sounds/Enemy Approaching.wav" id="11_hvjow"]
 [ext_resource type="AudioStream" uid="uid://cxoa4407vpjc4" path="res://sounds/Undertale Sound - Monster Dust.mp3" id="12_qybyd"]
@@ -423,7 +424,6 @@ position = Vector2(645, 183)
 
 [node name="Sprite2D" type="Sprite2D" parent="Monster"]
 unique_name_in_owner = true
-scale = Vector2(0.35, 0.35)
 
 [node name="Damage" type="Label" parent="Monster"]
 unique_name_in_owner = true
@@ -439,6 +439,37 @@ text = "Miss"
 [node name="LabelTimer" type="Timer" parent="Monster"]
 unique_name_in_owner = true
 wait_time = 0.5
+one_shot = true
+
+[node name="SpeechBox" type="ColorRect" parent="Monster"]
+unique_name_in_owner = true
+visible = false
+offset_left = 161.0
+offset_top = -143.0
+offset_right = 451.0
+offset_bottom = 111.0
+
+[node name="Traingle" type="ColorRect" parent="Monster/SpeechBox"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 96.0
+offset_right = 42.0
+offset_bottom = 136.0
+rotation = 0.785398
+
+[node name="MonsterDialouge" type="RichTextLabel" parent="Monster/SpeechBox"]
+unique_name_in_owner = true
+offset_left = 17.0
+offset_top = 15.0
+offset_right = 266.0
+offset_bottom = 233.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 25
+text = "Let's dance darling !"
+script = ExtResource("10_dxsh4")
+
+[node name="TextTimer" type="Timer" parent="Monster/SpeechBox/MonsterDialouge"]
+wait_time = 0.01
 one_shot = true
 
 [node name="Anim" type="AnimationPlayer" parent="."]
@@ -509,4 +540,5 @@ stream = ExtResource("13_eu6g2")
 [connection signal="pressed" from="Control/UI/ButtonsContainer/MercyButton" to="." method="_on_mercy_button_pressed"]
 [connection signal="timeout" from="Control/Box/BoxColorRect/Text/TextTimer" to="Control/Box/BoxColorRect/Text" method="_on_text_timer_timeout"]
 [connection signal="timeout" from="Monster/LabelTimer" to="." method="_on_damage_label_timer_timeout"]
+[connection signal="timeout" from="Monster/SpeechBox/MonsterDialouge/TextTimer" to="Monster/SpeechBox/MonsterDialouge" method="_on_text_timer_timeout"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]
