@@ -1,5 +1,6 @@
 class_name EnemyStats extends Resource
 
+@export var manager: PackedScene
 @export var name: String = "Enemy name here"
 @export var HP: int = 100
 @export var sprite: Texture

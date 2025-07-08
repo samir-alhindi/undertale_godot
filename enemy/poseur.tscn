@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkavs6k60jki1"]
+
+[ext_resource type="Script" uid="uid://cex3suh1x40eb" path="res://enemy/poseur.gd" id="1_grqwl"]
+
+[node name="Poseur" type="Node"]
+script = ExtResource("1_grqwl")

@@ -459,6 +459,7 @@ rotation = 0.785398
 
 [node name="MonsterDialouge" type="RichTextLabel" parent="Monster/SpeechBox"]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 17.0
 offset_top = 15.0
 offset_right = 266.0

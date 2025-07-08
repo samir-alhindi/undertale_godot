@@ -24,23 +24,26 @@ var enemy_hp := 100
 var enemy_name := "Name here"
 var encounter_text := "* name here drew new !"
 var idle_text := "* name here is staring at you angerly"
+var monster_text: String
 var enemy_mercy := 0:
 	set(new_value):
 		enemy_mercy = new_value
 		if enemy_mercy >= 100:
 			can_spare = true
-
 var acts: Array[Act] = []
 @export var items: Array[Item] = []
 var bullet_waves: Array[PackedScene] = []
+var monster_manager: Node
 
 var theme := preload("uid://cf0xm6i8snote")
 
 static var enemy_stat: EnemyStats
 
 func _ready() -> void:
-	
+	 
 	# set up enemy:
+	monster_manager = enemy_stat.manager.instantiate()
+	%Monster.add_child(monster_manager)
 	%Sprite2D.texture = enemy_stat.sprite
 	%Sprite2D.scale *= enemy_stat.sprite_scale
 	enemy_name = enemy_stat.name
@@ -48,6 +51,7 @@ func _ready() -> void:
 	acts = enemy_stat.acts.duplicate(true)
 	bullet_waves = enemy_stat.bullet_waves.duplicate(true)
 	encounter_text = enemy_stat.encounter_text
+	monster_text = monster_manager.get_monster_text()
 	idle_text = enemy_stat.idle_text
 	%Text.display(encounter_text)
 	
@@ -122,10 +126,11 @@ func _input(event: InputEvent) -> void:
 		%Text.text = ""
 		monster_speaking = true
 		%SpeechBox.show()
-		%MonsterDialouge.display("Let's dance darling !")
+		%MonsterDialouge.display(monster_text)
 		
 	elif event.is_action_pressed("ui_accept") and gonna_spare:
 		if can_spare:
+			can_spare = false
 			%BattleDone.play()
 			%Music.stop()
 			battle_won = true
@@ -233,7 +238,7 @@ func _on_damage_label_timer_timeout() -> void:
 	if battle_won or battle_lost: return
 	monster_speaking = true
 	%SpeechBox.show()
-	%MonsterDialouge.display("Let's dance darling !")
+	%MonsterDialouge.display(monster_text)
 
 var wave_index := 0
 func start_hell() -> void:
@@ -277,7 +282,9 @@ func do_act(act: Act) -> void:
 		button.queue_free()
 	%OptionsContainer.hide()
 	enemy_mercy += act.mercy_amount
-	%Text.display(act.text)
+	%Text.display(monster_manager.do_act_get_text(act))
+	monster_text = monster_manager.get_monster_text()
+	idle_text = monster_manager.get_idle_text()
 	is_choosing_act = false
 	is_reading_act_text = true
 
