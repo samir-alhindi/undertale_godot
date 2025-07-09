@@ -493,7 +493,7 @@ color = Color(0, 0, 0, 0)
 metadata/_edit_use_anchors_ = true
 
 [node name="DebugMarker" type="Marker2D" parent="."]
-position = Vector2(656, 791)
+position = Vector2(656, 568)
 
 [node name="UiCooldownTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -534,6 +534,8 @@ stream = ExtResource("12_qybyd")
 [node name="SoulBreak" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
 stream = ExtResource("13_eu6g2")
+
+[node name="Bullets" type="Node2D" parent="."]
 
 [connection signal="pressed" from="Control/UI/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="pressed" from="Control/UI/ButtonsContainer/ActButton" to="." method="_on_act_button_pressed"]

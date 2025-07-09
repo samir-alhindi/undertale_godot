@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="EnemyStats" load_steps=8 format=3 uid="uid://cxd4rgi65mitb"]
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=9 format=3 uid="uid://cxd4rgi65mitb"]
 
 [ext_resource type="Script" uid="uid://ctmhbj4qf467x" path="res://enemy/act.gd" id="1_fifkr"]
 [ext_resource type="Script" uid="uid://dacubvpu4m4oc" path="res://enemy/enemy_stats.gd" id="2_2pca0"]
-[ext_resource type="PackedScene" uid="uid://mlb50vg57cn7" path="res://waves/follow_soul.tscn" id="2_jogdg"]
+[ext_resource type="PackedScene" uid="uid://bssnb6ds0njcv" path="res://waves/spinning_storm_2.tscn" id="2_787nq"]
+[ext_resource type="PackedScene" uid="uid://cxvhasownaa34" path="res://waves/spinning_storm.tscn" id="2_pq2ho"]
 [ext_resource type="Texture2D" uid="uid://bhdrd0gjpota6" path="res://sprites/Poseur.png" id="3_2pca0"]
 [ext_resource type="PackedScene" uid="uid://bkavs6k60jki1" path="res://enemy/poseur.tscn" id="3_kiaw7"]
 
@@ -29,7 +30,7 @@ HP = 120
 sprite = ExtResource("3_2pca0")
 sprite_scale = 1.5
 acts = Array[ExtResource("1_fifkr")]([SubResource("Resource_jogdg"), SubResource("Resource_kiaw7")])
-bullet_waves = Array[PackedScene]([ExtResource("2_jogdg")])
+bullet_waves = Array[PackedScene]([ExtResource("2_pq2ho"), ExtResource("2_787nq")])
 encounter_text = "* Poseur approached you with style  !"
 idle_text = "* Poseur is posing really hard !"
 metadata/_custom_type_script = "uid://dacubvpu4m4oc"

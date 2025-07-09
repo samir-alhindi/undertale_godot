@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxvhasownaa34"]
+
+[ext_resource type="Script" uid="uid://dwudbckc03tyf" path="res://waves/spinning_storm.gd" id="1_4t0v7"]
+[ext_resource type="Texture2D" uid="uid://qk57agdnwi8" path="res://icon.svg" id="2_3gat6"]
+
+[node name="SpinningStorm" type="Node2D" groups=["wave"]]
+script = ExtResource("1_4t0v7")
+
+[node name="Spawners" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Spawner" type="Marker2D" parent="Spawners"]
+position = Vector2(50, 0)
+rotation = 1.5708
+
+[node name="Spawner2" type="Marker2D" parent="Spawners"]
+position = Vector2(-50, 0)
+rotation = -1.5708
+
+[node name="Spawner3" type="Marker2D" parent="Spawners"]
+position = Vector2(0, 50)
+rotation = 3.14159
+
+[node name="Spawner4" type="Marker2D" parent="Spawners"]
+position = Vector2(0, -50)
+
+[node name="EndTimer" type="Timer" parent="."]
+wait_time = 7.5
+one_shot = true
+autostart = true
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3gat6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 75.0
+offset_bottom = 75.0
+pivot_offset = Vector2(75, 75)
+
+[node name="ColorRect2" type="ColorRect" parent="ColorRect"]
+offset_right = 150.0
+offset_bottom = 150.0
+rotation = 0.785398
+pivot_offset = Vector2(75, 75)
+
+[connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

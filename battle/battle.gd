@@ -19,7 +19,6 @@ var player_hp := 20:
 		player_hp = clamp(new_value, 0, 20)
 		%HPBar.value = player_hp
 		%HP2.text = str(player_hp) + " / 20"
-		
 var enemy_hp := 100
 var enemy_name := "Name here"
 var encounter_text := "* name here drew new !"
@@ -56,6 +55,10 @@ func _ready() -> void:
 	%Text.display(encounter_text)
 	
 	Global.wave_done.connect(finish_hell)
+	Global.add_bullet.connect(func(bullet: Node2D, transform: Transform2D):
+		$Bullets.add_child(bullet)
+		bullet.global_transform = transform
+		)
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	%AttackButton.grab_focus()
 	
