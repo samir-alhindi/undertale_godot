@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ycbjbgr0j33j"]
+
+[ext_resource type="Script" uid="uid://ca7pjvrs4835q" path="res://enemy/godot.gd" id="1_emke6"]
+
+[node name="Godot" type="Node"]
+script = ExtResource("1_emke6")

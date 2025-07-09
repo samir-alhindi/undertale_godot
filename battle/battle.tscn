@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=30 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://dpexiickfpwht" path="res://sounds/Enemy Approaching.wav" id="11_hvjow"]
 [ext_resource type="AudioStream" uid="uid://cxoa4407vpjc4" path="res://sounds/Undertale Sound - Monster Dust.mp3" id="12_qybyd"]
 [ext_resource type="AudioStream" uid="uid://cnunm8axqgv8s" path="res://sounds/snd_break2.wav" id="13_eu6g2"]
+[ext_resource type="Texture2D" uid="uid://qmi8o2j171cs" path="res://sprites/bg.png" id="19_phvbk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qubjc"]
 size = Vector2(9.5, 323)
@@ -198,6 +199,11 @@ _data = {
 position = Vector2(1, 0)
 script = ExtResource("1_mqutd")
 items = Array[ExtResource("2_a56dj")]([ExtResource("3_dxsh4"), ExtResource("4_phvbk"), ExtResource("5_sf8fp")])
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(640, 492)
+scale = Vector2(2, 2)
+texture = ExtResource("19_phvbk")
 
 [node name="Control" type="Control" parent="."]
 unique_name_in_owner = true

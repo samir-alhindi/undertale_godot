@@ -11,6 +11,7 @@ func _on_spawn_timer_timeout() -> void:
 	add_child(bullet)
 	%PathFollow2D.progress_ratio = randf()
 	bullet.global_transform = %PathFollow2D.global_transform
+	bullet.rotation_degrees += 180
 
 func _on_end_timer_timeout() -> void:
 	Global.wave_done.emit(self, get_tree().get_first_node_in_group("soul"))

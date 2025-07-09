@@ -29,5 +29,5 @@ func get_idle_text() -> String:
 func get_monster_text() -> String:
 	if pose_counter == 1: return "Nice pose !"
 	elif pose_counter == 2: return "Fabulous !"
-	elif pose_counter == 3: return "absolutely beautiful"
+	elif pose_counter == 3: return "absolutely beautiful !!!"
 	return  "Let's dance darling !"
