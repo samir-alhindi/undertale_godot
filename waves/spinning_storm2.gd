@@ -1,5 +1,7 @@
 extends Node2D
 
+var mode: Soul.Mode = Soul.Mode.RED
+
 func _ready() -> void:
 	# in the middle of the battle box:
 	global_position = Vector2(950, 570)

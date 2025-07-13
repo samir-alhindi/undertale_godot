@@ -26,10 +26,13 @@ func _physics_process(delta: float) -> void:
 			velocity = dir * 200
 			move_and_slide()
 		Mode.BLUE:
+			var jump_force := -600
 			var dir := Input.get_axis("ui_left", "ui_right")
 			velocity.x = dir * 200
 			if Input.is_action_just_pressed("ui_up") and is_on_floor():
-				velocity.y = -400
+				velocity.y = jump_force
+			if Input.is_action_just_released("ui_up") and velocity.y < jump_force / 2:
+				velocity.y = jump_force / 2
 			velocity.y += 800 * delta
 			
 			move_and_slide()

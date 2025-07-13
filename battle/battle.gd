@@ -251,13 +251,13 @@ func start_hell() -> void:
 	%ButtonsContainer.hide()
 	%Anim.play("start_hell")
 	
-	var soul := Soul.new_soul(Soul.Mode.RED)
-	add_child(soul)
-	soul.global_position = %AttackBar.global_position
-	soul.took_damage.connect(player_take_damage)
 	
 	var wave: Node2D = bullet_waves[wave_index % bullet_waves.size()].instantiate()
 	wave_index += 1
+	var soul := Soul.new_soul(wave.mode)
+	add_child(soul)
+	soul.global_position = %AttackBar.global_position
+	soul.took_damage.connect(player_take_damage)
 	add_child(wave)
 	# The wave finishes when the Node emits the global "wave_done" signal.
 

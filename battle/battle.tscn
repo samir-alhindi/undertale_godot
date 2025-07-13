@@ -499,7 +499,7 @@ color = Color(0, 0, 0, 0)
 metadata/_edit_use_anchors_ = true
 
 [node name="DebugMarker" type="Marker2D" parent="."]
-position = Vector2(656, 568)
+position = Vector2(986, 730)
 
 [node name="UiCooldownTimer" type="Timer" parent="."]
 unique_name_in_owner = true
