@@ -21,8 +21,8 @@ func do_act_get_text(act: Act) -> String:
 		return "There was an error !!!"
 
 func get_idle_text() -> String:
-	if pose_counter == 0: "* Poseur is posing really hard !"
-	if pose_counter == 1: return "* Poseur wants to see you pose more !"
+	if pose_counter == 0: return "* Poseur is posing really hard !"
+	elif pose_counter == 1: return "* Poseur wants to see you pose more !"
 	elif pose_counter == 2: return "* Poseur wants to see one last pose !"
 	return "* Poseur is satsfied !"
 

@@ -50,14 +50,15 @@ func _ready() -> void:
 	acts = enemy_stat.acts.duplicate(true)
 	bullet_waves = enemy_stat.bullet_waves.duplicate(true)
 	encounter_text = enemy_stat.encounter_text
-	monster_text = monster_manager.get_monster_text()
-	idle_text = enemy_stat.idle_text
 	%Text.display(encounter_text)
 	
 	Global.wave_done.connect(finish_hell)
 	Global.add_bullet.connect(func(bullet: Node2D, transform: Transform2D):
 		$Bullets.add_child(bullet)
 		bullet.global_transform = transform
+		)
+	Global.change_mercy.connect(func(amount: int):
+		enemy_mercy += amount
 		)
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	%AttackButton.grab_focus()
@@ -83,6 +84,7 @@ func _input(event: InputEvent) -> void:
 		%Anim.play("attack")
 		gonna_attack = false
 		is_attacking = true
+		monster_text = monster_manager.get_monster_text()
 	elif event.is_action_pressed("ui_accept") and is_attacking:
 		%KnifeSlashSound.play()
 		%Anim.play("enemy_hurt")
@@ -128,6 +130,7 @@ func _input(event: InputEvent) -> void:
 		is_reading_item_text = false
 		%Text.text = ""
 		monster_speaking = true
+		monster_text = monster_manager.get_monster_text()
 		%SpeechBox.show()
 		%MonsterDialouge.display(monster_text)
 		
@@ -266,6 +269,7 @@ func finish_hell(wave: Node2D, soul: Soul) -> void:
 	%ButtonsContainer.show()
 	soul.queue_free()
 	%AttackButton.grab_focus()
+	idle_text = monster_manager.get_idle_text()
 	%Text.display(idle_text)
 
 
@@ -286,8 +290,6 @@ func do_act(act: Act) -> void:
 	%OptionsContainer.hide()
 	enemy_mercy += act.mercy_amount
 	%Text.display(monster_manager.do_act_get_text(act))
-	monster_text = monster_manager.get_monster_text()
-	idle_text = monster_manager.get_idle_text()
 	is_choosing_act = false
 	is_reading_act_text = true
 
