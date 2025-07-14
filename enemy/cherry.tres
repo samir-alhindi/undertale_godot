@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="EnemyStats" load_steps=9 format=3 uid="uid://cr5ugu5nnvmp2"]
+[gd_resource type="Resource" script_class="EnemyStats" load_steps=10 format=3 uid="uid://cr5ugu5nnvmp2"]
 
 [ext_resource type="Script" uid="uid://ctmhbj4qf467x" path="res://enemy/act.gd" id="1_pplj7"]
 [ext_resource type="Script" uid="uid://dacubvpu4m4oc" path="res://enemy/enemy_stats.gd" id="2_rnmnk"]
 [ext_resource type="PackedScene" uid="uid://cdy881pi383i1" path="res://waves/jump.tscn" id="2_vwwpk"]
+[ext_resource type="PackedScene" uid="uid://dgvkrbgoo6p34" path="res://waves/jump_2.tscn" id="3_fsvat"]
 [ext_resource type="Texture2D" uid="uid://buqhjii4x87fd" path="res://sprites/cherry.png" id="3_rnmnk"]
 [ext_resource type="PackedScene" uid="uid://b63wldbutwctw" path="res://enemy/cherry.tscn" id="3_vwwpk"]
 
@@ -39,7 +40,7 @@ HP = 150
 sprite = ExtResource("3_rnmnk")
 sprite_scale = 1.5
 acts = Array[ExtResource("1_pplj7")]([SubResource("Resource_sbabt"), SubResource("Resource_rnmnk"), SubResource("Resource_vwwpk")])
-bullet_waves = Array[PackedScene]([ExtResource("2_vwwpk")])
+bullet_waves = Array[PackedScene]([ExtResource("2_vwwpk"), ExtResource("3_fsvat")])
 encounter_text = "* Cherry jumped out of nowhere !"
 idle_text = "* Cherry is cheering for a random football team you're never heard of !"
 metadata/_custom_type_script = "uid://dacubvpu4m4oc"

@@ -236,7 +236,7 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		%Text.display("Battle Lost...")
 		%Anim.play("fade_into_black")
 	elif anim_name == "fade_into_black":
-		get_tree().quit(0)
+		get_tree().change_scene_to_file("uid://cnxrqinpyif6b")
 
 func _on_damage_label_timer_timeout() -> void:
 	%Damage.hide()
