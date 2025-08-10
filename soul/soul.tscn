@@ -6,6 +6,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rujom"]
 radius = 15.0333
 
+[sub_resource type="Animation" id="Animation_53ixt"]
+length = 0.001
+
 [sub_resource type="Animation" id="Animation_rujom"]
 resource_name = "hurt"
 length = 0.05
@@ -23,9 +26,6 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_53ixt"]
-length = 0.001
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_53ixt"]
 _data = {
 &"RESET": SubResource("Animation_53ixt"),
@@ -34,6 +34,7 @@ _data = {
 
 [node name="Soul" type="CharacterBody2D" groups=["soul"]]
 z_index = 1
+scale = Vector2(0.8, 0.8)
 script = ExtResource("1_rujom")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

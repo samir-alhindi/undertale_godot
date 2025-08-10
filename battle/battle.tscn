@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=34 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
@@ -19,6 +19,19 @@
 [ext_resource type="AudioStream" uid="uid://cxoa4407vpjc4" path="res://sounds/Undertale Sound - Monster Dust.mp3" id="12_qybyd"]
 [ext_resource type="AudioStream" uid="uid://cnunm8axqgv8s" path="res://sounds/snd_break2.wav" id="13_eu6g2"]
 [ext_resource type="Texture2D" uid="uid://qmi8o2j171cs" path="res://sprites/bg.png" id="19_phvbk"]
+
+[sub_resource type="Gradient" id="Gradient_phvbk"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sf8fp"]
+gradient = SubResource("Gradient_phvbk")
+
+[sub_resource type="Gradient" id="Gradient_sf8fp"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ihybe"]
+gradient = SubResource("Gradient_sf8fp")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qubjc"]
 size = Vector2(9.5, 323)
@@ -247,18 +260,20 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "HP"
 
-[node name="HPBar" type="ProgressBar" parent="Control/UI/StatsContainer"]
+[node name="HPBar" type="TextureProgressBar" parent="Control/UI/StatsContainer"]
 unique_name_in_owner = true
-modulate = Color(0.916667, 1, 0, 1)
+modulate = Color(1, 1, 0, 1)
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 max_value = 20.0
-step = 1.0
 value = 20.0
-show_percentage = false
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture2D_sf8fp")
+texture_progress = SubResource("GradientTexture2D_ihybe")
 
 [node name="HP2" type="Label" parent="Control/UI/StatsContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(168, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "20 / 20"

@@ -19,7 +19,7 @@ unique_name_in_owner = true
 position = Vector2(-300, 0)
 
 [node name="SpawnTimer" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.1
 autostart = true
 
 [node name="EndTimer" type="Timer" parent="."]
