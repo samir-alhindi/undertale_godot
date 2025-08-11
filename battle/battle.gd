@@ -43,8 +43,10 @@ func _ready() -> void:
 	# set up enemy:
 	monster_manager = enemy_stat.manager.instantiate()
 	%Monster.add_child(monster_manager)
-	%Sprite2D.texture = enemy_stat.sprite
-	%Sprite2D.scale *= enemy_stat.sprite_scale
+	%MonsterSprite.texture = enemy_stat.sprite
+	%MonsterSprite.scale *= enemy_stat.sprite_scale
+	%Damage.scale /= enemy_stat.sprite_scale # Keep the Damage label as is.
+	%Damage.global_position = monster_position()
 	enemy_name = enemy_stat.name
 	enemy_hp = enemy_stat.HP
 	acts = enemy_stat.acts.duplicate(true)
@@ -74,6 +76,9 @@ func _ready() -> void:
 func on_focus_entered() -> void:
 	%MoveSound.play()
 
+func monster_position() -> Vector2:
+	return get_tree().get_first_node_in_group("enemy").global_position
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and gonna_attack:
 		%SelectSound.play()
@@ -86,27 +91,15 @@ func _input(event: InputEvent) -> void:
 		is_attacking = true
 		monster_text = monster_manager.get_monster_text()
 	elif event.is_action_pressed("ui_accept") and is_attacking:
-		%KnifeSlashSound.play()
-		%Anim.play("enemy_hurt")
-		var hit_effect := preload("uid://jciddngihwq7").instantiate()
-		hit_effect.global_position = get_tree().get_first_node_in_group("enemy").global_position
-		add_child(hit_effect)
 		is_attacking = false
+		%Anim.pause() # Stop the attack line from moving so it doesn't trigger the 'Miss' animation.
+		%KnifeSlashSound.play()
+		%Knife.show()
+		%Knife.global_position = monster_position()
 		%AttackLine.hide()
-		var distance_from_centre: int = round(abs(%AttackLine.global_position.x - %AttackBar.global_position.x))
-		var damage: int = round((575  - distance_from_centre) / 10)
-		%Damage.text = str(damage)
-		%Damage.show()
-		%Anim.stop()
-		%LabelTimer.start()
-		
-		enemy_hp -= damage
-		if enemy_hp <= 0:
-			battle_won = true
-			%Anim.play("die")
-			%Music.stop()
-			%BattleDone.play()
-			# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
+		%Knife.play()
+		# Rest of the logic is in '_on_knife_animation_finished()'
+
 	elif event.is_action_pressed("ui_accept") and gonna_act:
 		%SelectSound.play()
 		gonna_act = false
@@ -140,7 +133,7 @@ func _input(event: InputEvent) -> void:
 			%BattleDone.play()
 			%Music.stop()
 			battle_won = true
-			%Sprite2D.modulate.a = 0.5
+			%MonsterSprite.modulate.a = 0.5
 			%Text.modulate = Color.WHITE
 			%Text.display("Battle won !\nGained 75 Gold and 0 EXP.")
 			%Anim.play("fade_into_black")
@@ -226,7 +219,8 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		%AttackLine.hide()
 		%Damage.text = "miss"
 		%Damage.show()
-		%LabelTimer.start()
+		%MissTimer.start()
+		# Rest of the logic is in '_on_miss_timer_timeout'.
 	elif anim_name == "die":
 		%Anim.play("end_hell")
 	elif anim_name == "end_hell" and battle_won:
@@ -237,14 +231,19 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		%Anim.play("fade_into_black")
 	elif anim_name == "fade_into_black":
 		get_tree().change_scene_to_file("uid://cnxrqinpyif6b")
-
-func _on_damage_label_timer_timeout() -> void:
-	%Damage.hide()
-	%AttackBar.hide()
-	if battle_won or battle_lost: return
-	monster_speaking = true
-	%SpeechBox.show()
-	%MonsterDialouge.display(monster_text)
+	elif anim_name == "monster_hurt":
+		%Damage.hide()
+		%AttackBar.hide()
+		if enemy_hp <= 0:
+			battle_won = true
+			%Anim.play("die")
+			%Music.stop()
+			%BattleDone.play()
+			return
+			# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
+		monster_speaking = true
+		%SpeechBox.show()
+		%MonsterDialouge.display(monster_text)
 
 var wave_index := 0
 func start_hell() -> void:
@@ -332,3 +331,18 @@ func _on_item_button_pressed() -> void:
 	%OptionsContainer.get_child(0).grab_focus()
 	%UiCooldownTimer.start()
 	# Rest of the logic is in "use_item".
+
+
+func _on_knife_animation_finished() -> void:
+	%Knife.hide()
+	%MonsterHurtSound.play()
+	var distance_from_centre: int = round(abs(%AttackLine.global_position.x - %AttackBar.global_position.x))
+	var damage: int = round((575  - distance_from_centre) / 10)
+	%Damage.text = str(damage)
+	%Damage.show()
+	enemy_hp -= damage
+	%Anim.play("monster_hurt")
+	# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
+
+func _on_miss_timer_timeout() -> void:
+	_on_anim_animation_finished("monster_hurt")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=43 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
@@ -16,9 +16,16 @@
 [ext_resource type="Script" uid="uid://dm77kynm1njqe" path="res://battle/monster_dialouge.gd" id="10_dxsh4"]
 [ext_resource type="AudioStream" uid="uid://bo5dxmxjbqcuc" path="res://sounds/snd_heal_c.wav" id="10_vlrs1"]
 [ext_resource type="AudioStream" uid="uid://dpexiickfpwht" path="res://sounds/Enemy Approaching.wav" id="11_hvjow"]
+[ext_resource type="Texture2D" uid="uid://dcghcrt5bpk2p" path="res://sprites/stab/spr_slice_o_0.png" id="12_as1q7"]
 [ext_resource type="AudioStream" uid="uid://cxoa4407vpjc4" path="res://sounds/Undertale Sound - Monster Dust.mp3" id="12_qybyd"]
+[ext_resource type="Texture2D" uid="uid://ckuqxua4m57lc" path="res://sprites/stab/spr_slice_o_1.png" id="13_7njrs"]
 [ext_resource type="AudioStream" uid="uid://cnunm8axqgv8s" path="res://sounds/snd_break2.wav" id="13_eu6g2"]
+[ext_resource type="Texture2D" uid="uid://dj70g88kuxjlc" path="res://sprites/stab/spr_slice_o_2.png" id="14_2t7ue"]
+[ext_resource type="Texture2D" uid="uid://7fb0mq50gkc2" path="res://sprites/stab/spr_slice_o_3.png" id="15_j5lq4"]
+[ext_resource type="Texture2D" uid="uid://vypbmv8oyr11" path="res://sprites/stab/spr_slice_o_4.png" id="16_562sy"]
+[ext_resource type="Texture2D" uid="uid://il3waeawr7kr" path="res://sprites/stab/spr_slice_o_5.png" id="17_kc5qh"]
 [ext_resource type="Texture2D" uid="uid://qmi8o2j171cs" path="res://sprites/bg.png" id="19_phvbk"]
+[ext_resource type="AudioStream" uid="uid://byrdnb2dtwnud" path="res://sounds/Undertale Sound Effect - Attack Hit 4.mp3" id="26_7njrs"]
 
 [sub_resource type="Gradient" id="Gradient_phvbk"]
 offsets = PackedFloat32Array(0)
@@ -38,6 +45,32 @@ size = Vector2(9.5, 323)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6hnvb"]
 size = Vector2(1143.5, 9)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1e446"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_as1q7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_7njrs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_2t7ue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_j5lq4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_562sy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_kc5qh")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="Animation" id="Animation_6hnvb"]
 length = 0.001
@@ -92,7 +125,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Monster/Sprite2D:modulate")
+tracks/4/path = NodePath("Monster/MonsterSprite:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -100,6 +133,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Monster/MonsterSprite:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_qubjc"]
@@ -123,7 +168,7 @@ length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Monster/Sprite2D:modulate")
+tracks/0/path = NodePath("Monster/MonsterSprite:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -147,22 +192,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(0.5, 1), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_qybyd"]
-resource_name = "enemy_hurt"
-length = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Monster/Sprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_l1kiu"]
@@ -197,19 +226,38 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(0.5, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_phvbk"]
+resource_name = "stab"
+
+[sub_resource type="Animation" id="Animation_qybyd"]
+resource_name = "enemy_hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Monster/MonsterSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1, 0.166667, 0.233333, 0.3, 0.366667, 0.433333, 0.5, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(10, 0), Vector2(-10, 0), Vector2(10, 0), Vector2(-10, 0), Vector2(10, 0), Vector2(-10, 0), Vector2(10, 0), Vector2(-10, 0), Vector2(10, 0), Vector2(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4mnim"]
 _data = {
 &"RESET": SubResource("Animation_6hnvb"),
 &"attack": SubResource("Animation_qubjc"),
 &"die": SubResource("Animation_vlrs1"),
 &"end_hell": SubResource("Animation_7fucf"),
-&"enemy_hurt": SubResource("Animation_qybyd"),
 &"fade_into_black": SubResource("Animation_l1kiu"),
+&"monster_hurt": SubResource("Animation_qybyd"),
+&"stab": SubResource("Animation_phvbk"),
 &"start_hell": SubResource("Animation_4mnim")
 }
 
 [node name="Battle" type="Node2D"]
-position = Vector2(1, 0)
 script = ExtResource("1_mqutd")
 items = Array[ExtResource("2_a56dj")]([ExtResource("3_dxsh4"), ExtResource("4_phvbk"), ExtResource("5_sf8fp")])
 
@@ -443,24 +491,22 @@ columns = 2
 unique_name_in_owner = true
 position = Vector2(645, 183)
 
-[node name="Sprite2D" type="Sprite2D" parent="Monster"]
+[node name="MonsterSprite" type="Sprite2D" parent="Monster"]
 unique_name_in_owner = true
 
-[node name="Damage" type="Label" parent="Monster"]
+[node name="Damage" type="Label" parent="Monster/MonsterSprite"]
 unique_name_in_owner = true
 visible = false
 offset_left = 206.0
 offset_top = -129.0
 offset_right = 424.0
 offset_bottom = -59.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 50
 theme_override_fonts/font = ExtResource("3_hvjow")
 theme_override_font_sizes/font_size = 70
 text = "Miss"
-
-[node name="LabelTimer" type="Timer" parent="Monster"]
-unique_name_in_owner = true
-wait_time = 0.5
-one_shot = true
 
 [node name="SpeechBox" type="ColorRect" parent="Monster"]
 unique_name_in_owner = true
@@ -493,6 +539,13 @@ script = ExtResource("10_dxsh4")
 [node name="TextTimer" type="Timer" parent="Monster/SpeechBox/MonsterDialouge"]
 wait_time = 0.01
 one_shot = true
+
+[node name="Knife" type="AnimatedSprite2D" parent="Monster"]
+unique_name_in_owner = true
+visible = false
+sprite_frames = SubResource("SpriteFrames_1e446")
+frame = 5
+frame_progress = 1.0
 
 [node name="Anim" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
@@ -556,13 +609,23 @@ stream = ExtResource("12_qybyd")
 unique_name_in_owner = true
 stream = ExtResource("13_eu6g2")
 
+[node name="MonsterHurtSound" type="AudioStreamPlayer" parent="Sounds"]
+unique_name_in_owner = true
+stream = ExtResource("26_7njrs")
+
 [node name="Bullets" type="Node2D" parent="."]
+
+[node name="MissTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.7
+one_shot = true
 
 [connection signal="pressed" from="Control/UI/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="pressed" from="Control/UI/ButtonsContainer/ActButton" to="." method="_on_act_button_pressed"]
 [connection signal="pressed" from="Control/UI/ButtonsContainer/ItemButton" to="." method="_on_item_button_pressed"]
 [connection signal="pressed" from="Control/UI/ButtonsContainer/MercyButton" to="." method="_on_mercy_button_pressed"]
 [connection signal="timeout" from="Control/Box/BoxColorRect/Text/TextTimer" to="Control/Box/BoxColorRect/Text" method="_on_text_timer_timeout"]
-[connection signal="timeout" from="Monster/LabelTimer" to="." method="_on_damage_label_timer_timeout"]
 [connection signal="timeout" from="Monster/SpeechBox/MonsterDialouge/TextTimer" to="Monster/SpeechBox/MonsterDialouge" method="_on_text_timer_timeout"]
+[connection signal="animation_finished" from="Monster/Knife" to="." method="_on_knife_animation_finished"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]
+[connection signal="timeout" from="MissTimer" to="." method="_on_miss_timer_timeout"]
