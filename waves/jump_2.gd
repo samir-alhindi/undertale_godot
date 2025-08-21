@@ -3,8 +3,9 @@ extends Node2D
 const bullet_scene := preload("uid://cw2m41h21w5dk")
 var mode: Soul.Mode = Soul.Mode.BLUE
 
-func _ready() -> void:
+func _on_start_timer_timeout() -> void:
 	_on_spawn_timer_timeout()
+	$SpawnTimer.start()
 
 func _on_spawn_timer_timeout() -> void:
 	var bullet1 := bullet_scene.instantiate()

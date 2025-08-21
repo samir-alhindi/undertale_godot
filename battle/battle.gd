@@ -62,6 +62,22 @@ func _ready() -> void:
 	Global.change_mercy.connect(func(amount: int):
 		enemy_mercy += amount
 		)
+	Global.heal_player.connect(func(amount: int):
+		player_hp += amount
+		%UseItemSound.play()
+		)
+	Global.bullet_destroyed.connect(func(pos: Vector2):
+		const BULLET_PARTICLE := preload("uid://jciddngihwq7")
+		var instance := BULLET_PARTICLE.instantiate()
+		instance.global_position = pos
+		add_child(instance)
+		)
+	%MonsterDialouge.play_monster_speak_anim.connect(monster_speaking_anim)
+	Global.monster_visible.connect(func(new_val: bool):
+		var tween := get_tree().create_tween()
+		var final_val := 1.0 if new_val else 0.0
+		tween.tween_property(%MonsterSprite, "modulate:a", final_val, 0.5)
+		)
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	%AttackButton.grab_focus()
 	
@@ -96,7 +112,6 @@ func _input(event: InputEvent) -> void:
 		%KnifeSlashSound.play()
 		%Knife.show()
 		%Knife.global_position = monster_position()
-		%AttackLine.hide()
 		%Knife.play()
 		# Rest of the logic is in '_on_knife_animation_finished()'
 
@@ -335,6 +350,7 @@ func _on_item_button_pressed() -> void:
 
 func _on_knife_animation_finished() -> void:
 	%Knife.hide()
+	%AttackLine.hide()
 	%MonsterHurtSound.play()
 	var distance_from_centre: int = round(abs(%AttackLine.global_position.x - %AttackBar.global_position.x))
 	var damage: int = round((575  - distance_from_centre) / 10)
@@ -346,3 +362,13 @@ func _on_knife_animation_finished() -> void:
 
 func _on_miss_timer_timeout() -> void:
 	_on_anim_animation_finished("monster_hurt")
+
+func monster_speaking_anim() -> void:
+	# Aniamtion:-
+	var tween := get_tree().create_tween()
+	var og_dim: Vector2 = %MonsterSprite.scale
+	var anim_dim: Vector2 = og_dim + Vector2(og_dim.x*0.1, og_dim.y*-0.05)
+	var delta := 0.2
+	for i in range(2):
+		tween.tween_property(%MonsterSprite, "scale", anim_dim, delta)
+		tween.tween_property(%MonsterSprite, "scale", og_dim, delta)

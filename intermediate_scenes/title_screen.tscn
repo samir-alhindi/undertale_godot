@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://cnxrqinpyif6b"]
+[gd_scene load_steps=7 format=3 uid="uid://cnxrqinpyif6b"]
 
 [ext_resource type="Script" uid="uid://ce81wwjperdmy" path="res://intermediate_scenes/title_screen.gd" id="1_k6j6k"]
-[ext_resource type="Script" uid="uid://dacubvpu4m4oc" path="res://enemy/enemy_stats.gd" id="2_cdqcp"]
-[ext_resource type="Resource" uid="uid://c1s07vh0ew48n" path="res://enemy/godot.tres" id="3_nlcaa"]
-[ext_resource type="Resource" uid="uid://cxd4rgi65mitb" path="res://enemy/poseur.tres" id="4_nlcaa"]
-[ext_resource type="Resource" uid="uid://cr5ugu5nnvmp2" path="res://enemy/cherry.tres" id="5_l7hfw"]
+[ext_resource type="Script" uid="uid://dacubvpu4m4oc" path="res://enemy_data/enemy_stats.gd" id="2_cdqcp"]
+[ext_resource type="Resource" uid="uid://c1s07vh0ew48n" path="res://enemy_data/godot.tres" id="3_nlcaa"]
+[ext_resource type="Resource" uid="uid://cxd4rgi65mitb" path="res://enemy_data/poseur.tres" id="4_nlcaa"]
+[ext_resource type="Resource" uid="uid://cr5ugu5nnvmp2" path="res://enemy_data/cherry.tres" id="5_l7hfw"]
+[ext_resource type="Resource" uid="uid://d31reg5n32lkg" path="res://enemy_data/present.tres" id="6_j7611"]
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("1_k6j6k")
-enemies = Array[ExtResource("2_cdqcp")]([ExtResource("3_nlcaa"), ExtResource("4_nlcaa"), ExtResource("5_l7hfw")])
+enemies = Array[ExtResource("2_cdqcp")]([ExtResource("3_nlcaa"), ExtResource("4_nlcaa"), ExtResource("5_l7hfw"), ExtResource("6_j7611")])
 
 [node name="BG" type="ColorRect" parent="."]
 anchors_preset = 15

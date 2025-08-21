@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bghmxuapoqdkl"]
+
+[ext_resource type="Script" uid="uid://ldqwmv40ctde" path="res://enemy_data/present.gd" id="1_kvdy5"]
+
+[node name="Present" type="Node"]
+script = ExtResource("1_kvdy5")

@@ -5,7 +5,7 @@ var mode: Soul.Mode = Soul.Mode.RED
 
 func  _ready() -> void:
 	# Right Below the battle box:
-	global_position = Vector2(656, 790)
+	global_position = Vector2(656, get_viewport_rect().size.y)
 
 func _on_spawn_timer_timeout() -> void:
 	var bullet := LINEAR_BULLET.instantiate()

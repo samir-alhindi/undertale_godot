@@ -31,6 +31,7 @@ soul="The human soul"
 bullet="hurts the soul"
 wave="A bullet wave."
 enemy="The monster"
+shootable_bullet="Blue bullets that Yellow soul can shoot"
 
 [gui]
 
