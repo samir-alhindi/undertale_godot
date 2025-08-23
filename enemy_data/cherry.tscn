@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://b63wldbutwctw"]
+[gd_scene load_steps=5 format=3 uid="uid://b63wldbutwctw"]
 
 [ext_resource type="Script" uid="uid://rg6qtfs24ilx" path="res://enemy_data/cherry.gd" id="1_o5bg2"]
+[ext_resource type="Texture2D" uid="uid://buqhjii4x87fd" path="res://sprites/cherry.png" id="2_ihon8"]
+[ext_resource type="PackedScene" uid="uid://cdy881pi383i1" path="res://waves/jump.tscn" id="3_px5xo"]
+[ext_resource type="PackedScene" uid="uid://dgvkrbgoo6p34" path="res://waves/jump_2.tscn" id="4_p7a4j"]
 
 [node name="Cherry" type="Node"]
 script = ExtResource("1_o5bg2")
+enemy_name = "Cherry"
+HP = 150
+sprite = ExtResource("2_ihon8")
+sprite_scale = 1.5
+acts = Array[String](["Check", "Cheer", "Football"])
+bullet_waves = Array[PackedScene]([ExtResource("3_px5xo"), ExtResource("4_p7a4j")])
+encounter_text = "* Cherry jumped out of nowhere!"

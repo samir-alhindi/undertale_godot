@@ -1,6 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkavs6k60jki1"]
+[gd_scene load_steps=5 format=3 uid="uid://bkavs6k60jki1"]
 
 [ext_resource type="Script" uid="uid://cex3suh1x40eb" path="res://enemy_data/poseur.gd" id="1_grqwl"]
+[ext_resource type="Texture2D" uid="uid://bhdrd0gjpota6" path="res://sprites/Poseur.png" id="2_gsvqt"]
+[ext_resource type="PackedScene" uid="uid://cxvhasownaa34" path="res://waves/spinning_storm.tscn" id="3_prbao"]
+[ext_resource type="PackedScene" uid="uid://bssnb6ds0njcv" path="res://waves/spinning_storm_2.tscn" id="4_owql0"]
 
 [node name="Poseur" type="Node"]
 script = ExtResource("1_grqwl")
+enemy_name = "Poseur"
+HP = 120
+sprite = ExtResource("2_gsvqt")
+sprite_scale = 1.5
+acts = Array[String](["Check", "Pose"])
+bullet_waves = Array[PackedScene]([ExtResource("3_prbao"), ExtResource("4_owql0")])
+encounter_text = "* Poseur approached you with style!"

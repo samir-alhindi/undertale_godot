@@ -1,23 +1,25 @@
-extends Node
+extends Enemy
 
 var chat_counter := 0
 var just_insulted := false
 
-func do_act_get_text(act: Act) -> String:
-	if act.name == "Chat":
+func do_act_get_text(act: String) -> String:
+	if act == "Chat":
 		if chat_counter == 0:
 			chat_counter += 1
+			Global.change_mercy.emit(50)
 			return "* You talked to Godot about GDscript...\n* It seemed interested!"
 		elif chat_counter == 1:
 			chat_counter += 1
+			Global.change_mercy.emit(50)
 			return "* You listed the data types of GDscript!\n* int, float, String...\n* Godot was very proud of you!"
 		else:
 			return "* That's enough talking!"
-	elif act.name == "Insult":
+	elif act == "Insult":
 		just_insulted = true
-		return act.text
-	elif act.name == "Check":
-		return act.text
+		return "* You told Godot that GDscript is slow...\n* Godot got angry !"
+	elif act == "Check":
+		return "* Godot - ATK 10 DEF 5\n* A Robot programmed in C++\n* He really likes talking"
 	else:
 		return "There was an error!!!"
 

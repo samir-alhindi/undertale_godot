@@ -29,29 +29,27 @@ var enemy_mercy := 0:
 		enemy_mercy = new_value
 		if enemy_mercy >= 100:
 			can_spare = true
-var acts: Array[Act] = []
+var acts: Array[String] = []
 @export var items: Array[Item] = []
 var bullet_waves: Array[PackedScene] = []
-var monster_manager: Node
 
 var theme := preload("uid://cf0xm6i8snote")
 
-static var enemy_stat: EnemyStats
+static var enemy: Enemy
 
 func _ready() -> void:
 	 
 	# set up enemy:
-	monster_manager = enemy_stat.manager.instantiate()
-	%Monster.add_child(monster_manager)
-	%MonsterSprite.texture = enemy_stat.sprite
-	%MonsterSprite.scale *= enemy_stat.sprite_scale
-	%Damage.scale /= enemy_stat.sprite_scale # Keep the Damage label as is.
+	%Monster.add_child(enemy)
+	%MonsterSprite.texture = enemy.sprite
+	%MonsterSprite.scale *= enemy.sprite_scale
+	%Damage.scale /= enemy.sprite_scale # Keep the Damage label as is.
 	%Damage.global_position = monster_position()
-	enemy_name = enemy_stat.name
-	enemy_hp = enemy_stat.HP
-	acts = enemy_stat.acts.duplicate(true)
-	bullet_waves = enemy_stat.bullet_waves.duplicate(true)
-	encounter_text = enemy_stat.encounter_text
+	enemy_name = enemy.name
+	enemy_hp = enemy.HP
+	acts = enemy.acts.duplicate(true)
+	bullet_waves = enemy.bullet_waves.duplicate(true)
+	encounter_text = enemy.encounter_text
 	%Text.display(encounter_text)
 	
 	Global.wave_done.connect(finish_hell)
@@ -105,7 +103,7 @@ func _input(event: InputEvent) -> void:
 		%Anim.play("attack")
 		gonna_attack = false
 		is_attacking = true
-		monster_text = monster_manager.get_monster_text()
+		monster_text = enemy.get_monster_text()
 	elif event.is_action_pressed("ui_accept") and is_attacking:
 		is_attacking = false
 		%Anim.pause() # Stop the attack line from moving so it doesn't trigger the 'Miss' animation.
@@ -121,10 +119,10 @@ func _input(event: InputEvent) -> void:
 		is_choosing_act = true
 		%Text.text = ""
 		%Text.modulate = Color.WHITE
-		for act: Act in acts:
+		for act: String in acts:
 			var button := Button.new()
 			button.theme = theme
-			button.text = act.name
+			button.text = act
 			button.custom_minimum_size = Vector2(100, 50)
 			button.add_theme_font_size_override("font_size", 50)
 			button.pressed.connect(do_act.bind(act))
@@ -138,7 +136,7 @@ func _input(event: InputEvent) -> void:
 		is_reading_item_text = false
 		%Text.clear_text()
 		monster_speaking = true
-		monster_text = monster_manager.get_monster_text()
+		monster_text = enemy.get_monster_text()
 		%SpeechBox.show()
 		%MonsterDialouge.display(monster_text)
 		
@@ -149,8 +147,8 @@ func _input(event: InputEvent) -> void:
 			%Music.stop()
 			battle_won = true
 			%MonsterSprite.modulate.a = 0.5
-			%Text.modulate = Color.WHITE
-			%Text.display("Battle won !\nGained 75 Gold and 0 EXP.")
+			var gold := randi_range(50, 75)
+			%Text.display("Battle won\nGot 0 EXP and %d Gold" % gold)
 			%Anim.play("fade_into_black")
 		elif not can_spare:
 			%SelectSound.play()
@@ -240,7 +238,9 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 	elif anim_name == "die":
 		%Anim.play("end_hell")
 	elif anim_name == "end_hell" and battle_won:
-		%Text.display("Battle won\nGot 50 EXP and 27 Gold.")
+		var exp := randi_range(25, 50)
+		var gold := randi_range(20, 30)
+		%Text.display("Battle won\nGot %d EXP and %d Gold" % [exp, gold])
 		%Anim.play("fade_into_black")
 	elif anim_name == "end_hell" and battle_lost:
 		%Text.display("Battle Lost...")
@@ -284,7 +284,7 @@ func finish_hell(wave: Node2D, soul: Soul) -> void:
 	%ButtonsContainer.show()
 	soul.queue_free()
 	%AttackButton.grab_focus()
-	idle_text = monster_manager.get_idle_text()
+	idle_text = enemy.get_idle_text()
 	%Text.display(idle_text)
 
 
@@ -297,14 +297,13 @@ func _on_act_button_pressed() -> void:
 	%Text.text = "* " + enemy_name
 	gonna_act = true
 
-func do_act(act: Act) -> void:
+func do_act(act_name: String) -> void:
 	if %UiCooldownTimer.time_left: return
 	%SelectSound.play()
 	for button: Button in %OptionsContainer.get_children():
 		button.queue_free()
 	%OptionsContainer.hide()
-	enemy_mercy += act.mercy_amount
-	%Text.display(monster_manager.do_act_get_text(act))
+	%Text.display(enemy.do_act_get_text(act_name))
 	is_choosing_act = false
 	is_reading_act_text = true
 

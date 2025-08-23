@@ -19,9 +19,9 @@ func _on_text_timer_timeout() -> void:
 	i += 1
 	if visible_ratio < 1.0 and text[i] != ".":
 		%TextTimer.start(text_speed)
-	elif visible_ratio < 1.0 and text[i] == ".":
+	elif visible_ratio < 1.0:
 		%TextTimer.start(dot_speed)
 
 func clear_text() -> void:
 	%TextTimer.stop()
-	text = ""
+	

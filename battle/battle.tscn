@@ -609,6 +609,7 @@ stream = ExtResource("10_vlrs1")
 [node name="Music" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
 stream = ExtResource("11_hvjow")
+autoplay = true
 
 [node name="BattleDone" type="AudioStreamPlayer" parent="Sounds"]
 unique_name_in_owner = true
