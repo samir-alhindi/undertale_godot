@@ -136,7 +136,7 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_accept") and is_reading_act_text or is_reading_item_text:
 		is_reading_act_text = false
 		is_reading_item_text = false
-		%Text.text = ""
+		%Text.clear_text()
 		monster_speaking = true
 		monster_text = monster_manager.get_monster_text()
 		%SpeechBox.show()
@@ -157,6 +157,7 @@ func _input(event: InputEvent) -> void:
 	
 	elif event.is_action_pressed("ui_accept") and monster_speaking:
 		monster_speaking = false
+		%MonsterDialouge.stop_talking()
 		%SpeechBox.hide()
 		start_hell()
 	
@@ -333,7 +334,7 @@ func _on_item_button_pressed() -> void:
 	is_choosing_item = true
 	%ButtonsContainer.hide()
 	%OptionsContainer.show()
-	%Text.text = ""
+	%Text.clear_text()
 	for item: Item in items:
 		var button := Button.new()
 		button.theme = theme

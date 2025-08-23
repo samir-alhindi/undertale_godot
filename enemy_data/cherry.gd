@@ -13,7 +13,7 @@ func do_act_get_text(act: Act) -> String:
 		Global.change_mercy.emit(50)
 		return act.text
 	elif act.name == "Cheer" and cheered:
-		return "* You cheered again with Cherry...\n* She didn't show much intrest."
+		return "* You cheered again with Cherry...\n* She didn't show much intrest"
 	elif act.name == "Football" and not talked_football:
 		just_talked_football = true
 		talked_football = true

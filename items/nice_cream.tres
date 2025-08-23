@@ -7,5 +7,5 @@ script = ExtResource("1_eir7d")
 item_name = "Nice Cream"
 amount = 15
 text = "* You licked the Nice cream...
-  it was very nice !"
+  it was very nice!"
 metadata/_custom_type_script = "uid://c52ed72xkdnj2"
