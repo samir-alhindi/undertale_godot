@@ -18,5 +18,5 @@ func _on_text_timer_timeout() -> void:
 		$TextTimer.start(text_speed)
 
 func stop_talking() -> void:
-	visible_characters = -1
+	text = ""
 	%TextTimer.stop()

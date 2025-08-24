@@ -24,4 +24,5 @@ func _on_text_timer_timeout() -> void:
 
 func clear_text() -> void:
 	%TextTimer.stop()
-	
+	visible_ratio = -1
+	text = ""
