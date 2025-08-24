@@ -122,8 +122,9 @@ func _input(event: InputEvent) -> void:
 		for act: String in acts:
 			var button := Button.new()
 			button.theme = theme
-			button.text = act
+			button.text = "* " + act
 			button.custom_minimum_size = Vector2(100, 50)
+			button.alignment = HORIZONTAL_ALIGNMENT_LEFT 
 			button.add_theme_font_size_override("font_size", 50)
 			button.pressed.connect(do_act.bind(act))
 			%OptionsContainer.add_child(button)

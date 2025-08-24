@@ -19,4 +19,5 @@ func _on_text_timer_timeout() -> void:
 
 func stop_talking() -> void:
 	text = ""
+	visible_ratio = 1.0
 	%TextTimer.stop()
