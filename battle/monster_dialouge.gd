@@ -15,7 +15,7 @@ func _on_text_timer_timeout() -> void:
 	%SpeakSound.play()
 	visible_characters += 1
 	if visible_ratio < 1.0:
-		$TextTimer.start(text_speed)
+		%TextTimer.start(text_speed)
 
 func stop_talking() -> void:
 	text = ""

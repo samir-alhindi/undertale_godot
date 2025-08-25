@@ -1,28 +1,32 @@
-extends RichTextLabel
+class_name TextBox extends RichTextLabel
 
-# Undertale text speed is 30 characters per second:
-var text_speed := 1.0 / 40.0 
-# Slow down dialouge if '.' char is encountered:
-var dot_speed := 0.75
+signal finished_scrolling
 
-var i := -1
-func display(new_text: String):
+var normal_speed := 0.05
+## Slow down dialouge if '.' or '\n' char is encountered:
+var slow_speed := 0.5
+
+func scroll(new_text: String) -> void:
+	await clear_text()
 	text = new_text
 	visible_characters = 0
-	i = -1
-	%TextTimer.start()
+	%Timer.start()
 	%TextSound.play()
 
-func _on_text_timer_timeout() -> void:
+func set_new_text(new_text: String) -> void:
+	await clear_text()
+	visible_ratio = 1.0
+	text = new_text
+
+func _on_timer_timeout() -> void:
+	if visible_ratio == 1.0:
+		%Timer.stop()
+		finished_scrolling.emit()
+		return
 	%TextSound.play()
+	%Timer.wait_time = slow_speed if text[visible_characters] in [".", "\n"] else normal_speed
 	visible_characters += 1
-	i += 1
-	if visible_ratio < 1.0 and text[i] != ".":
-		%TextTimer.start(text_speed)
-	elif visible_ratio < 1.0:
-		%TextTimer.start(dot_speed)
 
 func clear_text() -> void:
-	%TextTimer.stop()
-	visible_ratio = -1
-	text = ""
+	%Timer.stop()
+	visible_ratio = 0.0

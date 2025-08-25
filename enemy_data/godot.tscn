@@ -9,7 +9,7 @@
 script = ExtResource("1_emke6")
 enemy_name = "Godot"
 sprite = ExtResource("2_8eifk")
-sprite_scale = 0.35
+sprite_scale = 0.2
 acts = Array[String](["Check", "Insult", "Chat"])
 bullet_waves = Array[PackedScene]([ExtResource("3_sbvsa"), ExtResource("4_33x53")])
 encounter_text = "* Godot is _ready() for a fight!"

@@ -1,22 +1,21 @@
-[gd_scene load_steps=44 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=43 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
 [ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
-[ext_resource type="Script" uid="uid://cxsnx4tvhus7o" path="res://battle/text.gd" id="2_qybyd"]
 [ext_resource type="Resource" uid="uid://cdwpd7gdg4qdj" path="res://items/pie.tres" id="3_dxsh4"]
 [ext_resource type="FontFile" uid="uid://bsdludjyf4ury" path="res://themes/undertale-damage.otf" id="3_hvjow"]
 [ext_resource type="Resource" uid="uid://csj3basn1h8wt" path="res://items/apple.tres" id="4_phvbk"]
 [ext_resource type="Resource" uid="uid://buheun3jb126i" path="res://items/nice_cream.tres" id="5_sf8fp"]
 [ext_resource type="AudioStream" uid="uid://byp2svo436sh6" path="res://sounds/snd_select.wav" id="6_l1kiu"]
 [ext_resource type="AudioStream" uid="uid://bg6fcjorkrh23" path="res://sounds/snd_squeak.wav" id="7_7fucf"]
-[ext_resource type="AudioStream" uid="uid://x8op6wfspisx" path="res://sounds/SND_TXT2.wav" id="8_7njrs"]
+[ext_resource type="PackedScene" uid="uid://cowlpeawlvafn" path="res://text_box/text_box.tscn" id="7_7njrs"]
 [ext_resource type="AudioStream" uid="uid://dhbvccgm7a5sj" path="res://sounds/snd_hurt1.wav" id="8_iorop"]
 [ext_resource type="AudioStream" uid="uid://8uape5wkyje4" path="res://sounds/snd_laz.wav" id="9_rxlun"]
-[ext_resource type="Script" uid="uid://dm77kynm1njqe" path="res://battle/monster_dialouge.gd" id="10_dxsh4"]
+[ext_resource type="PackedScene" uid="uid://cedvngba5pql2" path="res://text_box/monster_text_box.tscn" id="10_as1q7"]
 [ext_resource type="AudioStream" uid="uid://bo5dxmxjbqcuc" path="res://sounds/snd_heal_c.wav" id="10_vlrs1"]
+[ext_resource type="FontFile" uid="uid://61kg45th28eb" path="res://themes/DTM-Mono.otf" id="11_7njrs"]
 [ext_resource type="AudioStream" uid="uid://dpexiickfpwht" path="res://sounds/Enemy Approaching.wav" id="11_hvjow"]
-[ext_resource type="AudioStream" uid="uid://50v00xr0tl8p" path="res://sounds/SND_TXT1.wav" id="12_2t7ue"]
 [ext_resource type="Texture2D" uid="uid://dcghcrt5bpk2p" path="res://sprites/stab/spr_slice_o_0.png" id="12_as1q7"]
 [ext_resource type="AudioStream" uid="uid://cxoa4407vpjc4" path="res://sounds/Undertale Sound - Monster Dust.mp3" id="12_qybyd"]
 [ext_resource type="Texture2D" uid="uid://ckuqxua4m57lc" path="res://sprites/stab/spr_slice_o_1.png" id="13_7njrs"]
@@ -371,7 +370,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -556.0
 offset_top = -140.0
-offset_right = 585.0
+offset_right = 584.0
 offset_bottom = 180.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -391,33 +390,18 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Text" type="RichTextLabel" parent="Control/Box/BoxColorRect"]
+[node name="TextBox" parent="Control/Box/BoxColorRect" instance=ExtResource("7_7njrs")]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 19.0
-offset_top = 30.0
-offset_right = -25.0
-offset_bottom = -22.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 40
-text = "* Godot hopped close !"
-scroll_active = false
-visible_characters_behavior = 1
-script = ExtResource("2_qybyd")
-metadata/_edit_use_anchors_ = true
-
-[node name="TextTimer" type="Timer" parent="Control/Box/BoxColorRect/Text"]
-unique_name_in_owner = true
-wait_time = 0.033
-one_shot = true
-
-[node name="TextSound" type="AudioStreamPlayer" parent="Control/Box/BoxColorRect/Text"]
-unique_name_in_owner = true
-stream = ExtResource("8_7njrs")
+anchors_preset = -1
+anchor_left = 0.022
+anchor_top = 0.069
+anchor_right = 0.976
+anchor_bottom = 0.928
+offset_left = 0.227999
+offset_top = -0.114002
+offset_right = 0.0239258
+offset_bottom = 0.0319824
 
 [node name="AttackBar" type="Sprite2D" parent="Control/Box/BoxColorRect"]
 unique_name_in_owner = true
@@ -464,9 +448,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -563.5
+offset_left = -563.0
 offset_top = -97.0
-offset_right = -535.5
+offset_right = -535.0
 offset_bottom = 97.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -519,33 +503,32 @@ offset_right = 451.0
 offset_bottom = 111.0
 
 [node name="Traingle" type="ColorRect" parent="Monster/SpeechBox"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.031
+anchor_bottom = 0.035
 offset_left = 2.0
 offset_top = 96.0
-offset_right = 42.0
-offset_bottom = 136.0
+offset_right = 33.01
+offset_bottom = 127.11
 rotation = 0.785398
 
-[node name="MonsterDialouge" type="RichTextLabel" parent="Monster/SpeechBox"]
+[node name="MonsterTextBox" parent="Monster/SpeechBox" instance=ExtResource("10_as1q7")]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 17.0
-offset_top = 15.0
-offset_right = 266.0
-offset_bottom = 233.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.045
+anchor_top = 0.063
+anchor_right = 0.969
+anchor_bottom = 0.953
+offset_left = -0.0500002
+offset_top = -0.00200081
+offset_right = -0.0100098
+offset_bottom = -0.0620117
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/normal_font_size = 25
-text = "Let's dance darling !"
-visible_characters_behavior = 1
-script = ExtResource("10_dxsh4")
-
-[node name="TextTimer" type="Timer" parent="Monster/SpeechBox/MonsterDialouge"]
-wait_time = 0.01
-one_shot = true
-
-[node name="SpeakSound" type="AudioStreamPlayer" parent="Monster/SpeechBox/MonsterDialouge"]
-unique_name_in_owner = true
-stream = ExtResource("12_2t7ue")
+theme_override_fonts/normal_font = ExtResource("11_7njrs")
+theme_override_font_sizes/normal_font_size = 20
+text = " Hello!sdfghjgfds"
 
 [node name="Knife" type="AnimatedSprite2D" parent="Monster"]
 unique_name_in_owner = true
@@ -575,7 +558,7 @@ color = Color(0, 0, 0, 0)
 metadata/_edit_use_anchors_ = true
 
 [node name="DebugMarker" type="Marker2D" parent="."]
-position = Vector2(652, 275)
+position = Vector2(1283, 275)
 
 [node name="UiCooldownTimer" type="Timer" parent="."]
 unique_name_in_owner = true
@@ -632,8 +615,6 @@ one_shot = true
 [connection signal="pressed" from="Control/UI/ButtonsContainer/ActButton" to="." method="_on_act_button_pressed"]
 [connection signal="pressed" from="Control/UI/ButtonsContainer/ItemButton" to="." method="_on_item_button_pressed"]
 [connection signal="pressed" from="Control/UI/ButtonsContainer/MercyButton" to="." method="_on_mercy_button_pressed"]
-[connection signal="timeout" from="Control/Box/BoxColorRect/Text/TextTimer" to="Control/Box/BoxColorRect/Text" method="_on_text_timer_timeout"]
-[connection signal="timeout" from="Monster/SpeechBox/MonsterDialouge/TextTimer" to="Monster/SpeechBox/MonsterDialouge" method="_on_text_timer_timeout"]
 [connection signal="animation_finished" from="Monster/Knife" to="." method="_on_knife_animation_finished"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]
 [connection signal="timeout" from="MissTimer" to="." method="_on_miss_timer_timeout"]

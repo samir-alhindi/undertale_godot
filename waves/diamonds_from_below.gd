@@ -1,7 +1,6 @@
-extends Node2D
+extends Wave
 
 const LINEAR_BULLET := preload("uid://cd8wtan5lb4ls")
-var mode: Soul.Mode = Soul.Mode.RED
 
 func  _ready() -> void:
 	# Right Below the battle box:

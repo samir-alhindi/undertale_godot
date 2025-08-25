@@ -1,7 +1,6 @@
-extends Node2D
+extends Wave
 
 const FOLLOWER_BULLET := preload("res://bullets/follower_bullet.tscn")
-var mode: Soul.Mode = Soul.Mode.RED
 
 func _ready() -> void:
 	var soul := get_tree().get_first_node_in_group("soul")

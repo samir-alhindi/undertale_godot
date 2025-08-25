@@ -17,7 +17,7 @@ func do_act_get_text(act: String) -> String:
 			return "* That's enough talking!"
 	elif act == "Insult":
 		just_insulted = true
-		return "* You told Godot that GDscript is slow...\n* Godot got angry !"
+		return "* You told Godot that GDscript is slow...\n* Godot got angry!"
 	elif act == "Check":
 		return "* Godot - ATK 10 DEF 5\n* A Robot programmed in C++\n* He really likes talking"
 	else:

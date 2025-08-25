@@ -1,23 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgvkrbgoo6p34"]
+[gd_scene load_steps=3 format=3 uid="uid://dgvkrbgoo6p34"]
 
-[ext_resource type="Script" uid="uid://50tq6a64gjfp" path="res://waves/jump_2.gd" id="1_2d7wp"]
+[ext_resource type="PackedScene" uid="uid://b8swhgvxqle3i" path="res://waves/wave.tscn" id="1_2d7wp"]
+[ext_resource type="Script" uid="uid://50tq6a64gjfp" path="res://waves/jump_2.gd" id="2_e6tyy"]
 
-[node name="Jump2" type="Node2D" groups=["wave"]]
-script = ExtResource("1_2d7wp")
+[node name="Jump2" instance=ExtResource("1_2d7wp")]
+script = ExtResource("2_e6tyy")
+mode = 1
 
-[node name="SpawnTimer" type="Timer" parent="."]
+[node name="SpawnTimer" parent="." index="0"]
 wait_time = 2.0
 
-[node name="EndTimer" type="Timer" parent="."]
+[node name="EndTimer" parent="." index="1"]
 wait_time = 10.0
-one_shot = true
-autostart = true
-
-[node name="StartTimer" type="Timer" parent="."]
-wait_time = 0.5
-one_shot = true
-autostart = true
-
-[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
-[connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]
-[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

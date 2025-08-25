@@ -1,6 +1,4 @@
-extends Node2D
-
-var mode: Soul.Mode = Soul.Mode.RED
+extends Wave
 
 func _ready() -> void:
 	# Right above the battle box:

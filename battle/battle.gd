@@ -35,6 +35,9 @@ var bullet_waves: Array[PackedScene] = []
 
 var theme := preload("uid://cf0xm6i8snote")
 
+@onready var text_box: TextBox = %TextBox
+@onready var monster_text_box: MonsterTextBox = %MonsterTextBox
+
 static var enemy: Enemy
 
 func _ready() -> void:
@@ -50,7 +53,7 @@ func _ready() -> void:
 	acts = enemy.acts.duplicate(true)
 	bullet_waves = enemy.bullet_waves.duplicate(true)
 	encounter_text = enemy.encounter_text
-	%Text.display(encounter_text)
+	text_box.scroll(encounter_text)
 	
 	Global.wave_done.connect(finish_hell)
 	Global.add_bullet.connect(func(bullet: Node2D, transform: Transform2D):
@@ -70,7 +73,7 @@ func _ready() -> void:
 		instance.global_position = pos
 		add_child(instance)
 		)
-	%MonsterDialouge.play_monster_speak_anim.connect(monster_speaking_anim)
+	monster_text_box.play_monster_speak_anim.connect(monster_speaking_anim)
 	Global.monster_visible.connect(func(new_val: bool):
 		var tween := get_tree().create_tween()
 		var final_val := 1.0 if new_val else 0.0
@@ -79,10 +82,6 @@ func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	%AttackButton.grab_focus()
 	
-	# Make sure all waves are valid:
-	for wave: PackedScene in bullet_waves:
-		var wave_instance := wave.instantiate()
-		assert(wave_instance.is_in_group("wave"), "Make sure all waves are in the 'Wave' group")
 	
 	for button: Button in %ButtonsContainer.get_children():
 		button.focus_entered.connect(on_focus_entered)
@@ -96,9 +95,9 @@ func monster_position() -> Vector2:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and gonna_attack:
 		%SelectSound.play()
-		%Text.modulate = Color.WHITE
+		text_box.modulate = Color.WHITE
 		%AttackBar.show()
-		%Text.text = ""
+		text_box.clear_text()
 		%AttackLine.show()
 		%Anim.play("attack")
 		gonna_attack = false
@@ -117,8 +116,8 @@ func _input(event: InputEvent) -> void:
 		%SelectSound.play()
 		gonna_act = false
 		is_choosing_act = true
-		%Text.text = ""
-		%Text.modulate = Color.WHITE
+		text_box.clear_text()
+		text_box.modulate = Color.WHITE
 		for act: String in acts:
 			var button := Button.new()
 			button.theme = theme
@@ -135,11 +134,11 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_accept") and is_reading_act_text or is_reading_item_text:
 		is_reading_act_text = false
 		is_reading_item_text = false
-		%Text.clear_text()
+		text_box.clear_text()
 		monster_speaking = true
 		monster_text = enemy.get_monster_text()
 		%SpeechBox.show()
-		%MonsterDialouge.display(monster_text)
+		monster_text_box.speak(monster_text)
 		
 	elif event.is_action_pressed("ui_accept") and gonna_spare:
 		if can_spare:
@@ -149,14 +148,15 @@ func _input(event: InputEvent) -> void:
 			battle_won = true
 			%MonsterSprite.modulate.a = 0.5
 			var gold := randi_range(50, 75)
-			%Text.display("Battle won\nGot 0 EXP and %d Gold" % gold)
+			text_box.scroll("Battle won\nGot 0 EXP and %d Gold" % gold)
+			await text_box.finished_scrolling
 			%Anim.play("fade_into_black")
 		elif not can_spare:
 			%SelectSound.play()
 	
 	elif event.is_action_pressed("ui_accept") and monster_speaking:
 		monster_speaking = false
-		%MonsterDialouge.stop_talking()
+		monster_text_box.stop_talking()
 		%SpeechBox.hide()
 		start_hell()
 	
@@ -166,22 +166,22 @@ func _input(event: InputEvent) -> void:
 			gonna_attack = false
 			%ButtonsContainer.show()
 			%AttackButton.grab_focus()
-			%Text.modulate = Color.WHITE
-			%Text.display(idle_text if turn_counter > 0 else encounter_text)
+			text_box.modulate = Color.WHITE
+			text_box.scroll(idle_text if turn_counter > 0 else encounter_text)
 		elif gonna_act:
 			%ActButton.grab_focus()
 			%ButtonsContainer.show()
 			%OptionsContainer.hide()
-			%Text.modulate = Color.WHITE
-			%Text.display(idle_text if turn_counter > 0 else encounter_text)
+			text_box.modulate = Color.WHITE
+			text_box.scroll(idle_text if turn_counter > 0 else encounter_text)
 			gonna_act = false
 		elif is_choosing_act:
 			for button: Button in %OptionsContainer.get_children():
 				button.queue_free()
 			%OptionsContainer.hide()
 			if can_spare:
-				%Text.modulate = Color.YELLOW
-			%Text.text = "* " + enemy_name
+				text_box.modulate = Color.YELLOW
+			text_box.set_new_text("* " + enemy_name)
 			is_choosing_act = false
 			gonna_act = true
 		elif is_choosing_item:
@@ -190,15 +190,15 @@ func _input(event: InputEvent) -> void:
 			%OptionsContainer.hide()
 			%ButtonsContainer.show()
 			%ItemButton.grab_focus()
-			%Text.modulate = Color.WHITE
-			%Text.display(idle_text if turn_counter > 0 else encounter_text)
+			text_box.modulate = Color.WHITE
+			text_box.scroll(idle_text if turn_counter > 0 else encounter_text)
 			is_choosing_item = false
 		elif gonna_spare:
 			%MercyButton.grab_focus()
 			%ButtonsContainer.show()
 			%OptionsContainer.hide()
-			%Text.modulate = Color.WHITE
-			%Text.display(idle_text if turn_counter > 0 else encounter_text)
+			text_box.modulate = Color.WHITE
+			text_box.scroll(idle_text if turn_counter > 0 else encounter_text)
 			gonna_spare = false
 
 func player_take_damage(amount: int, soul: Soul) -> void:
@@ -209,7 +209,7 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 		%Music.stop()
 		%SoulBreak.play()
 		battle_lost = true
-		var attack := get_tree().get_first_node_in_group("bullet_attack")
+		var attack := get_tree().get_first_node_in_group("wave")
 		if is_instance_valid(attack): attack.queue_free()
 		const DEATH_PARTICLE := preload("uid://cvsoixker4k6d")
 		var particles := DEATH_PARTICLE.instantiate()
@@ -217,15 +217,18 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 		particles.global_position = soul.global_position
 		add_child(particles)
 		soul.call_deferred("queue_free")
-		%Anim.play("end_hell")
-		# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
+		change_box_size(Vector2(1.0, 1.0))
+		particles.finished.connect(func():
+			text_box.scroll("Battle Lost...")
+			%Anim.play("fade_into_black")
+			)
 
 func _on_attack_button_pressed() -> void:
 	%SelectSound.play()
 	%ButtonsContainer.hide()
 	if can_spare:
-		%Text.modulate = Color.YELLOW
-	%Text.text = "* " + enemy_name
+		text_box.modulate = Color.YELLOW
+	text_box.set_new_text("* " + enemy_name)
 	gonna_attack = true
 
 func _on_anim_animation_finished(anim_name: StringName) -> void:
@@ -237,14 +240,11 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		%MissTimer.start()
 		# Rest of the logic is in '_on_miss_timer_timeout'.
 	elif anim_name == "die":
-		%Anim.play("end_hell")
-	elif anim_name == "end_hell" and battle_won:
+		change_box_size(Vector2(1.0, 1.0))
 		var exp := randi_range(25, 50)
 		var gold := randi_range(20, 30)
-		%Text.display("Battle won\nGot %d EXP and %d Gold" % [exp, gold])
-		%Anim.play("fade_into_black")
-	elif anim_name == "end_hell" and battle_lost:
-		%Text.display("Battle Lost...")
+		text_box.scroll("Battle won\nGot %d EXP and %d Gold" % [exp, gold])
+		await text_box.finished_scrolling
 		%Anim.play("fade_into_black")
 	elif anim_name == "fade_into_black":
 		get_tree().change_scene_to_file("uid://cnxrqinpyif6b")
@@ -260,14 +260,11 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 			# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
 		monster_speaking = true
 		%SpeechBox.show()
-		%MonsterDialouge.display(monster_text)
+		monster_text_box.speak(monster_text)
 
 var wave_index := 0
 func start_hell() -> void:
 	%ButtonsContainer.hide()
-	%Anim.play("start_hell")
-	
-	
 	var wave: Node2D = bullet_waves[wave_index % bullet_waves.size()].instantiate()
 	wave_index += 1
 	var soul := Soul.new_soul(wave.mode)
@@ -275,18 +272,19 @@ func start_hell() -> void:
 	soul.global_position = %AttackBar.global_position
 	soul.took_damage.connect(player_take_damage)
 	add_child(wave)
+	change_box_size(wave.box_size)
 	# The wave finishes when the Node emits the global "wave_done" signal.
 
 func finish_hell(wave: Node2D, soul: Soul) -> void:
 	wave.queue_free()
 	if battle_won or battle_lost: return
 	turn_counter += 1
-	%Anim.play("end_hell")
+	change_box_size(Vector2(1.0, 1.0))
 	%ButtonsContainer.show()
 	soul.queue_free()
 	%AttackButton.grab_focus()
 	idle_text = enemy.get_idle_text()
-	%Text.display(idle_text)
+	text_box.scroll(idle_text)
 
 
 func _on_act_button_pressed() -> void:
@@ -294,8 +292,8 @@ func _on_act_button_pressed() -> void:
 	%ButtonsContainer.hide()
 	%OptionsContainer.show()
 	if can_spare:
-		%Text.modulate = Color.YELLOW
-	%Text.text = "* " + enemy_name
+		text_box.modulate = Color.YELLOW
+	text_box.set_new_text("* " + enemy_name)
 	gonna_act = true
 
 func do_act(act_name: String) -> void:
@@ -304,7 +302,7 @@ func do_act(act_name: String) -> void:
 	for button: Button in %OptionsContainer.get_children():
 		button.queue_free()
 	%OptionsContainer.hide()
-	%Text.display(enemy.do_act_get_text(act_name))
+	text_box.scroll(enemy.do_act_get_text(act_name))
 	is_choosing_act = false
 	is_reading_act_text = true
 
@@ -315,7 +313,7 @@ func use_item(item: Item) -> void:
 		button.queue_free()
 		%OptionsContainer.hide()
 	player_hp += item.amount
-	%Text.display(item.text)
+	text_box.scroll(item.text)
 	items.erase(item)
 	is_choosing_item = false
 	is_reading_item_text = true
@@ -325,8 +323,8 @@ func _on_mercy_button_pressed() -> void:
 	gonna_spare = true
 	%ButtonsContainer.hide()
 	if can_spare:
-		%Text.modulate = Color.YELLOW
-	%Text.text = "* " + enemy_name
+		text_box.modulate = Color.YELLOW
+	text_box.set_new_text("* " + enemy_name)
 
 func _on_item_button_pressed() -> void:
 	%SelectSound.play()
@@ -334,7 +332,7 @@ func _on_item_button_pressed() -> void:
 	is_choosing_item = true
 	%ButtonsContainer.hide()
 	%OptionsContainer.show()
-	%Text.clear_text()
+	text_box.clear_text()
 	for item: Item in items:
 		var button := Button.new()
 		button.theme = theme
@@ -373,3 +371,7 @@ func monster_speaking_anim() -> void:
 	for i in range(2):
 		tween.tween_property(%MonsterSprite, "scale", anim_dim, delta)
 		tween.tween_property(%MonsterSprite, "scale", og_dim, delta)
+
+func change_box_size(new_size: Vector2, delta: float = 0.3) -> void:
+	var tween := get_tree().create_tween()
+	tween.tween_property(%Box, "scale", new_size, delta).set_ease(Tween.EASE_IN_OUT)
