@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bglhx60dodqh6"
-path="res://.godot/imported/undertale_nine_patch.png-c049549c140a6d986690ec6cdf07117e.ctex"
+uid="uid://dg54iaq6tmokf"
+path="res://.godot/imported/nine_patch.png-a0e0fcd839edecf7aa76fe13572881fe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/undertale_nine_patch.png"
-dest_files=["res://.godot/imported/undertale_nine_patch.png-c049549c140a6d986690ec6cdf07117e.ctex"]
+source_file="res://sprites/nine_patch.png"
+dest_files=["res://.godot/imported/nine_patch.png-a0e0fcd839edecf7aa76fe13572881fe.ctex"]
 
 [params]
 

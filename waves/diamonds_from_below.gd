@@ -1,13 +1,11 @@
 extends Wave
 
-const LINEAR_BULLET := preload("uid://cd8wtan5lb4ls")
-
 func  _ready() -> void:
 	# Right Below the battle box:
 	global_position = Vector2(656, get_viewport_rect().size.y)
 
 func _on_spawn_timer_timeout() -> void:
-	var bullet := LINEAR_BULLET.instantiate()
+	var bullet = bullet_scene.instantiate()
 	add_child(bullet)
 	%PathFollow2D.progress_ratio = randf()
 	bullet.global_transform = %PathFollow2D.global_transform

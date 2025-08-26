@@ -9,9 +9,8 @@ func _physics_process(delta: float) -> void:
 	rotation_degrees += delta * 100
 
 func _on_spawn_timer_timeout() -> void:
-	const linear_bullet := preload("uid://cd8wtan5lb4ls")
 	for spawner: Node2D in %Spawners.get_children():
-		var instance := linear_bullet.instantiate()
+		var instance := bullet_scene.instantiate()
 		Global.add_bullet.emit(instance, spawner.global_transform)
 
 func _on_end_timer_timeout() -> void:

@@ -1,7 +1,5 @@
 extends Wave
 
-const bullet_scene := preload("uid://cw2m41h21w5dk")
-
 func _ready() -> void:
 	_on_spawn_timer_timeout()
 

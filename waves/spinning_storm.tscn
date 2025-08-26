@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxvhasownaa34"]
+[gd_scene load_steps=5 format=3 uid="uid://cxvhasownaa34"]
 
 [ext_resource type="PackedScene" uid="uid://b8swhgvxqle3i" path="res://waves/wave.tscn" id="1_3gat6"]
 [ext_resource type="Script" uid="uid://dwudbckc03tyf" path="res://waves/spinning_storm.gd" id="1_4t0v7"]
 [ext_resource type="Texture2D" uid="uid://qk57agdnwi8" path="res://icon.svg" id="2_3gat6"]
+[ext_resource type="PackedScene" uid="uid://vy7eelm7fbgd" path="res://bullets/linear_bullet.tscn" id="3_ia4xi"]
 
 [node name="SpinningStorm" instance=ExtResource("1_3gat6")]
 script = ExtResource("1_4t0v7")
+bullet_scene = ExtResource("3_ia4xi")
 
 [node name="Spawners" type="Node2D" parent="." index="0"]
 unique_name_in_owner = true

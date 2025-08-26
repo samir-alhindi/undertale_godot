@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxfj73jvyfisf"]
+
+[ext_resource type="PackedScene" uid="uid://b8swhgvxqle3i" path="res://waves/wave.tscn" id="1_v53xw"]
+[ext_resource type="Script" uid="uid://dpeietywj7kdf" path="res://waves/shoot_1.gd" id="2_y5srv"]
+[ext_resource type="PackedScene" uid="uid://gjkaog25qkwy" path="res://bullets/simple_shootable.tscn" id="3_3iwr3"]
+
+[sub_resource type="Curve2D" id="Curve2D_ynafl"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -300, 0, 0, 0, 0, 0, 300, 0)
+}
+point_count = 2
+
+[node name="Shoot1" instance=ExtResource("1_v53xw")]
+script = ExtResource("2_y5srv")
+mode = 2
+bullet_scene = ExtResource("3_3iwr3")
+
+[node name="SpawnTimer" parent="." index="0"]
+wait_time = 0.1
+
+[node name="Instructions" type="Label" parent="." index="2"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.498039)
+offset_right = 212.0
+offset_bottom = 20.0
+theme_override_font_sizes/font_size = 35
+text = "* Press Z to shoot !!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Path2D" type="Path2D" parent="." index="3"]
+curve = SubResource("Curve2D_ynafl")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" index="0"]
+unique_name_in_owner = true
+position = Vector2(-300, 0)

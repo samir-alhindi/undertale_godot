@@ -1,8 +1,4 @@
-extends Node2D
-
-var speed := 500
-var damage_amount := 5 
-var freed_on_hit := true
+extends Bullet
 
 func _physics_process(delta: float) -> void:
 	position += delta * speed * global_transform.y

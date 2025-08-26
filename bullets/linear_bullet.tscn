@@ -1,18 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cd8wtan5lb4ls"]
+[gd_scene load_steps=3 format=3 uid="uid://vy7eelm7fbgd"]
 
 [ext_resource type="Script" uid="uid://bs1k3j32otdkj" path="res://bullets/linear_bullet.gd" id="1_j3t7x"]
+[ext_resource type="PackedScene" uid="uid://c6cn3s1xtkoow" path="res://bullets/bullet.tscn" id="1_obpkm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3q1om"]
-size = Vector2(16, 34)
-
-[node name="LinearBullet" type="Area2D" groups=["bullet"]]
+[node name="LinearBullet" instance=ExtResource("1_obpkm")]
 script = ExtResource("1_j3t7x")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -10.0
-offset_top = -19.0
-offset_right = 10.0
-offset_bottom = 20.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_3q1om")

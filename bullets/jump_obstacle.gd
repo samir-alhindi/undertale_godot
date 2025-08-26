@@ -1,9 +1,6 @@
-class_name JumpObstacle extends Area2D
+class_name JumpObstacle extends Bullet
 
-var dir := Vector2.LEFT
-var speed := 300
-var damage_amount := 5 
-var freed_on_hit := true
+@export var dir := Vector2.LEFT
 
 static var battle_box_bottom: int = 751
 

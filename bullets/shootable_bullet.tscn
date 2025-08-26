@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b0wl1"]
 size = Vector2(52, 51)
 
-[node name="ShootableBullet" type="Area2D" groups=["bullet", "shootable_bullet"]]
+[node name="ShootableBullet" type="Area2D" groups=["shootable_bullet"]]
 script = ExtResource("1_rl6hv")
 
 [node name="ColorRect" type="ColorRect" parent="."]

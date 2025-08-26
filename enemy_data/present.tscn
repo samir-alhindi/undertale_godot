@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ldqwmv40ctde" path="res://enemy_data/present.gd" id="1_kvdy5"]
 [ext_resource type="Texture2D" uid="uid://cyplkly6rcn5k" path="res://sprites/Present_Enemy_1_battle.webp" id="2_otxd1"]
-[ext_resource type="PackedScene" uid="uid://cn7mcph1jmflh" path="res://waves/shoot_1.tscn" id="3_5yan0"]
+[ext_resource type="PackedScene" uid="uid://cxfj73jvyfisf" path="res://bullets/shoot_1.tscn" id="3_5yan0"]
 
 [node name="Present" type="Node"]
 script = ExtResource("1_kvdy5")

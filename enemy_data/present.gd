@@ -13,4 +13,4 @@ func get_idle_text() -> String:
 	return ""
 
 func get_monster_text() -> String:
-	return ""
+	return "Get ready!"

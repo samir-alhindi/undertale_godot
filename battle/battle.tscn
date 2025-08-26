@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=44 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://csj3basn1h8wt" path="res://items/apple.tres" id="4_phvbk"]
 [ext_resource type="Resource" uid="uid://buheun3jb126i" path="res://items/nice_cream.tres" id="5_sf8fp"]
 [ext_resource type="AudioStream" uid="uid://byp2svo436sh6" path="res://sounds/snd_select.wav" id="6_l1kiu"]
+[ext_resource type="Texture2D" uid="uid://dg54iaq6tmokf" path="res://sprites/nine_patch.png" id="7_2t7ue"]
 [ext_resource type="AudioStream" uid="uid://bg6fcjorkrh23" path="res://sounds/snd_squeak.wav" id="7_7fucf"]
 [ext_resource type="PackedScene" uid="uid://cowlpeawlvafn" path="res://text_box/text_box.tscn" id="7_7njrs"]
 [ext_resource type="AudioStream" uid="uid://dhbvccgm7a5sj" path="res://sounds/snd_hurt1.wav" id="8_iorop"]
@@ -27,57 +28,12 @@
 [ext_resource type="Texture2D" uid="uid://qmi8o2j171cs" path="res://sprites/bg.png" id="19_phvbk"]
 [ext_resource type="AudioStream" uid="uid://byrdnb2dtwnud" path="res://sounds/Undertale Sound Effect - Attack Hit 4.mp3" id="26_7njrs"]
 
-[sub_resource type="Gradient" id="Gradient_phvbk"]
-offsets = PackedFloat32Array(0)
-colors = PackedColorArray(1, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_sf8fp"]
-gradient = SubResource("Gradient_phvbk")
-
-[sub_resource type="Gradient" id="Gradient_sf8fp"]
-colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ihybe"]
-gradient = SubResource("Gradient_sf8fp")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qubjc"]
-size = Vector2(7, 309)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6hnvb"]
-size = Vector2(1165, 6)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_1e446"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("12_as1q7")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_7njrs")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_2t7ue")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_j5lq4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_562sy")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_kc5qh")
-}],
-"loop": false,
-"name": &"default",
-"speed": 5.0
-}]
-
 [sub_resource type="Animation" id="Animation_6hnvb"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Box/AttackLine:position")
+tracks/0/path = NodePath("UI/Box/AttackLine:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -89,7 +45,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Control/Box:scale")
+tracks/1/path = NodePath("UI/Box:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -152,7 +108,7 @@ resource_name = "attack"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Box/AttackLine:position")
+tracks/0/path = NodePath("UI/Box/AttackLine:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -184,7 +140,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Box:scale")
+tracks/0/path = NodePath("UI/Box:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -235,7 +191,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Box:scale")
+tracks/0/path = NodePath("UI/Box:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -257,16 +213,67 @@ _data = {
 &"start_hell": SubResource("Animation_4mnim")
 }
 
+[sub_resource type="Gradient" id="Gradient_phvbk"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sf8fp"]
+gradient = SubResource("Gradient_phvbk")
+
+[sub_resource type="Gradient" id="Gradient_sf8fp"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ihybe"]
+gradient = SubResource("Gradient_sf8fp")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qubjc"]
+size = Vector2(7, 309)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6hnvb"]
+size = Vector2(1165, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1e446"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_as1q7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_7njrs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_2t7ue")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_j5lq4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_562sy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_kc5qh")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_mqutd")
 items = Array[ExtResource("2_a56dj")]([ExtResource("3_dxsh4"), ExtResource("4_phvbk"), ExtResource("5_sf8fp")])
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_4mnim")
+}
 
 [node name="BG" type="Sprite2D" parent="."]
 position = Vector2(640, 492)
 scale = Vector2(2, 2)
 texture = ExtResource("19_phvbk")
 
-[node name="Control" type="Control" parent="."]
+[node name="UI" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
@@ -275,7 +282,7 @@ offset_top = 522.0
 offset_right = 640.0
 offset_bottom = 522.0
 
-[node name="UI" type="VBoxContainer" parent="Control"]
+[node name="StatsAndButtons" type="VBoxContainer" parent="UI"]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = -547.0
@@ -284,31 +291,31 @@ offset_right = 585.0
 offset_bottom = 384.0
 theme_override_constants/separation = 20
 
-[node name="StatsContainer" type="HBoxContainer" parent="Control/UI"]
+[node name="StatsContainer" type="HBoxContainer" parent="UI/StatsAndButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="Name" type="Label" parent="Control/UI/StatsContainer"]
+[node name="Name" type="Label" parent="UI/StatsAndButtons/StatsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Chara"
 
-[node name="LV" type="Label" parent="Control/UI/StatsContainer"]
+[node name="LV" type="Label" parent="UI/StatsAndButtons/StatsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "LV 1"
 
-[node name="HP" type="Label" parent="Control/UI/StatsContainer"]
+[node name="HP" type="Label" parent="UI/StatsAndButtons/StatsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "HP"
 
-[node name="HPBar" type="TextureProgressBar" parent="Control/UI/StatsContainer"]
+[node name="HPBar" type="TextureProgressBar" parent="UI/StatsAndButtons/StatsContainer"]
 unique_name_in_owner = true
 modulate = Color(1, 1, 0, 1)
 custom_minimum_size = Vector2(200, 40)
@@ -319,48 +326,48 @@ nine_patch_stretch = true
 texture_under = SubResource("GradientTexture2D_sf8fp")
 texture_progress = SubResource("GradientTexture2D_ihybe")
 
-[node name="HP2" type="Label" parent="Control/UI/StatsContainer"]
+[node name="HP2" type="Label" parent="UI/StatsAndButtons/StatsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(168, 48)
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "20 / 20"
 
-[node name="ButtonsContainer" type="HBoxContainer" parent="Control/UI"]
+[node name="ButtonsContainer" type="HBoxContainer" parent="UI/StatsAndButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
-[node name="AttackButton" type="Button" parent="Control/UI/ButtonsContainer"]
+[node name="AttackButton" type="Button" parent="UI/StatsAndButtons/ButtonsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Attack"
 
-[node name="ActButton" type="Button" parent="Control/UI/ButtonsContainer"]
+[node name="ActButton" type="Button" parent="UI/StatsAndButtons/ButtonsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Act"
 
-[node name="ItemButton" type="Button" parent="Control/UI/ButtonsContainer"]
+[node name="ItemButton" type="Button" parent="UI/StatsAndButtons/ButtonsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Item"
 
-[node name="MercyButton" type="Button" parent="Control/UI/ButtonsContainer"]
+[node name="MercyButton" type="Button" parent="UI/StatsAndButtons/ButtonsContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 text = "Mercy"
 
-[node name="Box" type="ColorRect" parent="Control"]
+[node name="Box" type="NinePatchRect" parent="UI"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
@@ -375,71 +382,22 @@ offset_bottom = 235.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(590, 145)
+texture = ExtResource("7_2t7ue")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
 
-[node name="BoxColorRect" type="ColorRect" parent="Control/Box"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 6.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = -6.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
-
-[node name="TextBox" parent="Control/Box/BoxColorRect" instance=ExtResource("7_7njrs")]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.022
-anchor_top = 0.069
-anchor_right = 0.976
-anchor_bottom = 0.928
-offset_left = 0.227999
-offset_top = -0.114002
-offset_right = 0.0239258
-offset_bottom = 0.0319824
-
-[node name="AttackBar" type="Sprite2D" parent="Control/Box/BoxColorRect"]
+[node name="AttackBar" type="Sprite2D" parent="UI/Box"]
 unique_name_in_owner = true
 visible = false
-position = Vector2(582.998, 137.5)
+position = Vector2(588.998, 145.5)
 scale = Vector2(2.07169, 2.152)
 texture = ExtResource("2_qubjc")
 region_enabled = true
 region_rect = Rect2(7.04988, 24.3621, 558.95, 125.045)
 
-[node name="Border" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
-position = Vector2(2, 5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border"]
-position = Vector2(-5.5, 152.5)
-shape = SubResource("RectangleShape2D_qubjc")
-
-[node name="Border2" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
-position = Vector2(1135.5, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border2"]
-position = Vector2(34.5, 156)
-shape = SubResource("RectangleShape2D_qubjc")
-
-[node name="Border3" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border3"]
-position = Vector2(584, -4)
-shape = SubResource("RectangleShape2D_6hnvb")
-
-[node name="Border4" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
-position = Vector2(0, 315)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border4"]
-position = Vector2(583.5, -36)
-shape = SubResource("RectangleShape2D_6hnvb")
-
-[node name="AttackLine" type="ColorRect" parent="Control/Box"]
+[node name="AttackLine" type="ColorRect" parent="UI/Box"]
 unique_name_in_owner = true
 visible = false
 z_index = 1
@@ -457,22 +415,62 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(14, 100)
 
-[node name="OptionsContainer" type="GridContainer" parent="Control/Box"]
+[node name="OptionsContainer" type="GridContainer" parent="UI/Box"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = 40.0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = -25.0
+offset_bottom = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 400
 theme_override_constants/v_separation = 20
 columns = 2
+
+[node name="TextBox" parent="UI/Box" instance=ExtResource("7_7njrs")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.022
+anchor_top = 0.069
+anchor_right = 0.976
+anchor_bottom = 0.928
+offset_left = 5.92
+offset_top = 6.91999
+offset_right = 5.71594
+offset_bottom = 7.06598
+
+[node name="Border" type="StaticBody2D" parent="UI/Box"]
+position = Vector2(8, 13)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border"]
+position = Vector2(-5.5, 152.5)
+shape = SubResource("RectangleShape2D_qubjc")
+
+[node name="Border2" type="StaticBody2D" parent="UI/Box"]
+position = Vector2(1141.5, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border2"]
+position = Vector2(34.5, 156)
+shape = SubResource("RectangleShape2D_qubjc")
+
+[node name="Border3" type="StaticBody2D" parent="UI/Box"]
+position = Vector2(6, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border3"]
+position = Vector2(584, -4)
+shape = SubResource("RectangleShape2D_6hnvb")
+
+[node name="Border4" type="StaticBody2D" parent="UI/Box"]
+position = Vector2(6, 323)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border4"]
+position = Vector2(583.5, -36)
+shape = SubResource("RectangleShape2D_6hnvb")
 
 [node name="Monster" type="Node2D" parent="." groups=["enemy"]]
 unique_name_in_owner = true
@@ -539,11 +537,9 @@ sprite_frames = SubResource("SpriteFrames_1e446")
 frame = 5
 frame_progress = 1.0
 
-[node name="Anim" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_4mnim")
-}
+[node name="Bullets" type="Node2D" parent="."]
+
+[node name="DebugMarker" type="Marker2D" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -558,12 +554,14 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0)
 metadata/_edit_use_anchors_ = true
 
-[node name="DebugMarker" type="Marker2D" parent="."]
-position = Vector2(933, 631)
-
 [node name="UiCooldownTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 0.25
+one_shot = true
+
+[node name="MissTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.7
 one_shot = true
 
 [node name="Sounds" type="Node" parent="."]
@@ -605,17 +603,10 @@ stream = ExtResource("13_eu6g2")
 unique_name_in_owner = true
 stream = ExtResource("26_7njrs")
 
-[node name="Bullets" type="Node2D" parent="."]
-
-[node name="MissTimer" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 0.7
-one_shot = true
-
-[connection signal="pressed" from="Control/UI/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
-[connection signal="pressed" from="Control/UI/ButtonsContainer/ActButton" to="." method="_on_act_button_pressed"]
-[connection signal="pressed" from="Control/UI/ButtonsContainer/ItemButton" to="." method="_on_item_button_pressed"]
-[connection signal="pressed" from="Control/UI/ButtonsContainer/MercyButton" to="." method="_on_mercy_button_pressed"]
-[connection signal="animation_finished" from="Monster/Knife" to="." method="_on_knife_animation_finished"]
 [connection signal="animation_finished" from="Anim" to="." method="_on_anim_animation_finished"]
+[connection signal="pressed" from="UI/StatsAndButtons/ButtonsContainer/AttackButton" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="UI/StatsAndButtons/ButtonsContainer/ActButton" to="." method="_on_act_button_pressed"]
+[connection signal="pressed" from="UI/StatsAndButtons/ButtonsContainer/ItemButton" to="." method="_on_item_button_pressed"]
+[connection signal="pressed" from="UI/StatsAndButtons/ButtonsContainer/MercyButton" to="." method="_on_mercy_button_pressed"]
+[connection signal="animation_finished" from="Monster/Knife" to="." method="_on_knife_animation_finished"]
 [connection signal="timeout" from="MissTimer" to="." method="_on_miss_timer_timeout"]

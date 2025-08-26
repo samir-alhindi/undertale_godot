@@ -19,7 +19,7 @@ func set_new_text(new_text: String) -> void:
 	text = new_text
 
 func _on_timer_timeout() -> void:
-	if visible_ratio == 1.0:
+	if visible_ratio == 1.0 or len(text) == 0:
 		%Timer.stop()
 		finished_scrolling.emit()
 		return

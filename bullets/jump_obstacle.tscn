@@ -1,20 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://cw2m41h21w5dk"]
+[gd_scene load_steps=3 format=3 uid="uid://mo6ifyrp7ntd"]
 
+[ext_resource type="PackedScene" uid="uid://c6cn3s1xtkoow" path="res://bullets/bullet.tscn" id="1_c7bd3"]
 [ext_resource type="Script" uid="uid://bn8ckpviwq02e" path="res://bullets/jump_obstacle.gd" id="1_cmb32"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u34x2"]
-size = Vector2(16, 37.5)
-
-[node name="JumpObstacle" type="Area2D" groups=["bullet"]]
+[node name="JumpObstacle" instance=ExtResource("1_c7bd3")]
 scale = Vector2(1, 3)
 script = ExtResource("1_cmb32")
+dir = Vector2(-1, 0)
+speed = 300
 
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -10.0
-offset_top = -39.3333
-offset_right = 10.0
-offset_bottom = -0.333336
+[node name="ColorRect" parent="." index="0"]
+offset_top = -39.0
+offset_bottom = 0.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -20.3333)
-shape = SubResource("RectangleShape2D_u34x2")
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2(0, -20)
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="2"]
+position = Vector2(0.25, -20.5)
+scale = Vector2(1.175, 2.11667)

@@ -142,11 +142,13 @@ func _input(event: InputEvent) -> void:
 		
 	elif event.is_action_pressed("ui_accept") and gonna_spare:
 		if can_spare:
+			gonna_spare = false
 			can_spare = false
 			%BattleDone.play()
 			%Music.stop()
 			battle_won = true
 			%MonsterSprite.modulate.a = 0.5
+			
 			var gold := randi_range(50, 75)
 			text_box.scroll("Battle won\nGot 0 EXP and %d Gold" % gold)
 			await text_box.finished_scrolling
@@ -220,6 +222,7 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 		change_box_size(Vector2(1.0, 1.0))
 		particles.finished.connect(func():
 			text_box.scroll("Battle Lost...")
+			await text_box.finished_scrolling
 			%Anim.play("fade_into_black")
 			)
 
@@ -241,6 +244,7 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		# Rest of the logic is in '_on_miss_timer_timeout'.
 	elif anim_name == "die":
 		change_box_size(Vector2(1.0, 1.0))
+		text_box.modulate = Color.RED
 		var exp := randi_range(25, 50)
 		var gold := randi_range(20, 30)
 		text_box.scroll("Battle won\nGot %d EXP and %d Gold" % [exp, gold])

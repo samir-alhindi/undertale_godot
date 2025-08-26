@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://gjkaog25qkwy"]
+
+[ext_resource type="PackedScene" uid="uid://vy7eelm7fbgd" path="res://bullets/linear_bullet.tscn" id="1_4dv3r"]
+
+[node name="SimpleShootable" instance=ExtResource("1_4dv3r")]
+rotation = 3.14159
+shootable = true
+
+[node name="ColorRect" parent="." index="0"]
+color = Color(0.30825, 0.673752, 1, 1)
