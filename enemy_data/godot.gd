@@ -31,7 +31,7 @@ func get_idle_text() -> String:
 func get_monster_text() -> String:
 	if just_insulted:
 		just_insulted = false
-		return "How dare you insult the best language!"
+		return shake("How dare you insult the best language!")
 	if chat_counter == 1: return "Not bad!"
-	elif chat_counter == 2: return "You are a true Godot enthusiast!"
-	return  "I will crush you to BITs!"
+	elif chat_counter == 2: return wave("You are a true Godot enthusiast!")
+	return shake("I will crush you to BITs!")

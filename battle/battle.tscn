@@ -514,6 +514,7 @@ rotation = 0.785398
 
 [node name="MonsterTextBox" parent="Monster/SpeechBox" instance=ExtResource("10_as1q7")]
 unique_name_in_owner = true
+clip_contents = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.045

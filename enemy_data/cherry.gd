@@ -36,9 +36,9 @@ var i := -1
 func get_monster_text() -> String:
 	if just_cheered:
 		just_cheered = false
-		return "I love your moves <3"
+		return wave("I love your moves <3")
 	elif just_talked_football:
 		just_talked_football = false
-		return "OMG you know that team too <3"
+		return wave("OMG you know that team too <3")
 	i += 1
-	return "Go Go Hotland lizards <3" if i % 2 == 0 else "Cheerleading is a lifestyle <3"
+	return wave("Go Go Hotland lizards <3") if i % 2 == 0 else wave("Cheerleading is a lifestyle <3")

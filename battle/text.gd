@@ -24,8 +24,11 @@ func _on_timer_timeout() -> void:
 		finished_scrolling.emit()
 		return
 	%TextSound.play()
-	%Timer.wait_time = slow_speed if text[visible_characters] in [".", "\n"] else normal_speed
+	%Timer.wait_time = slow_speed if next_char() in [".", "\n"] else normal_speed
 	visible_characters += 1
+
+func next_char() -> String:
+	return "" if visible_characters+1 == len(text) else text[visible_characters+1]
 
 func clear_text() -> void:
 	%Timer.stop()
