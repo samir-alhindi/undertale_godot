@@ -41,10 +41,10 @@ colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 1)
 gradient = SubResource("Gradient_sf8fp")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qubjc"]
-size = Vector2(9.5, 323)
+size = Vector2(7, 309)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6hnvb"]
-size = Vector2(1143.5, 9)
+size = Vector2(1165, 6)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1e446"]
 animations = [{
@@ -159,7 +159,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(7, 63), Vector2(1070, 63)]
+"values": [Vector2(7, 63), Vector2(1100, 63)]
 }
 
 [sub_resource type="Animation" id="Animation_vlrs1"]
@@ -271,9 +271,9 @@ unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = 640.0
-offset_top = 552.0
+offset_top = 522.0
 offset_right = 640.0
-offset_bottom = 552.0
+offset_bottom = 522.0
 
 [node name="UI" type="VBoxContainer" parent="Control"]
 unique_name_in_owner = true
@@ -368,13 +368,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -556.0
-offset_top = -140.0
-offset_right = 584.0
-offset_bottom = 180.0
+offset_left = -590.0
+offset_top = -55.0
+offset_right = 590.0
+offset_bottom = 235.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(570.5, 160)
+pivot_offset = Vector2(590, 145)
 
 [node name="BoxColorRect" type="ColorRect" parent="Control/Box"]
 unique_name_in_owner = true
@@ -406,36 +406,37 @@ offset_bottom = 0.0319824
 [node name="AttackBar" type="Sprite2D" parent="Control/Box/BoxColorRect"]
 unique_name_in_owner = true
 visible = false
-position = Vector2(563.998, 154.5)
-scale = Vector2(2.00359, 2.344)
+position = Vector2(582.998, 137.5)
+scale = Vector2(2.07169, 2.152)
 texture = ExtResource("2_qubjc")
 region_enabled = true
 region_rect = Rect2(7.04988, 24.3621, 558.95, 125.045)
 
 [node name="Border" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
+position = Vector2(2, 5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border"]
-position = Vector2(-5.25, 151.5)
+position = Vector2(-5.5, 152.5)
 shape = SubResource("RectangleShape2D_qubjc")
 
 [node name="Border2" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
 position = Vector2(1135.5, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border2"]
-position = Vector2(-5.25, 151.5)
+position = Vector2(34.5, 156)
 shape = SubResource("RectangleShape2D_qubjc")
 
 [node name="Border3" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border3"]
-position = Vector2(561.75, -4.5)
+position = Vector2(584, -4)
 shape = SubResource("RectangleShape2D_6hnvb")
 
 [node name="Border4" type="StaticBody2D" parent="Control/Box/BoxColorRect"]
 position = Vector2(0, 315)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Control/Box/BoxColorRect/Border4"]
-position = Vector2(561.75, -4.5)
+position = Vector2(583.5, -36)
 shape = SubResource("RectangleShape2D_6hnvb")
 
 [node name="AttackLine" type="ColorRect" parent="Control/Box"]
@@ -448,10 +449,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -563.0
-offset_top = -97.0
-offset_right = -535.0
-offset_bottom = 97.0
+offset_left = -583.0
+offset_top = -82.0
+offset_right = -555.0
+offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(14, 100)
@@ -475,7 +476,7 @@ columns = 2
 
 [node name="Monster" type="Node2D" parent="." groups=["enemy"]]
 unique_name_in_owner = true
-position = Vector2(645, 183)
+position = Vector2(645, 213)
 
 [node name="MonsterSprite" type="Sprite2D" parent="Monster"]
 unique_name_in_owner = true
@@ -527,7 +528,7 @@ offset_right = -0.0100098
 offset_bottom = -0.0620117
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("11_7njrs")
-theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/normal_font_size = 30
 text = " Hello!sdfghjgfds"
 
 [node name="Knife" type="AnimatedSprite2D" parent="Monster"]
@@ -558,7 +559,7 @@ color = Color(0, 0, 0, 0)
 metadata/_edit_use_anchors_ = true
 
 [node name="DebugMarker" type="Marker2D" parent="."]
-position = Vector2(1283, 275)
+position = Vector2(933, 631)
 
 [node name="UiCooldownTimer" type="Timer" parent="."]
 unique_name_in_owner = true

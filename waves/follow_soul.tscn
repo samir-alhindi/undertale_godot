@@ -5,3 +5,4 @@
 
 [node name="FollowSoul" instance=ExtResource("1_oulgp")]
 script = ExtResource("2_a7og0")
+box_size = Vector2(0.25, 1)
