@@ -22,6 +22,7 @@ func _ready() -> void:
 		Mode.YELLOW:
 			color = Color.YELLOW
 			%Sprite2D.texture = preload("uid://bgiewq6am86ut")
+			%Hurtbox.rotate(PI)
 
 func _physics_process(delta: float) -> void:
 	match mode:

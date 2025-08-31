@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
-[ext_resource type="Texture2D" uid="uid://bubk6ccjybj0" path="res://sprites/attack.png" id="2_qubjc"]
 [ext_resource type="Resource" uid="uid://cdwpd7gdg4qdj" path="res://items/pie.tres" id="3_dxsh4"]
 [ext_resource type="FontFile" uid="uid://bsdludjyf4ury" path="res://themes/undertale-damage.otf" id="3_hvjow"]
 [ext_resource type="Resource" uid="uid://csj3basn1h8wt" path="res://items/apple.tres" id="4_phvbk"]
 [ext_resource type="Resource" uid="uid://buheun3jb126i" path="res://items/nice_cream.tres" id="5_sf8fp"]
 [ext_resource type="AudioStream" uid="uid://byp2svo436sh6" path="res://sounds/snd_select.wav" id="6_l1kiu"]
+[ext_resource type="Texture2D" uid="uid://budfuioj3f6wu" path="res://sprites/Undertale.png" id="7_2t7ue"]
 [ext_resource type="AudioStream" uid="uid://bg6fcjorkrh23" path="res://sounds/snd_squeak.wav" id="7_7fucf"]
 [ext_resource type="PackedScene" uid="uid://cowlpeawlvafn" path="res://text_box/text_box.tscn" id="7_7njrs"]
 [ext_resource type="AudioStream" uid="uid://dhbvccgm7a5sj" path="res://sounds/snd_hurt1.wav" id="8_iorop"]
@@ -114,7 +114,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(7, 63), Vector2(1100, 63)]
+"values": [Vector2(7, 48), Vector2(1100, 48)]
 }
 
 [sub_resource type="Animation" id="Animation_vlrs1"]
@@ -392,10 +392,10 @@ color = Color(0, 0, 0, 1)
 [node name="AttackBar" type="Sprite2D" parent="UI/Box"]
 unique_name_in_owner = true
 visible = false
+texture_filter = 1
 position = Vector2(588.998, 145.5)
-scale = Vector2(2.07169, 2.152)
-texture = ExtResource("2_qubjc")
-region_enabled = true
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_2t7ue")
 region_rect = Rect2(7.04988, 24.3621, 558.95, 125.045)
 
 [node name="AttackLine" type="ColorRect" parent="UI/Box"]
@@ -415,6 +415,20 @@ offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(14, 100)
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect" type="ColorRect" parent="UI/Box/AttackLine"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 1)
 
 [node name="OptionsContainer" type="GridContainer" parent="UI/Box"]
 unique_name_in_owner = true
@@ -444,6 +458,7 @@ offset_left = 5.92
 offset_top = 6.91999
 offset_right = 5.71594
 offset_bottom = 7.06598
+bbcode_enabled = true
 
 [node name="Border" type="StaticBody2D" parent="UI/Box"]
 position = Vector2(8, 13)

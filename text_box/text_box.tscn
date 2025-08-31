@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cowlpeawlvafn"]
 
-[ext_resource type="Script" uid="uid://cxsnx4tvhus7o" path="res://battle/text.gd" id="1_35xxs"]
+[ext_resource type="Script" uid="uid://cxsnx4tvhus7o" path="res://battle/text_box.gd" id="1_35xxs"]
 [ext_resource type="AudioStream" uid="uid://x8op6wfspisx" path="res://sounds/SND_TXT2.wav" id="2_js0o0"]
 
 [node name="TextBox" type="RichTextLabel"]

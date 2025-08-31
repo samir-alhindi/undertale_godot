@@ -34,6 +34,7 @@ var acts: Array[String] = []
 var bullet_waves: Array[PackedScene] = []
 
 var theme := preload("uid://cf0xm6i8snote")
+var button := preload("uid://ptt71q0lsxgx")
 
 @onready var text_box: TextBox = %TextBox
 @onready var monster_text_box: MonsterTextBox = %MonsterTextBox
@@ -41,7 +42,15 @@ var theme := preload("uid://cf0xm6i8snote")
 static var enemy: Enemy
 
 func _ready() -> void:
-	 
+	
+	%AttackBar.modulate.a = 0.0
+	%AttackLine.modulate.a = 0.0
+	%SpeechBox.modulate.a = 0.0
+	
+	%AttackBar.show()
+	%AttackLine.show()
+	%SpeechBox.show()
+	
 	# set up enemy:
 	%Monster.add_child(enemy)
 	%MonsterSprite.texture = enemy.sprite
@@ -84,10 +93,10 @@ func _ready() -> void:
 	
 	
 	for button: Button in %ButtonsContainer.get_children():
-		button.focus_entered.connect(on_focus_entered)
-
-func on_focus_entered() -> void:
-	%MoveSound.play()
+		button.pivot_offset = button.size / 2
+		button.focus_entered.connect(
+			_on_focus_entered.bind(button)
+		)
 
 func monster_position() -> Vector2:
 	return get_tree().get_first_node_in_group("enemy").global_position
@@ -96,9 +105,8 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and gonna_attack:
 		%SelectSound.play()
 		text_box.modulate = Color.WHITE
-		%AttackBar.show()
+		attack_bar_visibility(true)
 		text_box.clear_text()
-		%AttackLine.show()
 		%Anim.play("attack")
 		gonna_attack = false
 		is_attacking = true
@@ -106,6 +114,9 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_accept") and is_attacking:
 		is_attacking = false
 		%Anim.pause() # Stop the attack line from moving so it doesn't trigger the 'Miss' animation.
+		var tween := get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT)
+		tween.tween_property(%AttackLine, "scale", Vector2(1.25, 1.25), .25)
+		tween.tween_property(%AttackLine, "scale", Vector2(1, 1), .25)
 		%KnifeSlashSound.play()
 		%Knife.show()
 		%Knife.global_position = monster_position()
@@ -119,12 +130,10 @@ func _input(event: InputEvent) -> void:
 		text_box.clear_text()
 		text_box.modulate = Color.WHITE
 		for act: String in acts:
-			var button := Button.new()
-			button.theme = theme
-			button.text = "* " + act
-			button.custom_minimum_size = Vector2(100, 50)
-			button.alignment = HORIZONTAL_ALIGNMENT_LEFT 
-			button.add_theme_font_size_override("font_size", 50)
+			var button: Button = button.instantiate()
+			button.get_node("text").text = Text.shake(act)
+			button.focus_exited.connect(func():
+				button.modulate.a  = 0.5)
 			button.pressed.connect(do_act.bind(act))
 			%OptionsContainer.add_child(button)
 		%OptionsContainer.get_child(0).grab_focus()
@@ -137,7 +146,7 @@ func _input(event: InputEvent) -> void:
 		text_box.clear_text()
 		monster_speaking = true
 		monster_text = enemy.get_monster_text()
-		%SpeechBox.show()
+		speech_bubble_visibility(true)
 		monster_text_box.speak(monster_text)
 		
 	elif event.is_action_pressed("ui_accept") and gonna_spare:
@@ -149,6 +158,9 @@ func _input(event: InputEvent) -> void:
 			battle_won = true
 			%MonsterSprite.modulate.a = 0.5
 			
+			create_tween().tween_property(%Box, "scale", Vector2(2, 2), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+			create_tween().tween_property(%Box, "scale", Vector2(1, 1), 0.5).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+			
 			var gold := randi_range(50, 75)
 			text_box.scroll("Battle won\nGot 0 EXP and %d Gold" % gold)
 			await text_box.finished_scrolling
@@ -159,7 +171,7 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("ui_accept") and monster_speaking:
 		monster_speaking = false
 		monster_text_box.stop_talking()
-		%SpeechBox.hide()
+		speech_bubble_visibility(false)
 		start_hell()
 	
 	
@@ -237,7 +249,7 @@ func _on_attack_button_pressed() -> void:
 func _on_anim_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "attack":
 		is_attacking = false
-		%AttackLine.hide()
+		%AttackLine.modulate.a = 0.0
 		%Damage.text = "miss"
 		%Damage.show()
 		%MissTimer.start()
@@ -254,7 +266,7 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		get_tree().change_scene_to_file("uid://cnxrqinpyif6b")
 	elif anim_name == "monster_hurt":
 		%Damage.hide()
-		%AttackBar.hide()
+		attack_bar_visibility(false)
 		if enemy_hp <= 0:
 			battle_won = true
 			%Anim.play("die")
@@ -263,7 +275,7 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 			return
 			# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
 		monster_speaking = true
-		%SpeechBox.show()
+		speech_bubble_visibility(true)
 		monster_text_box.speak(monster_text)
 
 var wave_index := 0
@@ -338,22 +350,21 @@ func _on_item_button_pressed() -> void:
 	%OptionsContainer.show()
 	text_box.clear_text()
 	for item: Item in items:
-		var button := Button.new()
-		button.theme = theme
-		button.text = item.item_name
-		button.custom_minimum_size = Vector2(100, 50)
-		button.add_theme_font_size_override("font_size", 50)
-		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		var button: Button = button.instantiate()
+		button.get_node("text").text = Text.shake(item.item_name)
+		button.focus_exited.connect(func():
+			button.modulate.a  = 0.5)
 		button.pressed.connect(use_item.bind(item))
 		%OptionsContainer.add_child(button)
 	%OptionsContainer.get_child(0).grab_focus()
 	%UiCooldownTimer.start()
 	# Rest of the logic is in "use_item".
 
+func add_choices_buttons() -> void:
+	pass
 
 func _on_knife_animation_finished() -> void:
 	%Knife.hide()
-	%AttackLine.hide()
 	%MonsterHurtSound.play()
 	var distance_from_centre: int = round(abs(%AttackLine.global_position.x - %AttackBar.global_position.x))
 	var damage: int = round((575  - distance_from_centre) / 10)
@@ -377,8 +388,9 @@ func monster_speaking_anim() -> void:
 		tween.tween_property(%MonsterSprite, "scale", og_dim, delta)
 
 func change_box_size(new_size: Vector2, delta: float = 0.3) -> void:
-	var tween := get_tree().create_tween()
-	tween.tween_property(%Box, "scale", new_size, delta).set_ease(Tween.EASE_IN_OUT)
+	var tween := get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(%Box, "scale:x", new_size.x, delta)
+	tween.tween_property(%Box, "scale:y", new_size.y, delta)
 	await tween.finished
 
 func _process(delta: float) -> void:
@@ -387,3 +399,24 @@ func _process(delta: float) -> void:
 func _draw() -> void:
 	var box_rect := Rect2(%Box.global_position, %Box.size  * %Box.scale)
 	draw_rect(box_rect, Color.WHITE, false, 10)
+
+func attack_bar_visibility(visible_: bool) -> void:
+	var new_val := 1.0 if visible_ else 0.0
+	var delta := 0.05 if visible_ else 0.2
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BOUNCE).set_parallel()
+	tween.tween_property(%AttackLine, "modulate:a", new_val, delta)
+	tween.tween_property(%AttackBar, "modulate:a", new_val, delta)
+
+func speech_bubble_visibility(visible_: bool) -> void:
+	var new_val := 1.0 if visible_ else 0.0
+	var tween := get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BOUNCE).set_parallel()
+	tween.tween_property(%SpeechBox, "modulate:a", new_val, 0.25)
+
+func _on_focus_entered(button : Button) -> void:
+	button.modulate.a = 1
+	%MoveSound.play()
+	var tween := get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(button, "scale", Vector2(1.5,1.5), 0.2)
+	tween.tween_property(button, "scale", Vector2(1,1), 0.1)
