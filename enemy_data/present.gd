@@ -10,7 +10,7 @@ func do_act_get_text(act: String) -> String:
 	return "Error"
 
 func get_idle_text() -> String:
-	return ""
+	return "Present is giving you a funny look"
 
 func get_monster_text() -> String:
 	return "Get ready!"

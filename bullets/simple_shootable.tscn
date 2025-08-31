@@ -7,4 +7,10 @@ rotation = 3.14159
 shootable = true
 
 [node name="ColorRect" parent="." index="0"]
-color = Color(0.30825, 0.673752, 1, 1)
+color = Color(0.239326, 0.484585, 0.702933, 1)
+
+[node name="CollisionShape2D" parent="." index="1"]
+visible = false
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="2"]
+visible = false

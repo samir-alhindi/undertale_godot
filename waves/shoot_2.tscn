@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://bca2m45j3lmyb"]
+
+[ext_resource type="PackedScene" uid="uid://b8swhgvxqle3i" path="res://waves/wave.tscn" id="1_0ta8k"]
+[ext_resource type="Script" uid="uid://iatiwxs0d1bt" path="res://waves/shoot_2.gd" id="2_ogfp1"]
+[ext_resource type="PackedScene" uid="uid://gjkaog25qkwy" path="res://bullets/simple_shootable.tscn" id="3_8g612"]
+
+[node name="Shoot2" instance=ExtResource("1_0ta8k")]
+script = ExtResource("2_ogfp1")
+mode = 2
+box_size = Vector2(0.05, 2)
+box_size_change_time = 0.5
+bullet_scene = ExtResource("3_8g612")
+
+[node name="EndTimer" parent="." index="1"]
+wait_time = 3.0

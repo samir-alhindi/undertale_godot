@@ -1,4 +1,4 @@
-class_name Battle extends Node
+class_name Battle extends Node2D
 
 var gonna_attack := false
 var gonna_act := false
@@ -53,7 +53,7 @@ func _ready() -> void:
 	acts = enemy.acts.duplicate(true)
 	bullet_waves = enemy.bullet_waves.duplicate(true)
 	encounter_text = enemy.encounter_text
-	text_box.scroll(encounter_text)
+	text_box.scroll(encounter_text)            
 	
 	Global.wave_done.connect(finish_hell)
 	Global.add_bullet.connect(func(bullet: Node2D, transform: Transform2D):
@@ -272,23 +272,23 @@ func start_hell() -> void:
 	var wave: Node2D = bullet_waves[wave_index % bullet_waves.size()].instantiate()
 	wave_index += 1
 	var soul := Soul.new_soul(wave.mode)
-	add_child(soul)
 	soul.global_position = %AttackBar.global_position
 	soul.took_damage.connect(player_take_damage)
+	await change_box_size(wave.box_size, wave.box_size_change_time)
+	add_child(soul)
 	add_child(wave)
-	change_box_size(wave.box_size)
 	# The wave finishes when the Node emits the global "wave_done" signal.
 
 func finish_hell(wave: Node2D, soul: Soul) -> void:
 	wave.queue_free()
 	if battle_won or battle_lost: return
 	turn_counter += 1
-	change_box_size(Vector2(1.0, 1.0))
 	%ButtonsContainer.show()
 	soul.queue_free()
-	%AttackButton.grab_focus()
+	await change_box_size(Vector2(1.0, 1.0), wave.box_size_change_time)
 	idle_text = enemy.get_idle_text()
 	text_box.scroll(idle_text)
+	%AttackButton.grab_focus()
 
 
 func _on_act_button_pressed() -> void:
@@ -379,3 +379,11 @@ func monster_speaking_anim() -> void:
 func change_box_size(new_size: Vector2, delta: float = 0.3) -> void:
 	var tween := get_tree().create_tween()
 	tween.tween_property(%Box, "scale", new_size, delta).set_ease(Tween.EASE_IN_OUT)
+	await tween.finished
+
+func _process(delta: float) -> void:
+	queue_redraw()
+
+func _draw() -> void:
+	var box_rect := Rect2(%Box.global_position, %Box.size  * %Box.scale)
+	draw_rect(box_rect, Color.WHITE, false, 10)

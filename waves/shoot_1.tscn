@@ -16,7 +16,10 @@ mode = 2
 bullet_scene = ExtResource("3_3iwr3")
 
 [node name="SpawnTimer" parent="." index="0"]
-wait_time = 0.1
+wait_time = 0.2
+
+[node name="EndTimer" parent="." index="1"]
+wait_time = 10.0
 
 [node name="Instructions" type="Label" parent="." index="2"]
 unique_name_in_owner = true

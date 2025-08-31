@@ -43,7 +43,7 @@ func _physics_process(delta: float) -> void:
 		Mode.YELLOW:
 			var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 			velocity = dir * 200
-			if Input.is_action_pressed("ui_accept") and %ShootTimer.is_stopped():
+			if Input.is_action_just_pressed("ui_accept") and %ShootTimer.is_stopped():
 				%ShootTimer.start()
 				%ShootSound.play()
 				const YELLOW_BULLET := preload("uid://c53touampkpns")
@@ -60,6 +60,7 @@ func _physics_process(delta: float) -> void:
 		if area.freed_on_hit: area.queue_free()
 		%SoulAnim.play("hurt")
 		%invincibilityTimer.start()
+
 
 
 func _on_invincibility_timer_timeout() -> void:
