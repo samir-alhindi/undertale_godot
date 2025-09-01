@@ -30,7 +30,7 @@ func get_idle_text() -> String:
 	return "* Poseur is satsfied!"
 
 func get_monster_text() -> String:
-	if pose_counter == 1: return Text.tornado("Nice pose!")
-	elif pose_counter == 2: return Text.tornado("Fabulous!")
-	elif pose_counter == 3: return Text.tornado("absolutely beautiful!")
-	return  Text.tornado("Let's dance darling!")
+	if pose_counter == 1: return Util.tornado("Nice pose!")
+	elif pose_counter == 2: return Util.tornado("Fabulous!")
+	elif pose_counter == 3: return Util.tornado("absolutely beautiful!")
+	return  Util.tornado("Let's dance darling!")

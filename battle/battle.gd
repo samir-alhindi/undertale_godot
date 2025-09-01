@@ -131,7 +131,7 @@ func _input(event: InputEvent) -> void:
 		text_box.modulate = Color.WHITE
 		for act: String in acts:
 			var button: Button = button.instantiate()
-			button.get_node("text").text = Text.shake(act)
+			button.get_node("text").text = Util.shake(act)
 			button.focus_exited.connect(func():
 				button.modulate.a  = 0.5)
 			button.pressed.connect(do_act.bind(act))
@@ -351,7 +351,7 @@ func _on_item_button_pressed() -> void:
 	text_box.clear_text()
 	for item: Item in items:
 		var button: Button = button.instantiate()
-		button.get_node("text").text = Text.shake(item.item_name)
+		button.get_node("text").text = Util.shake(item.item_name)
 		button.focus_exited.connect(func():
 			button.modulate.a  = 0.5)
 		button.pressed.connect(use_item.bind(item))

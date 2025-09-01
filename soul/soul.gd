@@ -52,7 +52,6 @@ func _physics_process(delta: float) -> void:
 				Global.add_bullet.emit(bullet, self.global_transform)
 			move_and_slide()
 	
-	
 	# Check for damage:
 	var all_areas: Array[Area2D] = %Hurtbox.get_overlapping_areas()
 	for area: Area2D in all_areas:
@@ -61,7 +60,6 @@ func _physics_process(delta: float) -> void:
 		if area.freed_on_hit: area.queue_free()
 		%SoulAnim.play("hurt")
 		%invincibilityTimer.start()
-
 
 
 func _on_invincibility_timer_timeout() -> void:

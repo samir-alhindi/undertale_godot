@@ -1,4 +1,4 @@
-class_name Text extends Node
+class_name Util extends Node
 
 static func tornado(text: String, radius: float = 10.0, freq: float = 3.0) -> String:
 	return "[tornado radius=%f freq=%f]%s[/tornado]" % [radius, freq, text]

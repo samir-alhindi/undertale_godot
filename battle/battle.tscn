@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=43 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
@@ -225,16 +225,11 @@ colors = PackedColorArray(1, 1, 0, 1, 1, 1, 0, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ihybe"]
 gradient = SubResource("Gradient_sf8fp")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qubjc"]
-size = Vector2(60, 289)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7njrs"]
-resource_local_to_scene = true
-size = Vector2(1165, 41)
+size = Vector2(1, 290)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6hnvb"]
-resource_local_to_scene = true
-size = Vector2(1165, 46)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2t7ue"]
+size = Vector2(1180, 1)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1e446"]
 animations = [{
@@ -461,32 +456,32 @@ offset_bottom = 7.06598
 bbcode_enabled = true
 
 [node name="Border" type="StaticBody2D" parent="UI/Box"]
-position = Vector2(8, 13)
+unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border"]
-position = Vector2(-21, 131)
-shape = SubResource("RectangleShape2D_qubjc")
-
-[node name="Border2" type="StaticBody2D" parent="UI/Box"]
-position = Vector2(1141.5, 8)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border2"]
-position = Vector2(59.5, 138.5)
-shape = SubResource("RectangleShape2D_qubjc")
-
-[node name="Border3" type="StaticBody2D" parent="UI/Box"]
-position = Vector2(6, 8)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border3"]
-position = Vector2(584, -29.5)
+position = Vector2(0, 147.5)
 shape = SubResource("RectangleShape2D_7njrs")
 
+[node name="Border2" type="StaticBody2D" parent="UI/Box"]
+unique_name_in_owner = true
+position = Vector2(1180, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border2"]
+position = Vector2(0, 147.5)
+shape = SubResource("RectangleShape2D_7njrs")
+
+[node name="Border3" type="StaticBody2D" parent="UI/Box"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border3"]
+position = Vector2(590, 0)
+shape = SubResource("RectangleShape2D_2t7ue")
+
 [node name="Border4" type="StaticBody2D" parent="UI/Box"]
-position = Vector2(6, 323)
+position = Vector2(0, 290)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UI/Box/Border4"]
-position = Vector2(583.5, -10)
-shape = SubResource("RectangleShape2D_6hnvb")
+position = Vector2(590, 0)
+shape = SubResource("RectangleShape2D_2t7ue")
 
 [node name="Monster" type="Node2D" parent="." groups=["enemy"]]
 unique_name_in_owner = true

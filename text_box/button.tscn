@@ -14,12 +14,13 @@ alignment = 0
 script = ExtResource("2_8cus2")
 
 [node name="text" type="RichTextLabel" parent="."]
-custom_minimum_size = Vector2(100, 50)
+custom_minimum_size = Vector2(300, 50)
 layout_mode = 0
 offset_right = 186.0
 offset_bottom = 69.0
 theme_override_font_sizes/normal_font_size = 50
 bbcode_enabled = true
+text = "Football"
 fit_content = true
 scroll_active = false
 vertical_alignment = 1

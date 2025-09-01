@@ -8,7 +8,7 @@ var slow_speed := 0.5
 
 func scroll(new_text: String) -> void:
 	await clear_text()
-	text = Text.shake(new_text, 5, 5)
+	text = Util.shake(new_text, 5, 5)
 	visible_characters = 0
 	%Timer.start()
 	%TextSound.play()
@@ -16,7 +16,7 @@ func scroll(new_text: String) -> void:
 func set_new_text(new_text: String) -> void:
 	await clear_text()
 	visible_ratio = 1.0
-	text = Text.shake(new_text)
+	text = Util.shake(new_text)
 
 func _on_timer_timeout() -> void:
 	if visible_ratio == 1.0 or len(get_parsed_text()) == 0:

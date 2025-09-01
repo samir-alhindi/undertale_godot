@@ -3,7 +3,7 @@ extends CanvasLayer
 @export var enemies: Array[PackedScene]
 
 func _ready() -> void:
-	%Title.text = Text.shake(%Title.text)
+	%Title.text = Util.shake(%Title.text)
 	for scene: PackedScene in enemies:
 		var instance: Node = scene.instantiate()
 		assert(instance is Enemy, "Only put Enemy scenes in the enemies array")

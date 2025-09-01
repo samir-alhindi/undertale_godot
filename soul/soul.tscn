@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://vm38somiibp1" path="res://soul/soul.gd" id="1_rujom"]
 [ext_resource type="AudioStream" uid="uid://xandhxe1l75f" path="res://sounds/Yellow SOUL shoot.wav" id="3_53ixt"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_rujom"]
-radius = 15.0333
+[sub_resource type="CircleShape2D" id="CircleShape2D_53ixt"]
+radius = 12.5
 
 [sub_resource type="Animation" id="Animation_53ixt"]
 length = 0.001
@@ -43,16 +43,15 @@ unique_name_in_owner = true
 scale = Vector2(0.05, 0.05)
 texture = ExtResource("1_llyy4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-unique_name_in_owner = true
-shape = SubResource("CircleShape2D_rujom")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-15, -18.75, -10, -18.75, -10, -16.25, -6.25, -16.25, -6.25, -13.75, -3.75, -13.75, -3.75, -8.75, 3.75, -8.75, 3.75, -13.75, 7.5, -13.75, 7.5, -16.25, 11.25, -16.25, 11.25, -18.75, 13.75, -18.75, 13.75, -16.25, 16.25, -16.25, 16.25, -12.5, 18.75, -12.5, 18.75, 3.75, 13.75, 3.75, 13.75, 8.75, 8.75, 8.75, 8.75, 13.75, 3.75, 13.75, 3.75, 22.5, -2.5, 22.5, -2.5, 13.75, -8.75, 13.75, -8.75, 8.75, -13.75, 8.75, -13.75, 3.75, -18.75, 3.75, -18.75, -13.75, -16.25, -13.75, -16.25, -16.25, -15, -16.25)
 
 [node name="Hurtbox" type="Area2D" parent="."]
 unique_name_in_owner = true
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hurtbox"]
-unique_name_in_owner = true
-polygon = PackedVector2Array(0, 19, -19, 5, -19, -15, -11, -19, -1, -10, 11, -19, 19, -13, 19, 4)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+visible = false
+shape = SubResource("CircleShape2D_53ixt")
 
 [node name="invincibilityTimer" type="Timer" parent="."]
 unique_name_in_owner = true
