@@ -10,6 +10,3 @@ mode = 2
 box_size = Vector2(0.05, 2)
 box_size_change_time = 0.5
 bullet_scene = ExtResource("3_8g612")
-
-[node name="EndTimer" parent="." index="1"]
-wait_time = 3.0
