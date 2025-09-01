@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dpexiickfpwht"
-path="res://.godot/imported/Enemy Approaching.wav-cd27c0bd928d415dd101a3eb0ab3ac42.sample"
+path="res://.godot/imported/Enemy Approaching.wav-27cc556dead5e96383e9be043e7b00d2.sample"
 
 [deps]
 
-source_file="res://sounds/Enemy Approaching.wav"
-dest_files=["res://.godot/imported/Enemy Approaching.wav-cd27c0bd928d415dd101a3eb0ab3ac42.sample"]
+source_file="res://songs/Enemy Approaching.wav"
+dest_files=["res://.godot/imported/Enemy Approaching.wav-27cc556dead5e96383e9be043e7b00d2.sample"]
 
 [params]
 

@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cedvngba5pql2" path="res://text_box/monster_text_box.tscn" id="10_as1q7"]
 [ext_resource type="AudioStream" uid="uid://bo5dxmxjbqcuc" path="res://sounds/snd_heal_c.wav" id="10_vlrs1"]
 [ext_resource type="FontFile" uid="uid://61kg45th28eb" path="res://themes/DTM-Mono.otf" id="11_7njrs"]
-[ext_resource type="AudioStream" uid="uid://dpexiickfpwht" path="res://sounds/Enemy Approaching.wav" id="11_hvjow"]
+[ext_resource type="AudioStream" uid="uid://dpexiickfpwht" path="res://songs/Enemy Approaching.wav" id="11_hvjow"]
 [ext_resource type="Texture2D" uid="uid://dcghcrt5bpk2p" path="res://sprites/stab/spr_slice_o_0.png" id="12_as1q7"]
 [ext_resource type="AudioStream" uid="uid://cxoa4407vpjc4" path="res://sounds/Undertale Sound - Monster Dust.mp3" id="12_qybyd"]
 [ext_resource type="Texture2D" uid="uid://ckuqxua4m57lc" path="res://sprites/stab/spr_slice_o_1.png" id="13_7njrs"]
