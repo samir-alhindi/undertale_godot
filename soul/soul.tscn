@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://tly4ac72poq7"]
+[gd_scene load_steps=7 format=3 uid="uid://tly4ac72poq7"]
 
 [ext_resource type="Texture2D" uid="uid://ck5iwib4fr77x" path="res://sprites/red_soul.svg.png" id="1_llyy4"]
 [ext_resource type="Script" uid="uid://vm38somiibp1" path="res://soul/soul.gd" id="1_rujom"]
-[ext_resource type="AudioStream" uid="uid://xandhxe1l75f" path="res://sounds/Yellow SOUL shoot.wav" id="3_53ixt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_53ixt"]
-radius = 12.5
+radius = 17.5446
 
 [sub_resource type="Animation" id="Animation_53ixt"]
 length = 0.001
@@ -50,7 +49,6 @@ polygon = PackedVector2Array(-15, -18.75, -10, -18.75, -10, -16.25, -6.25, -16.2
 unique_name_in_owner = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-visible = false
 shape = SubResource("CircleShape2D_53ixt")
 
 [node name="invincibilityTimer" type="Timer" parent="."]
@@ -67,9 +65,5 @@ libraries = {
 unique_name_in_owner = true
 wait_time = 0.2
 one_shot = true
-
-[node name="ShootSound" type="AudioStreamPlayer" parent="."]
-unique_name_in_owner = true
-stream = ExtResource("3_53ixt")
 
 [connection signal="timeout" from="invincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 			velocity = dir * 200
 			if Input.is_action_just_pressed("ui_accept") and %ShootTimer.is_stopped():
 				%ShootTimer.start()
-				%ShootSound.play()
+				Global.play_shoot_sound.emit()
 				const YELLOW_BULLET := preload("uid://c53touampkpns")
 				var bullet := YELLOW_BULLET.instantiate()
 				Global.add_bullet.emit(bullet, self.global_transform)

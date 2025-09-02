@@ -41,6 +41,7 @@ func go_to_battle(enemy: Enemy) -> void:
 	%Encounter1.play()
 	for button: Button in %BattlesContainer.get_children():
 		button.modulate.a = 1.0 if button.text == enemy.enemy_name else 0.0
+		button.release_focus()
 	await get_tree().create_timer(0.25).timeout
 	%Encounter2.play()
 	await Fade.fade_into_black()

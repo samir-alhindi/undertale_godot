@@ -1,5 +1,7 @@
 class_name Battle extends Node2D
 
+static var battle_counter := -1
+
 var gonna_attack := false
 var gonna_act := false
 var is_choosing_act := false
@@ -45,19 +47,24 @@ func _ready() -> void:
 	
 	Fade.fade_from_black()
 	
-	%AttackBar.modulate.a = 0.0
-	%AttackLine.modulate.a = 0.0
-	%SpeechBox.modulate.a = 0.0
+	var songs: Array[AudioStream] = [
+		preload("uid://dpexiickfpwht"),
+		preload("uid://b5k27ym6e01c6")]
 	
-	%AttackBar.show()
-	%AttackLine.show()
-	%SpeechBox.show()
+	randomize()
+	Battle.battle_counter += 1
+	%Music.stream = songs[battle_counter % songs.size()]
+	%Music.play()
+	
+	var make_me_transparent: Array[CanvasItem] = [%AttackBar, %AttackLine,%SpeechBox, $Damage]
+	for ui: CanvasItem in make_me_transparent:
+		ui.show()
+		ui.modulate.a = 0.0
 	
 	# set up enemy:
 	%Monster.add_child(enemy)
 	%MonsterSprite.texture = enemy.sprite
 	%MonsterSprite.scale *= enemy.sprite_scale
-	%Damage.scale /= enemy.sprite_scale # Keep the Damage label as is.
 	%Damage.global_position = monster_position()
 	enemy_name = enemy.name
 	enemy_hp = enemy.HP
@@ -90,6 +97,8 @@ func _ready() -> void:
 		var final_val := 1.0 if new_val else 0.0
 		tween.tween_property(%MonsterSprite, "modulate:a", final_val, 0.5)
 		)
+	Global.play_shoot_sound.connect(func():
+		%ShootSound.play())
 	RenderingServer.set_default_clear_color(Color.BLACK)
 	%AttackButton.grab_focus()
 	
@@ -255,9 +264,8 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		is_attacking = false
 		%AttackLine.modulate.a = 0.0
 		%Damage.text = "miss"
-		%Damage.show()
-		%MissTimer.start()
-		# Rest of the logic is in '_on_miss_timer_timeout'.
+		await damage_label_bounce()
+		_on_anim_animation_finished("monster_hurt")
 	elif anim_name == "die":
 		change_box_size(Vector2(1.0, 1.0))
 		text_box.modulate = Color.RED
@@ -268,7 +276,6 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		await Fade.fade_into_black()
 		get_tree().change_scene_to_file("uid://cnxrqinpyif6b")
 	elif anim_name == "monster_hurt":
-		%Damage.hide()
 		attack_bar_visibility(false)
 		if enemy_hp <= 0:
 			battle_won = true
@@ -372,13 +379,10 @@ func _on_knife_animation_finished() -> void:
 	var distance_from_centre: int = round(abs(%AttackLine.global_position.x - %AttackBar.global_position.x))
 	var damage: int = round((575  - distance_from_centre) / 10)
 	%Damage.text = str(damage)
-	%Damage.show()
+	damage_label_bounce()
 	enemy_hp -= damage
 	%Anim.play("monster_hurt")
 	# The rest of the logic happens in the fucntion "_on_anim_animation_finished()"...
-
-func _on_miss_timer_timeout() -> void:
-	_on_anim_animation_finished("monster_hurt")
 
 func monster_speaking_anim() -> void:
 	# Aniamtion:-
@@ -423,3 +427,11 @@ func _on_focus_entered(button : Button) -> void:
 	var tween := get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_BOUNCE)
 	tween.tween_property(button, "scale", Vector2(1.5,1.5), 0.2)
 	tween.tween_property(button, "scale", Vector2(1,1), 0.1)
+
+func damage_label_bounce() -> void:
+	var tween := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(%Damage, "modulate:a", 1.0, 0.1)
+	tween.tween_property(%Damage, "scale", Vector2(1.5,1.5), .2)
+	tween.tween_property(%Damage, "scale", Vector2(1,1), .1)
+	tween.tween_property(%Damage, "modulate:a", 0.0, 0.1)
+	await tween.finished
