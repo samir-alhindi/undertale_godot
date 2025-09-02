@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://45qmet5s5aix"]
+[gd_scene load_steps=44 format=3 uid="uid://45qmet5s5aix"]
 
 [ext_resource type="Script" uid="uid://c57c672oeb8vm" path="res://battle/battle.gd" id="1_mqutd"]
 [ext_resource type="Script" uid="uid://c52ed72xkdnj2" path="res://items/item.gd" id="2_a56dj"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://7fb0mq50gkc2" path="res://sprites/stab/spr_slice_o_3.png" id="15_j5lq4"]
 [ext_resource type="Texture2D" uid="uid://vypbmv8oyr11" path="res://sprites/stab/spr_slice_o_4.png" id="16_562sy"]
 [ext_resource type="Texture2D" uid="uid://il3waeawr7kr" path="res://sprites/stab/spr_slice_o_5.png" id="17_kc5qh"]
+[ext_resource type="PackedScene" uid="uid://qg7ksrbtkou6" path="res://autoloads/fade_to_black.tscn" id="18_2t7ue"]
 [ext_resource type="Texture2D" uid="uid://qmi8o2j171cs" path="res://sprites/bg.png" id="19_phvbk"]
 [ext_resource type="AudioStream" uid="uid://byrdnb2dtwnud" path="res://sounds/Undertale Sound Effect - Attack Hit 4.mp3" id="26_7njrs"]
 
@@ -553,18 +554,8 @@ frame_progress = 1.0
 
 [node name="DebugMarker" type="Marker2D" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" parent="." instance=ExtResource("18_2t7ue")]
 unique_name_in_owner = true
-
-[node name="BlackScreen" type="ColorRect" parent="CanvasLayer"]
-unique_name_in_owner = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0)
-metadata/_edit_use_anchors_ = true
 
 [node name="UiCooldownTimer" type="Timer" parent="."]
 unique_name_in_owner = true

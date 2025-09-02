@@ -43,6 +43,8 @@ static var enemy: Enemy
 
 func _ready() -> void:
 	
+	Fade.fade_from_black()
+	
 	%AttackBar.modulate.a = 0.0
 	%AttackLine.modulate.a = 0.0
 	%SpeechBox.modulate.a = 0.0
@@ -164,7 +166,8 @@ func _input(event: InputEvent) -> void:
 			var gold := randi_range(50, 75)
 			text_box.scroll("Battle won\nGot 0 EXP and %d Gold" % gold)
 			await text_box.finished_scrolling
-			%Anim.play("fade_into_black")
+			await Fade.fade_into_black()
+			get_tree().change_scene_to_file("uid://cnxrqinpyif6b")
 		elif not can_spare:
 			%SelectSound.play()
 	
@@ -235,7 +238,8 @@ func player_take_damage(amount: int, soul: Soul) -> void:
 		particles.finished.connect(func():
 			text_box.scroll("Battle Lost...")
 			await text_box.finished_scrolling
-			%Anim.play("fade_into_black")
+			await Fade.fade_into_black()
+			get_tree().change_scene_to_file("uid://cnxrqinpyif6b")
 			)
 
 func _on_attack_button_pressed() -> void:
@@ -261,8 +265,7 @@ func _on_anim_animation_finished(anim_name: StringName) -> void:
 		var gold := randi_range(20, 30)
 		text_box.scroll("Battle won\nGot %d EXP and %d Gold" % [exp, gold])
 		await text_box.finished_scrolling
-		%Anim.play("fade_into_black")
-	elif anim_name == "fade_into_black":
+		await Fade.fade_into_black()
 		get_tree().change_scene_to_file("uid://cnxrqinpyif6b")
 	elif anim_name == "monster_hurt":
 		%Damage.hide()

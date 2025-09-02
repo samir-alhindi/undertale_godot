@@ -3,6 +3,7 @@ extends CanvasLayer
 @export var enemies: Array[PackedScene]
 
 func _ready() -> void:
+	Fade.fade_from_black()
 	%Title.text = Util.shake(%Title.text)
 	for scene: PackedScene in enemies:
 		var instance: Node = scene.instantiate()
@@ -22,6 +23,7 @@ func _ready() -> void:
 		button.pressed.connect(
 			go_to_battle.bind(enemy)
 			)
+	
 	%BattlesContainer.get_child(0).grab_focus()
 
 func _on_focus_entered(button: Button) -> void:
@@ -35,5 +37,12 @@ func _on_focus_exited(button: Button) -> void:
 	button.modulate.a = 0.5
 
 func go_to_battle(enemy: Enemy) -> void:
+	%Song.stop()
+	%Encounter1.play()
+	for button: Button in %BattlesContainer.get_children():
+		button.modulate.a = 1.0 if button.text == enemy.enemy_name else 0.0
+	await get_tree().create_timer(0.25).timeout
+	%Encounter2.play()
+	await Fade.fade_into_black()
 	Battle.enemy = enemy
 	get_tree().change_scene_to_file("uid://45qmet5s5aix")
